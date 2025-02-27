@@ -1,0 +1,649 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45957014-6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-45957014-6');
+    </script>
+    
+    <title>LLM 基础 &#8212; 技术写作实用教程  文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=946197a6"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "galty687/doc-x");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '2-Basics/llm-basics';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="prev" title="资源" href="../1-Intro/resources.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">技术写作实用教程  文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程简介</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/intro.html">人工智能实践（语言）课程大纲</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/resources.html">资源</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型基础</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">LLM 基础</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/2-Basics/llm-basics.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>LLM 基础</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformers">transformers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automodelforcausallm">AutoModelForCausalLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#autotokenizer">AutoTokenizer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">下载和运行LLM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#microsoft-phi">Microsoft Phi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">加载模型和分词器</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">让模型输出</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="llm">
+<h1>LLM 基础<a class="headerlink" href="#llm" title="Link to this heading">#</a></h1>
+<section id="transformers">
+<h2>transformers<a class="headerlink" href="#transformers" title="Link to this heading">#</a></h2>
+<p>Hugging Face 的 transformers 是一个开源库，主要用于自然语言处理（NLP）和其他基于 Transformer 架构的任务。它的主要特点包括：</p>
+<p>•	<strong>丰富的预训练模型</strong>：支持 BERT、GPT、T5、RoBERTa 等多种主流模型，方便直接应用于文本分类、生成、翻译等任务。</p>
+<p>•	<strong>统一的接口</strong>：提供统一的 API 来加载模型和分词器，简化数据预处理和模型推理过程。</p>
+<p>•	<strong>跨框架支持</strong>：同时兼容 PyTorch 和 TensorFlow，用户可根据习惯和需求选择合适的深度学习框架。</p>
+<p>•	<strong>易于微调</strong>：用户可以基于预训练模型进行微调，快速适应特定任务或领域应用。</p>
+<p>安装</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>transformers
+</pre></div>
+</div>
+<p>异常即其他情形，可参考：<a class="reference external" href="https://huggingface.co/docs/transformers/v4.49.0/en/installation?install=pip">官方文档</a></p>
+<section id="automodelforcausallm">
+<h3>AutoModelForCausalLM<a class="headerlink" href="#automodelforcausallm" title="Link to this heading">#</a></h3>
+<p>AutoModelForCausalLM 是 Hugging Face transformers 库中提供的一个便捷类，用于自动加载适用于因果语言建模（Causal Language Modeling）任务的模型。其主要功能包括：</p>
+<ol class="arabic simple">
+<li><p><strong>自动推断模型架构</strong></p></li>
+</ol>
+<p>根据你提供的预训练模型名称或路径，AutoModelForCausalLM 会读取模型的配置文件，并自动确定适合的模型架构（如 GPT、GPT-2 等），无需手动指定具体模型类型。</p>
+<ol class="arabic simple" start="2">
+<li><p><strong>文本生成任务支持</strong></p></li>
+</ol>
+<p>因果语言模型主要用于生成连续文本，例如自动续写、对话生成等任务。加载这样的模型后，可以利用它进行自然语言生成。</p>
+<ol class="arabic simple" start="3">
+<li><p><strong>简化模型加载流程</strong></p></li>
+</ol>
+<p>通过自动推断和加载预训练权重、配置等，开发者只需要知道模型名称即可快速加载并使用模型，降低了入门和使用复杂性。</p>
+</section>
+<section id="autotokenizer">
+<h3>AutoTokenizer<a class="headerlink" href="#autotokenizer" title="Link to this heading">#</a></h3>
+<p>AutoTokenizer 是 Hugging Face transformers 库中的一个便捷类，它主要负责为预训练模型自动加载和配置相应的分词器。具体功能包括：</p>
+<ol class="arabic simple">
+<li><p><strong>文本分词</strong>。将输入的自然语言文本拆分成模型能够理解的 token（词元或子词单元），这一步是模型处理文本的前置步骤。</p></li>
+<li><p><strong>自动匹配模型</strong>。根据你提供的预训练模型名称或路径，AutoTokenizer 会自动选择与模型相匹配的分词器，保证文本编码方式与模型训练时使用的方式一致。</p></li>
+<li><p><strong>编码和解码</strong>。除了将文本转换为 token id 序列（编码），它还能将模型输出的 token id 序列解码回可读的文本（解码），方便理解和展示生成结果。</p></li>
+</ol>
+</section>
+</section>
+<section id="id1">
+<h2>下载和运行LLM<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<section id="microsoft-phi">
+<h3>Microsoft Phi<a class="headerlink" href="#microsoft-phi" title="Link to this heading">#</a></h3>
+<p>Microsoft 的 Phi 模型是一系列由微软研究团队开发的小型语言模型（SLMs），其目标是在参数规模较小的前提下提供与大型语言模型相媲美的性能。Phi 模型的发展经历了从 Phi-1、Phi-1.5、Phi-2 到最新的 Phi-3，不断提升语言理解、推理、编码等多方面能力。其中，Phi-3 系列包括多个版本，如 Phi-3-mini、Phi-3-small 和 Phi-3-medium，参数规模分别约为 3.8 亿、7 亿和 14 亿。经过指令微调后，这些模型能够更好地理解和执行用户指令，生成高质量且安全的回答。此外，得益于轻量化设计，Phi 模型适用于资源受限的设备，如移动端和边缘计算场景，提供了低成本、高效率的生成式 AI 解决方案。</p>
+<p>第三代 Phi-3 系列模型，这一代包含三个不同规模的版本：</p>
+<ul class="simple">
+<li><p><strong>Phi-3-mini</strong>：约 3.8 亿参数（38亿参数），默认上下文长度为 4K，适合在资源受限的设备（如手机）上运行。</p></li>
+<li><p><strong>Phi-3-small</strong>：约 7 亿参数（70亿参数），支持更长的上下文（通常为 8K），在多语言和理解能力上有所提升。</p></li>
+<li><p><strong>Phi-3-medium</strong>：约 14 亿参数（140亿参数），参数规模更大，性能更强，但对硬件要求也更高。</p></li>
+</ul>
+<p>模型名称中的 “instruct” 表示该模型经过了指令微调，也就是通过使用大量标注了“指令–回答”对的数据对模型进行了额外训练，从而使模型能够更好地理解和执行用户给出的指令，生成更符合预期、更有针对性的回答。与普通的基础语言模型相比，“instruct” 版本在回答问题时通常会更“听话”，输出也更加安全和实用。</p>
+</section>
+<section id="id2">
+<h3>加载模型和分词器<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModelForCausalLM</span><span class="p">,</span> <span class="n">AutoTokenizer</span>
+<span class="c1"># Load model and tokenizer</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+<span class="s2">&quot;microsoft/Phi-3-mini-4k-instruct&quot;</span><span class="p">,</span>
+<span class="n">device_map</span><span class="o">=</span><span class="s2">&quot;cuda&quot;</span><span class="p">,</span>
+<span class="n">torch_dtype</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+<span class="n">trust_remote_code</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;microsoft/Phi-3-mini-4k-instruct&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h3>让模型输出<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;Write an email apologizing to Sarah for the tragic gardening mishap.Explain how it happened.&lt;|assistant|&gt;&quot;</span>
+<span class="c1"># Tokenize the input prompt</span>
+<span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+
+<span class="c1"># Generate the text</span>
+<span class="n">generation_output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+<span class="n">input_ids</span><span class="o">=</span><span class="n">input_ids</span><span class="p">,</span>
+<span class="n">max_new_tokens</span><span class="o">=</span><span class="mi">20</span>
+<span class="p">)</span>
+
+<span class="c1"># Print the output</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">generation_output</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>模型输出结果：</p>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>Write an email apologizing to Sarah for the tragic gardening mishap. Explain how it happened.&lt;|assistant|&gt; Subject: Sincere Apologies for the Gardening Mishap
+
+
+Dear
+</pre></div>
+</div>
+<p>查看<code class="docutils literal notranslate"><span class="pre">input_ids</span></code>中的内容</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tensor</span><span class="p">([[</span><span class="mi">14350</span><span class="p">,</span><span class="mi">385</span><span class="p">,</span><span class="mi">4876</span><span class="p">,</span><span class="mi">27746</span><span class="p">,</span><span class="mi">5281</span><span class="p">,</span><span class="mi">304</span><span class="p">,</span><span class="mi">19235</span><span class="p">,</span><span class="mi">363</span><span class="p">,</span><span class="mi">278</span><span class="p">,</span><span class="mi">25305</span><span class="p">,</span><span class="mi">293</span><span class="p">,</span><span class="mi">16423</span><span class="p">,</span><span class="mi">292</span><span class="p">,</span><span class="mi">286</span><span class="p">,</span><span class="mi">728</span><span class="p">,</span><span class="mi">481</span><span class="p">,</span><span class="mi">29889</span><span class="p">,</span><span class="mi">12027</span><span class="p">,</span><span class="mi">7420</span><span class="p">,</span><span class="mi">920</span><span class="p">,</span><span class="mi">372</span><span class="p">,</span><span class="mi">9559</span><span class="p">,</span><span class="mi">29889</span><span class="p">,</span><span class="mi">32001</span><span class="p">]],</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda:0&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>将id转为token</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">input_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+	<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="nb">id</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>Write
+an
+email
+apolog
+izing
+to
+Sarah
+for
+the
+trag
+ic
+garden
+ing
+m
+ish
+ap
+.
+Exp
+lain
+how
+it
+happened
+.
+&lt;|assistant|&gt;
+</pre></div>
+</div>
+<p>查看结果发现：</p>
+<ul class="simple">
+<li><p>一些 token 是完整的单词（例如：Write、an、email）。</p></li>
+<li><p>一些 token 是单词的一部分（例如：apolog、izing、trag、ic、m、ish、ap）。</p></li>
+<li><p>标点符号则作为独立的 token。</p></li>
+</ul>
+<p>检查输出</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">generation_output</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>输出结果的ID：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tensor</span><span class="p">([[</span><span class="mi">14350</span><span class="p">,</span><span class="mi">385</span><span class="p">,</span><span class="mi">4876</span><span class="p">,</span><span class="mi">27746</span><span class="p">,</span><span class="mi">5281</span><span class="p">,</span><span class="mi">304</span><span class="p">,</span><span class="mi">19235</span><span class="p">,</span><span class="mi">363</span><span class="p">,</span><span class="mi">278</span><span class="p">,</span><span class="mi">25305</span><span class="p">,</span><span class="mi">293</span><span class="p">,</span><span class="mi">16423</span><span class="p">,</span><span class="mi">292</span><span class="p">,</span><span class="mi">286</span><span class="p">,</span><span class="mi">728</span><span class="p">,</span><span class="mi">481</span><span class="p">,</span><span class="mi">29889</span><span class="p">,</span><span class="mi">9544</span><span class="p">,</span><span class="mi">7420</span><span class="p">,</span><span class="mi">920</span><span class="p">,</span><span class="mi">372</span><span class="p">,</span><span class="mi">9559</span><span class="p">,</span><span class="mi">29889</span><span class="p">,</span><span class="mi">32001</span><span class="p">,</span><span class="mi">3323</span><span class="p">,</span><span class="mi">622</span><span class="p">,</span><span class="mi">29901</span><span class="p">,</span><span class="mi">317</span><span class="p">,</span><span class="mi">3742</span><span class="p">,</span><span class="mi">406</span><span class="p">,</span><span class="mi">6225</span><span class="p">,</span><span class="mi">11763</span><span class="p">,</span><span class="mi">363</span><span class="p">,</span><span class="mi">278</span><span class="p">,</span><span class="mi">19906</span><span class="p">,</span><span class="mi">292</span><span class="p">,</span><span class="mi">341</span><span class="p">,</span><span class="mi">728</span><span class="p">,</span><span class="mi">481</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">29928</span><span class="p">,</span><span class="mi">799</span><span class="p">]],</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda:0&#39;</span><span class="p">)</span>
+
+
+</pre></div>
+</div>
+<p>检查Token 32001之后的内容</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="mi">3323</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="mi">622</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="mi">29901</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="mi">317</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="mi">3742</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="mi">406</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>输出结果：</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>Sub
+ject
+:
+S
+inc
+ere
+</pre></div>
+</div>
+<p>Phi 模型的tokenizer</p>
+<ol class="arabic simple">
+<li><p>词汇表（Vocabulary）
+分词器在训练时会构建一个词汇表，其中每个词或子词都对应一个唯一的整数 ID。</p></li>
+<li><p>分词过程
+当输入文本传入分词器时，它会根据预定的编码算法（例如 Byte-Pair Encoding（BPE）或 SentencePiece）将文本拆分成多个 token。其中，有些 token 可能代表完整的单词，而有些则是单词的子部分。</p></li>
+<li><p>特殊标记
+分词器还会在文本的开头或结尾添加特殊标记（例如  <s>  表示开始，</s>  表示结束），这些特殊标记也会对应特定的 token ID。</p></li>
+<li><p>编码为整数
+最终，文本中的每个 token 都被转换为一个整数 ID，形成一个整数序列，也就是 token ID 序列。这些整数序列就是送入模型进行计算的输入。</p></li>
+</ol>
+<p>查看Phi的词汇表</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">vocab</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">get_vocab</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vocab</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">get_vocab</span><span class="p">()</span>
+<span class="c1"># 按照 token ID 排序，生成一个 (token, token_id) 的列表</span>
+<span class="n">vocab_sorted</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">vocab</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="c1"># 打印前 100 个词汇</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vocab_sorted</span><span class="p">[:</span><span class="mi">100</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>输出结果：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;小&#39;</span><span class="p">:</span> <span class="mi">30446</span><span class="p">,</span> <span class="s1">&#39;▁SY&#39;</span><span class="p">:</span> <span class="mi">28962</span><span class="p">,</span> <span class="s1">&#39;▁earnest&#39;</span><span class="p">:</span> <span class="mi">24828</span><span class="p">,</span> <span class="s1">&#39;▁minimum&#39;</span><span class="p">:</span> <span class="mi">9212</span><span class="p">,</span> <span class="s1">&#39;▁sugar&#39;</span><span class="p">:</span> <span class="mi">26438</span><span class="p">,</span> <span class="s1">&#39;Cam&#39;</span><span class="p">:</span> <span class="mi">14353</span><span class="p">,</span> <span class="s1">&#39;▁build&#39;</span><span class="p">:</span> <span class="mi">2048</span><span class="p">,</span> <span class="s1">&#39;▁agr&#39;</span><span class="p">:</span> <span class="mi">9221</span><span class="p">,</span> <span class="s1">&#39;ierten&#39;</span><span class="p">:</span> <span class="mi">12025</span><span class="p">,</span> <span class="s1">&#39;emet&#39;</span><span class="p">:</span> <span class="mi">21056</span><span class="p">,</span> <span class="s1">&#39;uuid&#39;</span><span class="p">:</span> <span class="mi">25118</span><span class="p">,</span> <span class="s1">&#39;▁TRUE&#39;</span><span class="p">:</span> <span class="mi">15676</span><span class="p">,</span> <span class="s1">&#39;▁notification&#39;</span><span class="p">:</span> <span class="mi">12519</span><span class="p">,</span> <span class="s1">&#39;▁inside&#39;</span><span class="p">:</span> <span class="mi">2768</span><span class="p">,</span> <span class="s1">&#39;▁extens&#39;</span><span class="p">:</span> <span class="mi">21103</span><span class="p">,</span> <span class="s1">&#39;▁Wür&#39;</span><span class="p">:</span> <span class="mi">21241</span><span class="p">,</span> <span class="s1">&#39;▁gross&#39;</span><span class="p">:</span> <span class="mi">22683</span><span class="p">,</span> <span class="s1">&#39;inf&#39;</span><span class="p">:</span> <span class="mi">7192</span><span class="p">,</span> <span class="s1">&#39;Μ&#39;</span><span class="p">:</span> <span class="mi">30362</span><span class="p">,</span> <span class="s2">&quot;&#39;],&quot;</span><span class="p">:</span> <span class="mi">7464</span><span class="p">,</span> <span class="s1">&#39;bek&#39;</span><span class="p">:</span> <span class="mi">16863</span><span class="p">,</span> <span class="s1">&#39;Values&#39;</span><span class="p">:</span> <span class="mi">9065</span><span class="p">,</span> <span class="s1">&#39;ón&#39;</span><span class="p">:</span> <span class="mi">888</span><span class="p">,</span> <span class="s1">&#39;три&#39;</span><span class="p">:</span> <span class="mi">7678</span><span class="p">,</span> <span class="s1">&#39;шти&#39;</span><span class="p">:</span> <span class="mi">12316</span><span class="p">,</span> <span class="s1">&#39;▁Bush&#39;</span><span class="p">:</span> <span class="mi">24715</span><span class="p">,</span> <span class="s1">&#39;▁decom&#39;</span><span class="p">:</span> <span class="mi">17753</span><span class="p">,</span> <span class="s1">&#39;▁kommen&#39;</span><span class="p">:</span> <span class="mi">28171</span><span class="p">,</span> <span class="s1">&#39;.$&#39;</span><span class="p">:</span> <span class="mi">7449</span><span class="p">,</span> <span class="s1">&#39;DOC&#39;</span><span class="p">:</span> <span class="mi">28665</span><span class="p">,</span> <span class="s1">&#39;▁mang&#39;</span><span class="p">:</span> <span class="mi">25016</span><span class="p">,</span> 
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../1-Intro/resources.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">资源</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformers">transformers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automodelforcausallm">AutoModelForCausalLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#autotokenizer">AutoTokenizer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">下载和运行LLM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#microsoft-phi">Microsoft Phi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">加载模型和分词器</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">让模型输出</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Zhijun
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 高志军.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

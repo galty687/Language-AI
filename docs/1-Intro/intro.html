@@ -1,0 +1,678 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45957014-6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-45957014-6');
+    </script>
+    
+    <title>人工智能实践（语言）课程大纲 &#8212; 技术写作实用教程  文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=946197a6"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "galty687/doc-x");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '1-Intro/intro';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="资源" href="resources.html" />
+    <link rel="prev" title="人工智能实践" href="../index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">技术写作实用教程  文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程简介</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">人工智能实践（语言）课程大纲</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/llm-basics.html">LLM 基础</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/1-Intro/intro.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>人工智能实践（语言）课程大纲</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">课程目标</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">课程大纲</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1. 语言智能导论</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2. 自然语言处理</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3. 常见自然语言任务实践</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">4. 语言学与语言类产品</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">5. 学生课程项目选题报告</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">6. 基于星河社区的大模型开发实践（百度飞桨，2025年4月3日）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">7. 大模型产品开发常见工具</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">8. 提示词工程</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9. 微调大模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rag-agent">10. RAG 与 Agent</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">11. 学生最终作品展示</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">大模型大规模分布式训练</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">期末分数构成</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>人工智能实践（语言）课程大纲<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p><strong>（草稿）</strong></p>
+<p><strong>授课对象</strong>：北京大学软件与微电子学院研究生一年级学生<br />
+<strong>开课时间</strong>：每周四下午14:00-17:00<br />
+<strong>课程老师</strong>：高志军</p>
+<section id="id2">
+<h2>课程目标<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>让学生了解大语言模型的基本原理、架构和应用；</p></li>
+<li><p>掌握常见自然语言处理（NLP）技术：包括文本处理、情感分析、语义理解等；</p></li>
+<li><p>知晓常见的语言学概念，从而开发符合语言学理论的智能语言产品；</p></li>
+<li><p>通过工程化的方式设计、开发并展示一个完整的智能语言应用，培养学生工程化思维与项目设计能力。</p></li>
+</ol>
+</section>
+<section id="id3">
+<h2>课程大纲<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<section id="id4">
+<h3>1. 语言智能导论<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>目标</strong>：了解语言智能的基础概念、应用领域和大模型的基本原理，明确大模型在实际问题中的应用。</p></li>
+<li><p><strong>内容</strong>：</p>
+<ul>
+<li><p>语言智能的定义与发展历程</p></li>
+<li><p>语言类智能产品，如：语言学习、写作辅助、机器翻译、同声传译、舆情监控等</p></li>
+<li><p>自然语言处理基本任务，如：分词、情感分析、命名实体识别等</p></li>
+<li><p>大模型基础：GPT、BERT等语言大模型</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id5">
+<h3>2. 自然语言处理<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>目标</strong>：深入理解常见自然语言处理技术和方法，掌握文本预处理和特征提取的基本技能。</p></li>
+<li><p><strong>内容</strong>：</p>
+<ul>
+<li><p>文本预处理：分词、停用词、Tokenization等</p></li>
+<li><p>词嵌入：Word2Vec、GloVe、fastText</p></li>
+<li><p>语言模型：n-gram</p></li>
+<li><p>语法分析：依存句法分析、句法树</p></li>
+<li><p>语义分析：词义消歧、语义角色标注</p></li>
+<li><p>文本分类与聚类、情感分析、信息抽取、命名实体识别等常见任务的基本原理</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id6">
+<h3>3. 常见自然语言任务实践<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>目标</strong>：通过实际操作提升对NLP任务的理解。</p></li>
+<li><p><strong>内容</strong>：</p>
+<ul>
+<li><p>实战任务1：命名实体识别（NER）</p></li>
+<li><p>实战任务2：情感分析（基于电影评论或社交媒体数据）</p></li>
+<li><p>实战任务3：语法分析</p></li>
+<li><p>实战任务4：文本分类</p></li>
+<li><p>每个任务后进行讨论和反馈，鼓励学生提出改进方案</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id7">
+<h3>4. 语言学与语言类产品<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>目标</strong>：介绍语言学理论，帮助学生设计符合语言学理论的智能语言产品。</p></li>
+<li><p><strong>内容</strong>：</p>
+<ul>
+<li><p>语言学基础：词汇学、句法学、语用学、文体学</p></li>
+<li><p>语言学理论在NLP中的应用</p></li>
+<li><p>如何根据不同的任务需求调整语言模型</p></li>
+<li><p>案例分析：语言学知识助力大模型的翻译能力的提升</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id8">
+<h3>5. 学生课程项目选题报告<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>目标</strong>：学生分组共同设计语言类产品，锻炼项目管理和团队协作能力。</p></li>
+<li><p><strong>内容</strong>：</p>
+<ul>
+<li><p>项目选题与需求分析：学生自选感兴趣的项目（如同声传译、简历自动生成、儿童绘本等）</p></li>
+<li><p>项目设计：目标定义、方法选择、技术架构</p></li>
+<li><p>小组报告：展示项目进度、技术难点、改进方案</p></li>
+<li><p>教师与同学反馈，学生根据反馈调整设计</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id9">
+<h3>6. 基于星河社区的大模型开发实践（百度飞桨，2025年4月3日）<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>目标</strong>：介绍基于飞桨开发智能语言产品所需的技术。</p></li>
+<li><p><strong>内容</strong>：</p>
+<ul>
+<li><p>星河社区资源介绍：如何利用社区工具进行模型开发</p></li>
+<li><p>开发环境配置：如何在云端搭建开发环境</p></li>
+<li><p>实践任务：基于平台进行简单的大模型训练与优化</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id10">
+<h3>7. 大模型产品开发常见工具<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>目标</strong>：掌握大模型开发所需的常用工具。</p></li>
+<li><p><strong>内容</strong>：</p>
+<ul>
+<li><p><strong>Streamlit</strong>：快速构建大模型的UI</p></li>
+<li><p><strong>FastAPI</strong>：学习如何使用FastAPI快速构建高性能的API接口，将训练好的大模型提供给外部服务</p></li>
+<li><p><strong>Google Colab</strong>：云端模型训练与协作</p></li>
+<li><p><strong>Hugging Face</strong>：大模型部署</p></li>
+<li><p><strong>MLflow</strong>：学习如何使用MLflow管理机器学习实验，记录训练过程、调参结果、模型版本等</p></li>
+<li><p>工具实践：学生动手使用这些工具完成实际任务</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id11">
+<h3>8. 提示词工程<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>目标</strong>：掌握提示词设计的技巧与优化策略，能够独立设计高效的提示词以提高大模型性能。</p></li>
+<li><p><strong>内容</strong>：</p>
+<ul>
+<li><p>提示词的定义与应用场景</p></li>
+<li><p>提示词优化策略：如何通过调整提示词提高模型性能</p></li>
+<li><p>Prompty:</p></li>
+<li><p>实践任务：根据任务需求设计不同类型的提示词</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id12">
+<h3>9. 微调大模型<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>目标</strong>：理解微调原理及其应用，能够根据不同任务需求进行大模型的微调。</p></li>
+<li><p><strong>内容</strong>：</p>
+<ul>
+<li><p>微调原理与基本方法：Fine-Tuning、Transfer Learning、Reward Learning 和 LFHF等</p></li>
+<li><p>微调示例：准备数据、微调大模型的文本生成风格</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="rag-agent">
+<h3>10. RAG 与 Agent<a class="headerlink" href="#rag-agent" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>目标</strong>：理解RAG和Agent的基本概念，并能够将其应用于实际任务中。</p></li>
+<li><p><strong>内容</strong>：</p>
+<ul>
+<li><p>RAG（Retrieval-Augmented Generation）的基本概念与应用场景</p></li>
+<li><p>使用RAG结合信息检索与生成模型</p></li>
+<li><p>Agent的基本概念与开发方法：自动化任务执行与调度</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id13">
+<h3>11. 学生最终作品展示<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>目标</strong>：学生展示课程成果，授课专家作为评委对学生作品进行评估。</p></li>
+<li><p><strong>内容</strong>：</p>
+<ul>
+<li><p>每个小组展示项目成果，分享技术实现、设计思路与创新点</p></li>
+<li><p>学生通过视频、交互式展示等多元化方式呈现作品</p></li>
+<li><p>现场报告：学生回答项目相关问题，展示设计的深度与实际应用价值</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id14">
+<h3>大模型大规模分布式训练<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>目标</strong>：掌握大模型训练的基本原理，了解分布式训练的实现方式。</p></li>
+<li><p><strong>内容</strong>：</p>
+<ul>
+<li><p>大模型技术和深度学习框架的关系</p></li>
+<li><p>使用深度学习框架开发大模型</p></li>
+<li><p>动手实践：大模型分布式训练</p></li>
+<li><p>大模型分布式训练策略</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id15">
+<h2>期末分数构成<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>课程项目（50%）</p></li>
+<li><p>期末论文（30%）</p></li>
+<li><p>课堂参与与讨论（15%）</p></li>
+<li><p>考勤（5%）</p></li>
+</ol>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">人工智能实践</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="resources.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">资源</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">课程目标</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">课程大纲</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1. 语言智能导论</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2. 自然语言处理</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3. 常见自然语言任务实践</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">4. 语言学与语言类产品</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">5. 学生课程项目选题报告</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">6. 基于星河社区的大模型开发实践（百度飞桨，2025年4月3日）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">7. 大模型产品开发常见工具</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">8. 提示词工程</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9. 微调大模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rag-agent">10. RAG 与 Agent</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">11. 学生最终作品展示</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">大模型大规模分布式训练</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">期末分数构成</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Zhijun
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 高志军.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
