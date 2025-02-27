@@ -2,6 +2,9 @@
 
 ## 实验平台
 - [Google Colab](https://colab.research.google.com/)
+- [Kaggle Notebook](https://www.kaggle.com/code)
+- Hugging Face Spaces
+- 魔搭社区
 
 
 
@@ -16,6 +19,8 @@
 
 
 ## 模型
+
+
 
 - [Sentence-transformer](https://github.com/UKPLab/sentence-transformers)
 
@@ -52,7 +57,11 @@
 
 ## 微调
 
-- Unsloth
+- [Firefly](https://github.com/yangjianxin1/Firefly)
+- [Unsloth](https://unsloth.ai/)
+- [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory)
+- [ModelScope  SWIFT](https://github.com/modelscope/ms-swift)
+- [Hugging Face PEFT](https://huggingface.co/docs/peft/en/index)
 
 
 

@@ -19,7 +19,7 @@
 
 project = '人工智能实践'
 copyright = '高志军'
-author = 'Zhijun'
+author = 'Zhijun Gao'
 
 # The full version, including alpha/beta/rc tags
 release = ''

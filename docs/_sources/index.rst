@@ -22,7 +22,9 @@
    :maxdepth: 1
    :caption: 大模型基础
 
+   2-Basics/setup.md
    2-Basics/llm-basics.md
+   
    
 
 
