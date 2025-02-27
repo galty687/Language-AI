@@ -1,0 +1,493 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45957014-6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-45957014-6');
+    </script>
+    
+    <title>术语 &#8212; 人工智能实践  文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=946197a6"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '1-Intro/terms';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="LLM 基础" href="../2-Basics/llm-basics.html" />
+    <link rel="prev" title="资源" href="resources.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">人工智能实践  文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程简介</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">人工智能实践（语言）课程大纲</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">术语</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/llm-basics.html">LLM 基础</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/1-Intro/terms.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>术语</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>术语<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p><strong>人工智能（AI, Artificial Intelligence）</strong></p>
+<p>指通过计算机系统来模拟或延伸人类智能行为的技术和理论的集合。它包含机器学习、深度学习、自然语言处理、计算机视觉等众多子领域。</p>
+<p><strong>机器学习（Machine Learning）</strong></p>
+<p>让计算机能够从数据中自动学习和改进的一类方法论，其核心目标是通过样本数据训练得到模型并进行预测或决策。</p>
+<p><strong>神经网络（Neural Network）</strong></p>
+<p>人工构建的类似于生物神经元结构的网络。通过对大量加权求和与非线性激活函数的组合来对数据进行处理、学习和预测。</p>
+<p><strong>监督学习（Supervised Learning）</strong></p>
+<p>通过已有的输入-输出（特征-标签）配对数据来训练模型，使模型能够对新数据进行预测。例如：图像分类、语音识别等。</p>
+<p><strong>强化学习（Reinforcement Learning）</strong></p>
+<p>通过智能体（Agent）与环境交互获得奖励（Reward）或惩罚（Penalty）进行学习，优化决策策略（Policy）。常见应用包括游戏AI、机器人控制等。</p>
+<p><strong>无监督学习（Unsupervised Learning）</strong></p>
+<p>数据没有明确的标签，模型通过挖掘数据内部的结构（如聚类、降维等）来发现潜在模式。例如：K-Means聚类、主成分分析（PCA）等。</p>
+<p><strong>半监督学习（Semi-Supervised Learning）</strong></p>
+<p>部分数据带有标签，部分数据无标签，通过利用大量无标签数据的分布特性来帮助模型学习，提高模型的准确率。</p>
+<p><strong>强化学习（Reinforcement Learning）</strong></p>
+<p>通过智能体（Agent）与环境交互获得奖励（Reward）或惩罚（Penalty）进行学习，优化决策策略（Policy）。常见应用包括游戏AI、机器人控制等。</p>
+<p><strong>元学习（Meta-Learning）</strong></p>
+<p>又称“学习如何学习”，模型通过在不同任务上的学习经验来加速对新任务的学习，提升泛化能力。</p>
+<p><strong>在线学习（Online Learning）</strong></p>
+<p>模型在不断获取新数据流的过程中持续更新，通过“边学习边预测”的方式应对动态环境。</p>
+<hr class="docutils" />
+<p><strong>感知器（Perceptron）</strong></p>
+<p>最简单的神经网络结构之一，仅包含输入层和输出层，用于线性可分问题的分类。</p>
+<p><strong>卷积神经网络（CNN, Convolutional Neural Network）</strong></p>
+<p>利用卷积层和池化层来抽取局部特征，广泛应用于图像处理、视频分析等领域。</p>
+<p><strong>循环神经网络（RNN, Recurrent Neural Network）</strong></p>
+<p>专门处理序列数据（如文本、语音等）的网络结构，通过在隐藏层中保留“记忆”来处理上下文。</p>
+<p><strong>长短期记忆（LSTM, Long Short-Term Memory）</strong></p>
+<p>解决RNN中“梯度消失/梯度爆炸”问题的特殊结构，能够在较长序列中保留并传递重要信息。</p>
+<p><strong>门控循环单元（GRU, Gated Recurrent Unit）</strong></p>
+<p>是LSTM的简化版本，具有类似的效果，但参数更少，计算效率更高。</p>
+<p><strong>Transformer</strong></p>
+<p>摒弃循环结构，完全依赖“注意力机制（Attention Mechanism）”来捕捉序列依赖的网络结构，大幅提升并行计算效率，也是大多数大型语言模型（LLM）的基础。</p>
+<hr class="docutils" />
+<p><strong>大型语言模型（LLM, Large Language Model）</strong></p>
+<p>指在大规模文本数据上训练得到的、拥有数亿到数千亿参数的语言模型（如GPT、BERT 等），具备强大的自然语言理解和生成能力。</p>
+<p><strong>GPT（Generative Pre-trained Transformer）</strong></p>
+<p>一系列由OpenAI提出的生成式预训练模型，基于Transformer结构，能够进行强大的文本生成与理解。</p>
+<p><strong>BERT（Bidirectional Encoder Representations from Transformers）</strong></p>
+<p>由Google提出的双向编码器预训练模型，擅长理解句子上下文和词义，多用于自然语言理解、文本分类等任务。</p>
+<p><strong>SFT（Supervised Fine-Tuning，监督微调）</strong></p>
+<p>在训练好的预训练模型之上，利用带标签的数据对模型进行进一步的“微调”，使模型在特定任务上具有更强的表现。例如，针对对话任务或特定领域文本的二次训练。</p>
+<p><strong>RLHF（Reinforcement Learning from Human Feedback）</strong></p>
+<p>结合人类反馈（如人工标注的偏好）和强化学习，将人类偏好纳入到模型训练目标中，从而得到更符合人类期望或偏好的模型回复。</p>
+<p><strong>自监督学习（Self-Supervised Learning）</strong></p>
+<p>不依赖人工标注数据，而是从数据自身构造出训练信号（如掩码预测、下一词预测等），常见于大型语言模型的预训练阶段。</p>
+<p><strong>提示工程（Prompt Engineering）</strong></p>
+<p>在使用大型语言模型时，通过精心设计Prompt（提示语句）来引导模型生成更准确或更符合需求的结果。</p>
+<hr class="docutils" />
+<p><strong>迁移学习（Transfer Learning）</strong></p>
+<p>将在某一任务或领域学到的知识迁移到另外相似任务或领域，常见方式是用预训练模型做特征提取或进行微调（Fine-Tuning）。</p>
+<p><strong>多任务学习（Multi-Task Learning）</strong></p>
+<p>同时学习多个相关任务，以达到共享知识、提高总体模型性能的目的。</p>
+<p><strong>数据增强（Data Augmentation）</strong></p>
+<p>在图像、文本等领域，通过对训练样本进行变换（如旋转、翻转、添加噪声）来增加数据量，缓解过拟合问题。</p>
+<p><strong>正则化（Regularization）</strong></p>
+<p>在模型训练时添加额外约束或惩罚（L1、L2、Dropout等），以防止模型过拟合、提升泛化能力。</p>
+<p><strong>超参数调整（Hyperparameter Tuning）</strong></p>
+<p>调整学习率、批大小、网络深度等超参数，找出能使模型达到最佳性能的组合。</p>
+<p><strong>过拟合（Overfitting）</strong></p>
+<p>机器学习和深度学习中常见的问题，指的是模型在训练数据上表现非常好，但在新数据（验证集或测试集）上表现较差的现象。它主要是因为模型“记住”了训练集中的噪声或与真实任务无关的细节，导致泛化能力下降。</p>
+<p><strong>早停（Early Stopping）</strong></p>
+<p>在验证集性能不再提升时提前结束训练，避免模型过度拟合训练集。</p>
+<hr class="docutils" />
+<p><strong>准确率（Accuracy）</strong></p>
+<p>预测正确的样本数与总样本数之比，适合于数据集分布相对平衡的场景。</p>
+<p><strong>精确率（Precision）</strong></p>
+<p>在预测为正类的样本中，真正为正类的占比。</p>
+<p><strong>召回率（Recall）</strong></p>
+<p>在真实为正类的样本中，被正确预测为正类的占比。</p>
+<p><strong>F1分数（F1 Score）</strong></p>
+<p>精确率与召回率的调和平均，综合度量模型精确率和召回率。</p>
+<p><strong>ROC 曲线（ROC Curve）和 AUC（Area Under Curve）</strong></p>
+<p>衡量分类器在不同阈值下的表现，AUC表示ROC曲线下的面积，AUC越大代表分类器整体性能越好。</p>
+<p><strong>混淆矩阵（Confusion Matrix）</strong></p>
+<p>以矩阵形式展示分类任务中实际标签与预测标签的对比情况。</p>
+<hr class="docutils" />
+<p><strong>损失函数（Loss Function）</strong></p>
+<p>度量模型预测与真实值之间差异的函数，如均方误差（MSE）、交叉熵损失（Cross-Entropy）等。</p>
+<p><strong>梯度下降（Gradient Descent）</strong></p>
+<p>通过计算损失函数对模型参数的梯度来更新参数的优化方法，常见批量梯度下降、小批量梯度下降等。</p>
+<p><strong>反向传播（Backpropagation）</strong></p>
+<p>通过计算损失函数对每个参数的偏导数来更新参数，是神经网络训练的核心算法之一。</p>
+<p><strong>降维（Dimensionality Reduction）</strong></p>
+<p>将高维数据映射到低维空间的过程，常见算法有PCA（主成分分析）、t-SNE 等。</p>
+<p><strong>聚类（Clustering）</strong></p>
+<p>将相似度较高的样本划分到同一组的方法，如K-Means、DBSCAN等。</p>
+<hr class="docutils" />
+<p><strong>全量微调（Full Fine-Tuning）</strong></p>
+<p>指在预训练模型的基础上，对模型中所有参数进行端到端训练的方式。优点是能够充分利用模型的强大表达能力，缺点是训练和部署的开销较大，且容易在小数据集上过拟合。</p>
+<p><strong>指令微调（Instruction Tuning）</strong></p>
+<p>通过在训练数据中加入大量“指令-回复”示例，对模型进行微调，使其更好地理解和执行人类以自然语言形式给出的指令。在对话系统、问答系统等场景中广泛应用。</p>
+<p><strong>Adapter Tuning（Adapter Tuning）</strong></p>
+<p>在预训练模型的某些层插入轻量级的 Adapter 模块，微调时仅更新这些新增的 Adapter 参数，主干网络保持冻结。</p>
+<p>**Prefix Tuning / P-Tuning（Prefix Tuning / P-Tuning）**在 Transformer 的输入序列中添加可学习的“前缀”，并仅对这部分前缀参数进行训练，引导预训练模型关注目标任务。</p>
+<p><strong>LoRA（LoRA, Low-Rank Adaptation）</strong></p>
+<p>对需要更新的权重矩阵进行低秩分解，只训练分解后的两个小矩阵，从而大幅减少需更新的参数量。</p>
+<p><strong>BitFit（BitFit）</strong></p>
+<p>只微调模型中的偏置（bias）参数，冻结所有权重矩阵，进一步降低训练成本，但在复杂任务上的效果较有限。</p>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="resources.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">资源</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../2-Basics/llm-basics.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">LLM 基础</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Zhijun
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 高志军.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = '技术写作实用教程'
+project = '人工智能实践'
 copyright = '高志军'
 author = 'Zhijun'
 
@@ -88,15 +88,7 @@ html_css_files = [
 googleanalytics_id = 'UA-45957014-6'
 
 
-#Utterance Comments
 
-comments_config = {
-   "utterances": {
-      "repo": "galty687/doc-x",
-      "optional": "config",
-      
-   }
-}
 
 #Enbale gif rendering
 

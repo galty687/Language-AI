@@ -15,6 +15,7 @@
 
    1-Intro/intro.md
    1-Intro/resources.md
+   1-Intro/terms.md
 
 
 .. toctree::

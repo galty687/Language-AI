@@ -17,7 +17,7 @@
         gtag('config', 'UA-45957014-6');
     </script>
     
-    <title>资源 &#8212; 技术写作实用教程  文档</title>
+    <title>资源 &#8212; 人工智能实践  文档</title>
   
   
   
@@ -55,46 +55,12 @@
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script kind="utterances">
-
-    var commentsRunWhenDOMLoaded = cb => {
-    if (document.readyState != 'loading') {
-        cb()
-    } else if (document.addEventListener) {
-        document.addEventListener('DOMContentLoaded', cb)
-    } else {
-        document.attachEvent('onreadystatechange', function() {
-        if (document.readyState == 'complete') cb()
-        })
-    }
-}
-
-var addUtterances = () => {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "https://utteranc.es/client.js";
-    script.async = "async";
-
-    script.setAttribute("repo", "galty687/doc-x");
-    script.setAttribute("issue-term", "pathname");
-    script.setAttribute("theme", "github-light");
-    script.setAttribute("label", "💬 comment");
-    script.setAttribute("crossorigin", "anonymous");
-
-    sections = document.querySelectorAll("div.section");
-    if (sections !== null) {
-        section = sections[sections.length-1];
-        section.appendChild(script);
-    }
-}
-commentsRunWhenDOMLoaded(addUtterances);
-</script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="../_static/translations.js?v=beaddf03"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '1-Intro/resources';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="LLM 基础" href="../2-Basics/llm-basics.html" />
+    <link rel="next" title="术语" href="terms.html" />
     <link rel="prev" title="人工智能实践（语言）课程大纲" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
@@ -173,7 +139,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   
   
   
-    <p class="title logo__title">技术写作实用教程  文档</p>
+    <p class="title logo__title">人工智能实践  文档</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -189,6 +155,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">人工智能实践（语言）课程大纲</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms.html">术语</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型基础</span></p>
 <ul class="nav bd-sidenav">
@@ -334,6 +301,22 @@ commentsRunWhenDOMLoaded(addUtterances);
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">实验平台</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">重要会议</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">模型</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">小模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">翻译大模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">视觉大模型</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">本地推理框架</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">微调</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">大模型测评</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">有趣的应用</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ai">AI编程工具</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">工作流</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">基于知识库的问答</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">智能体</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">大模型催生的新协议</a></li>
 </ul>
             </nav>
         </div>
@@ -351,7 +334,106 @@ commentsRunWhenDOMLoaded(addUtterances);
 <h2>实验平台<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://colab.research.google.com/">Google Colab</a></p></li>
-<li></li>
+</ul>
+</section>
+<section id="id3">
+<h2>重要会议<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>ACL | <a class="reference external" href="https://aclanthology.org">ACL Anthology</a></p></li>
+<li><p>EMNLP (<a class="reference external" href="https://2025.emnlp.org/calls/main-conference-papers/">2025</a>)</p></li>
+<li><p><a class="reference external" href="https://in2writing.glitch.me">Workshop on Intelligent and Interactive Writing Assistants</a></p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>模型<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/UKPLab/sentence-transformers">Sentence-transformer</a></p></li>
+</ul>
+<section id="id5">
+<h3>小模型<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://huggingface.co/collections/microsoft/phi-4-677e9380e514feb5577a40e4">Phi 4</a></p></li>
+<li><p>Qwen 1.5 B</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>翻译大模型<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://help.aliyun.com/zh/model-studio/user-guide/machine-translation">Qwen-MT</a></p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>视觉大模型<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://tongyi.aliyun.com/wanxiang/videoCreation">通义万象</a> | <a class="reference external" href="https://alidocs.dingtalk.com/i/nodes/jb9Y4gmKWrx9eo4dCql9LlbYJGXn6lpz?spm=5176.29623064.0.0.41ed1ecerZpS4I&amp;amp;utm_scene=person_space">官方提示词</a></p></li>
+</ul>
+</section>
+</section>
+<section id="id8">
+<h2>本地推理框架<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://ollama.com">Ollama</a></p></li>
+<li><p><a class="reference external" href="https://lmstudio.ai">LM Studio</a></p></li>
+<li><p><a class="reference external" href="https://www.nomic.ai/gpt4all">GPT4ALL</a></p></li>
+<li><p><a class="reference external" href="https://docs.vllm.ai/en/latest/">vLLM</a></p></li>
+<li><p><a class="reference external" href="https://localai.io">LocalAI</a></p></li>
+</ul>
+</section>
+<section id="id9">
+<h2>微调<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Unsloth</p></li>
+</ul>
+</section>
+<section id="id10">
+<h2>大模型测评<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Chatbot Arena</p></li>
+</ul>
+</section>
+<section id="id11">
+<h2>有趣的应用<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://notebooklm.google/">Notebook LM</a> (生成英文博客)</p></li>
+<li><p><a class="reference external" href="https://github.com/FoloUp/FoloUp">FoloUP</a> （模拟面试）</p></li>
+</ul>
+</section>
+<section id="ai">
+<h2>AI编程工具<a class="headerlink" href="#ai" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="http://cursor.com">Cursor</a></p></li>
+<li><p><a class="reference external" href="http://trae.ai">Trae</a></p></li>
+<li><p><a class="reference external" href="https://github.com/cline/cline">Cline Coding Agent</a>  （ VS Code 插件 ）</p></li>
+</ul>
+</section>
+<section id="id12">
+<h2>工作流<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="http://dify.ai">Dify</a></p></li>
+<li><p><a class="reference external" href="http://coze.com">Coze</a></p></li>
+<li><p><a class="reference external" href="https://github.com/PySpur-Dev/pyspur">PySpur</a></p></li>
+</ul>
+</section>
+<section id="id13">
+<h2>基于知识库的问答<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/netease-youdao/QAnything">Qanything</a> (有道)</p></li>
+<li><p><a class="reference external" href="https://ima.qq.com">ima</a> (腾讯)</p></li>
+<li><p><a class="reference external" href="https://maxkb.cn">MaxKB</a></p></li>
+<li><p><a class="reference external" href="https://fastgpt.cn">FastGPT</a></p></li>
+</ul>
+</section>
+<section id="id14">
+<h2>智能体<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://operator.browserbase.com">Open Operator</a></p></li>
+</ul>
+</section>
+<section id="id15">
+<h2>大模型催生的新协议<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://supabase.com/docs/guides/getting-started/mcp">Model Context Protocol (MCP)</a></p></li>
+<li><p><a class="reference external" href="https://llmstxt.org">llms.txt</a></p></li>
 </ul>
 </section>
 </section>
@@ -377,11 +459,11 @@ commentsRunWhenDOMLoaded(addUtterances);
       </div>
     </a>
     <a class="right-next"
-       href="../2-Basics/llm-basics.html"
+       href="terms.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title">LLM 基础</p>
+        <p class="prev-next-title">术语</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -403,6 +485,22 @@ commentsRunWhenDOMLoaded(addUtterances);
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">实验平台</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">重要会议</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">模型</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">小模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">翻译大模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">视觉大模型</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">本地推理框架</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">微调</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">大模型测评</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">有趣的应用</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ai">AI编程工具</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">工作流</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">基于知识库的问答</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">智能体</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">大模型催生的新协议</a></li>
 </ul>
   </nav></div>
 
