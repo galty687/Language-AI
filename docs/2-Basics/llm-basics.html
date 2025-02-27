@@ -60,8 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '2-Basics/llm-basics';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="环境准备" href="setup.html" />
-    <link rel="prev" title="术语" href="../1-Intro/terms.html" />
+    <link rel="prev" title="环境准备" href="setup.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
   <meta name="docsearch:version" content="" />
@@ -159,8 +158,8 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型基础</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">LLM 基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="setup.html">环境准备</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">LLM 基础</a></li>
 </ul>
 
     </div>
@@ -312,6 +311,9 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">让模型输出</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt2">测试GPT2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contextual-embeddings">Contextual Embeddings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lm-head">LM Head</a></li>
 </ul>
             </nav>
         </div>
@@ -511,6 +513,105 @@ ere
 </div>
 </section>
 </section>
+<section id="gpt2">
+<h2>测试GPT2<a class="headerlink" href="#gpt2" title="Link to this heading">#</a></h2>
+<p>查看模型形状</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">GPT2Tokenizer</span><span class="p">,</span> <span class="n">GPT2Model</span>
+
+<span class="c1"># 加载模型和分词器</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">GPT2Tokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;gpt2&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">GPT2Model</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;gpt2&quot;</span><span class="p">)</span>
+
+<span class="c1"># 直接访问词嵌入层</span>
+<span class="n">word_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">wte</span><span class="o">.</span><span class="n">weight</span>  <span class="c1"># 形状通常为 (vocab_size, embedding_dim)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">word_embeddings</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># 比如 (50257, 768)</span>
+</pre></div>
+</div>
+<p>获取某个 token 的词向量</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;hello&quot;</span>
+<span class="n">token_id</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">convert_tokens_to_ids</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="n">embedding</span> <span class="o">=</span> <span class="n">word_embeddings</span><span class="p">[</span><span class="n">token_id</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">embedding</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="contextual-embeddings">
+<h2>Contextual Embeddings<a class="headerlink" href="#contextual-embeddings" title="Link to this heading">#</a></h2>
+<p>查看Bank在不同语境下的embeddings</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">BertTokenizer</span><span class="p">,</span> <span class="n">BertModel</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># 加载预训练的 BERT 模型和分词器</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">BertTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;bert-base-uncased&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">BertModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;bert-base-uncased&quot;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>  <span class="c1"># 切换到评估模式</span>
+
+<span class="n">sentences</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;I went to the bank to deposit money.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;The river bank was covered with lush vegetation.&quot;</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+    <span class="c1"># 编码句子，返回 PyTorch 张量</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="o">**</span><span class="n">inputs</span><span class="p">)</span>
+    <span class="c1"># 获取最后一层隐藏状态，形状为 (batch_size, seq_length, hidden_dim)</span>
+    <span class="n">token_embeddings</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">last_hidden_state</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># (seq_length, hidden_dim)</span>
+    <span class="c1"># 将 token IDs 转换回 token 字符串</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">convert_ids_to_tokens</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">input_ids</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="c1"># 找出单词 &quot;bank&quot; 的位置（注意：BERT 将 &quot;bank&quot; 分词为单个 token &quot;bank&quot;）</span>
+    <span class="n">bank_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;bank&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">bank_indices</span><span class="p">:</span>
+        <span class="n">bank_embedding</span> <span class="o">=</span> <span class="n">token_embeddings</span><span class="p">[</span><span class="n">bank_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="c1"># 为了展示，我们只显示前 10 个数值（真实的嵌入向量通常是768维）</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;句子: </span><span class="si">{</span><span class="n">sentence</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;token 列表: </span><span class="si">{</span><span class="n">tokens</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;‘bank’ 的嵌入向量（前10个数值）: </span><span class="si">{</span><span class="n">bank_embedding</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>句子: I went to the bank to deposit money.
+token 列表: [&#39;[CLS]&#39;, &#39;i&#39;, &#39;went&#39;, &#39;to&#39;, &#39;the&#39;, &#39;bank&#39;, &#39;to&#39;, &#39;deposit&#39;, &#39;money&#39;, &#39;.&#39;, &#39;[SEP]&#39;]
+‘bank’ 的嵌入向量（前10个数值）: [ 0.7091013  -0.25904247 -0.01858949 -0.09361451  1.2636592   0.02228517
+ -0.30962497  0.9713595  -0.10284916  0.20124747]
+
+句子: The river bank was covered with lush vegetation.
+token 列表: [&#39;[CLS]&#39;, &#39;the&#39;, &#39;river&#39;, &#39;bank&#39;, &#39;was&#39;, &#39;covered&#39;, &#39;with&#39;, &#39;lush&#39;, &#39;vegetation&#39;, &#39;.&#39;, &#39;[SEP]&#39;]
+‘bank’ 的嵌入向量（前10个数值）: [-0.17602193 -0.55783457 -0.23129024 -0.1350407  -0.3741462   0.35257423
+ -0.04954641  1.3635753   0.208523   -0.48707223]
+</pre></div>
+</div>
+</section>
+<section id="lm-head">
+<h2>LM Head<a class="headerlink" href="#lm-head" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;The capital of France is&quot;</span>
+<span class="c1"># Tokenize the input prompt</span>
+<span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span>
+<span class="c1"># Tokenize the input prompt</span>
+<span class="n">input_ids</span> <span class="o">=</span> <span class="n">input_ids</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+<span class="c1"># Get the output of the model before the lm_head</span>
+<span class="n">model_output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">input_ids</span><span class="p">)</span>
+<span class="c1"># Get the output of the lm_head</span>
+<span class="n">lm_head_output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">lm_head</span><span class="p">(</span><span class="n">model_output</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">lm_head_output</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Top_K</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="c1"># 获取最后一个位置的 logits</span>
+<span class="n">logits</span> <span class="o">=</span> <span class="n">lm_head_output</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="c1"># 获取前2个最高的值及对应的索引</span>
+<span class="n">topk</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1"># 第二高的 token 的 ID</span>
+<span class="n">second_token_id</span> <span class="o">=</span> <span class="n">topk</span><span class="o">.</span><span class="n">indices</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>
+<span class="c1"># 解码为文本</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">second_token_id</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -525,22 +626,13 @@ ere
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../1-Intro/terms.html"
+       href="setup.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title">术语</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="setup.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">下一页</p>
         <p class="prev-next-title">环境准备</p>
       </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -570,6 +662,9 @@ ere
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">让模型输出</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt2">测试GPT2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contextual-embeddings">Contextual Embeddings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lm-head">LM Head</a></li>
 </ul>
   </nav></div>
 

@@ -257,3 +257,120 @@ print(vocab_sorted[:100])
 
 
 
+## 测试GPT2
+
+查看模型形状
+
+```python
+from transformers import GPT2Tokenizer, GPT2Model
+
+# 加载模型和分词器
+tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+model = GPT2Model.from_pretrained("gpt2")
+
+# 直接访问词嵌入层
+word_embeddings = model.wte.weight  # 形状通常为 (vocab_size, embedding_dim)
+print(word_embeddings.shape)  # 比如 (50257, 768)
+```
+
+
+
+获取某个 token 的词向量
+
+
+
+```python
+token = "hello"
+token_id = tokenizer.convert_tokens_to_ids(token)
+embedding = word_embeddings[token_id]
+print(embedding)
+```
+
+
+
+## Contextual Embeddings
+
+查看Bank在不同语境下的embeddings
+
+```
+from transformers import BertTokenizer, BertModel
+import torch
+import numpy as np
+
+# 加载预训练的 BERT 模型和分词器
+tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+model = BertModel.from_pretrained("bert-base-uncased")
+model.eval()  # 切换到评估模式
+
+sentences = [
+    "I went to the bank to deposit money.",
+    "The river bank was covered with lush vegetation."
+]
+
+for sentence in sentences:
+    # 编码句子，返回 PyTorch 张量
+    inputs = tokenizer(sentence, return_tensors="pt")
+    with torch.no_grad():
+        outputs = model(**inputs)
+    # 获取最后一层隐藏状态，形状为 (batch_size, seq_length, hidden_dim)
+    token_embeddings = outputs.last_hidden_state.squeeze(0)  # (seq_length, hidden_dim)
+    # 将 token IDs 转换回 token 字符串
+    tokens = tokenizer.convert_ids_to_tokens(inputs.input_ids.squeeze(0))
+    # 找出单词 "bank" 的位置（注意：BERT 将 "bank" 分词为单个 token "bank"）
+    bank_indices = [i for i, token in enumerate(tokens) if token == "bank"]
+    if bank_indices:
+        bank_embedding = token_embeddings[bank_indices[0]]
+        # 为了展示，我们只显示前 10 个数值（真实的嵌入向量通常是768维）
+        print(f"句子: {sentence}")
+        print(f"token 列表: {tokens}")
+        print(f"‘bank’ 的嵌入向量（前10个数值）: {bank_embedding[:10].numpy()}\n")
+```
+
+输出：
+
+```md
+句子: I went to the bank to deposit money.
+token 列表: ['[CLS]', 'i', 'went', 'to', 'the', 'bank', 'to', 'deposit', 'money', '.', '[SEP]']
+‘bank’ 的嵌入向量（前10个数值）: [ 0.7091013  -0.25904247 -0.01858949 -0.09361451  1.2636592   0.02228517
+ -0.30962497  0.9713595  -0.10284916  0.20124747]
+
+句子: The river bank was covered with lush vegetation.
+token 列表: ['[CLS]', 'the', 'river', 'bank', 'was', 'covered', 'with', 'lush', 'vegetation', '.', '[SEP]']
+‘bank’ 的嵌入向量（前10个数值）: [-0.17602193 -0.55783457 -0.23129024 -0.1350407  -0.3741462   0.35257423
+ -0.04954641  1.3635753   0.208523   -0.48707223]
+```
+
+
+
+## LM Head
+
+```python
+prompt = "The capital of France is"
+# Tokenize the input prompt
+input_ids = tokenizer(prompt, return_tensors="pt").input_ids
+# Tokenize the input prompt
+input_ids = input_ids.to("cuda")
+# Get the output of the model before the lm_head
+model_output = model.model(input_ids)
+# Get the output of the lm_head
+lm_head_output = model.lm_head(model_output[0])
+
+print(lm_head_output[0,-1])
+```
+
+
+
+Top_K
+
+```
+import torch
+# 获取最后一个位置的 logits
+logits = lm_head_output[0, -1]
+# 获取前2个最高的值及对应的索引
+topk = torch.topk(logits, k=10)
+# 第二高的 token 的 ID
+second_token_id = topk.indices[9]
+# 解码为文本
+print(tokenizer.decode(second_token_id))
+```
+
