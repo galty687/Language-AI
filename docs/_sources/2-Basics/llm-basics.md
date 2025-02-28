@@ -257,9 +257,9 @@ print(vocab_sorted[:100])
 
 
 
-## 测试GPT2
+## GPT2
 
-查看模型形状
+**模型的词嵌入矩阵**
 
 ```python
 from transformers import GPT2Tokenizer, GPT2Model
@@ -273,9 +273,19 @@ word_embeddings = model.wte.weight  # 形状通常为 (vocab_size, embedding_dim
 print(word_embeddings.shape)  # 比如 (50257, 768)
 ```
 
+**输出：**
+
+```python
+torch.Size([50257, 768])
+```
+
+word_embeddings.shape 的输出 (50257, 768) 表示模型有50257个词汇，每个词汇由一个768维的向量表示。
 
 
-获取某个 token 的词向量
+
+
+
+**获取某个 token 的词向量**
 
 
 
@@ -290,7 +300,7 @@ print(embedding)
 
 ## Contextual Embeddings
 
-查看Bank在不同语境下的embeddings
+查看单词 *bank* 在不同语境下的 embeddings
 
 ```
 from transformers import BertTokenizer, BertModel
@@ -344,6 +354,32 @@ token 列表: ['[CLS]', 'the', 'river', 'bank', 'was', 'covered', 'with', 'lush'
 
 ## LM Head
 
+**常见的 Head 类型**
+
+不同的任务需要不同的“Head”。这些“Head”负责根据不同的任务目标处理模型的输出。以下是几种常见的 Head 类型：
+
+1. Classification Head（分类头）：
+
+  - 任务：将文本分到一个类别中（比如情感分析或垃圾邮件分类）。
+  - 工作：它会把模型生成的隐藏状态转换成每个类别的概率，最终模型会输出预测的类别。
+
+2. Regression Head（回归头）：
+
+  - 任务：用于数值预测（例如，预测房价或用户评分）。
+  - 工作：这个 Head 会将隐藏状态映射到一个数值输出（比如实际的价格或评分）。
+
+3.	Sequence Labeling Head（序列标注头）：
+
+  - 任务：将输入序列中的每个元素标注为某种类型（例如命名实体识别 NER）。
+  - 工作：这个 Head 会为每个输入的单词或符号输出一个标签（例如，“John”可能被标注为“人名”）。
+
+4. Language Modeling Head（语言模型头）：
+
+  - 任务：预测下一个词或字符。
+  - 工作：正如前面提到的，它计算一个词汇表中每个词的概率，最终生成下一个词。
+
+
+
 ```python
 prompt = "The capital of France is"
 # Tokenize the input prompt
@@ -356,6 +392,12 @@ model_output = model.model(input_ids)
 lm_head_output = model.lm_head(model_output[0])
 
 print(lm_head_output[0,-1])
+```
+
+输出：
+
+```
+Paris
 ```
 
 

@@ -311,7 +311,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">让模型输出</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt2">测试GPT2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt2">GPT2</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contextual-embeddings">Contextual Embeddings</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lm-head">LM Head</a></li>
 </ul>
@@ -514,8 +514,8 @@ ere
 </section>
 </section>
 <section id="gpt2">
-<h2>测试GPT2<a class="headerlink" href="#gpt2" title="Link to this heading">#</a></h2>
-<p>查看模型形状</p>
+<h2>GPT2<a class="headerlink" href="#gpt2" title="Link to this heading">#</a></h2>
+<p><strong>模型的词嵌入矩阵</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">GPT2Tokenizer</span><span class="p">,</span> <span class="n">GPT2Model</span>
 
 <span class="c1"># 加载模型和分词器</span>
@@ -527,7 +527,12 @@ ere
 <span class="nb">print</span><span class="p">(</span><span class="n">word_embeddings</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># 比如 (50257, 768)</span>
 </pre></div>
 </div>
-<p>获取某个 token 的词向量</p>
+<p><strong>输出：</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">50257</span><span class="p">,</span> <span class="mi">768</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>word_embeddings.shape 的输出 (50257, 768) 表示模型有50257个词汇，每个词汇由一个768维的向量表示。</p>
+<p><strong>获取某个 token 的词向量</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;hello&quot;</span>
 <span class="n">token_id</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">convert_tokens_to_ids</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
 <span class="n">embedding</span> <span class="o">=</span> <span class="n">word_embeddings</span><span class="p">[</span><span class="n">token_id</span><span class="p">]</span>
@@ -537,7 +542,7 @@ ere
 </section>
 <section id="contextual-embeddings">
 <h2>Contextual Embeddings<a class="headerlink" href="#contextual-embeddings" title="Link to this heading">#</a></h2>
-<p>查看Bank在不同语境下的embeddings</p>
+<p>查看单词 <em>bank</em> 在不同语境下的 embeddings</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">BertTokenizer</span><span class="p">,</span> <span class="n">BertModel</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -586,6 +591,36 @@ token 列表: [&#39;[CLS]&#39;, &#39;the&#39;, &#39;river&#39;, &#39;bank&#39;, 
 </section>
 <section id="lm-head">
 <h2>LM Head<a class="headerlink" href="#lm-head" title="Link to this heading">#</a></h2>
+<p><strong>常见的 Head 类型</strong></p>
+<p>不同的任务需要不同的“Head”。这些“Head”负责根据不同的任务目标处理模型的输出。以下是几种常见的 Head 类型：</p>
+<ol class="arabic simple">
+<li><p>Classification Head（分类头）：</p></li>
+</ol>
+<ul class="simple">
+<li><p>任务：将文本分到一个类别中（比如情感分析或垃圾邮件分类）。</p></li>
+<li><p>工作：它会把模型生成的隐藏状态转换成每个类别的概率，最终模型会输出预测的类别。</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p>Regression Head（回归头）：</p></li>
+</ol>
+<ul class="simple">
+<li><p>任务：用于数值预测（例如，预测房价或用户评分）。</p></li>
+<li><p>工作：这个 Head 会将隐藏状态映射到一个数值输出（比如实际的价格或评分）。</p></li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p>Sequence Labeling Head（序列标注头）：</p></li>
+</ol>
+<ul class="simple">
+<li><p>任务：将输入序列中的每个元素标注为某种类型（例如命名实体识别 NER）。</p></li>
+<li><p>工作：这个 Head 会为每个输入的单词或符号输出一个标签（例如，“John”可能被标注为“人名”）。</p></li>
+</ul>
+<ol class="arabic simple" start="4">
+<li><p>Language Modeling Head（语言模型头）：</p></li>
+</ol>
+<ul class="simple">
+<li><p>任务：预测下一个词或字符。</p></li>
+<li><p>工作：正如前面提到的，它计算一个词汇表中每个词的概率，最终生成下一个词。</p></li>
+</ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;The capital of France is&quot;</span>
 <span class="c1"># Tokenize the input prompt</span>
 <span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span>
@@ -597,6 +632,10 @@ token 列表: [&#39;[CLS]&#39;, &#39;the&#39;, &#39;river&#39;, &#39;bank&#39;, 
 <span class="n">lm_head_output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">lm_head</span><span class="p">(</span><span class="n">model_output</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">lm_head_output</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Paris</span>
 </pre></div>
 </div>
 <p>Top_K</p>
@@ -662,7 +701,7 @@ token 列表: [&#39;[CLS]&#39;, &#39;the&#39;, &#39;river&#39;, &#39;bank&#39;, 
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">让模型输出</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt2">测试GPT2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt2">GPT2</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contextual-embeddings">Contextual Embeddings</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lm-head">LM Head</a></li>
 </ul>
