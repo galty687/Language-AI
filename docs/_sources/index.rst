@@ -27,6 +27,11 @@
    
    
 
+.. toctree::
+   :maxdepth: 1
+   :caption: 大模型的应用
+
+   3-Practice/classification.md
 
    
 

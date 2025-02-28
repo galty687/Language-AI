@@ -1,0 +1,712 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45957014-6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-45957014-6');
+    </script>
+    
+    <title>文本分类 &#8212; 人工智能实践  文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=946197a6"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '3-Practice/classification';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="prev" title="LLM 基础" href="../2-Basics/llm-basics.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">人工智能实践  文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程简介</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/intro.html">课程大纲</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/terms.html">术语</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/setup.html">环境准备</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/llm-basics.html">LLM 基础</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型的应用</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">文本分类</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/3-Practice/classification.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>文本分类</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">任务</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">准备数据</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">模型选择</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">使用表示模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">使用生成式模型（1）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">使用生成式模型（2）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt">使用GPT最新模型</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>文本分类<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<section id="id2">
+<h2>任务<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>电影评价的情感分析</p>
+<p>数据集：<a class="reference external" href="https://huggingface.co/datasets/cornell-movie-review-data/rotten_tomatoes">rotten_tomatoes</a></p>
+</section>
+<section id="id3">
+<h2>准备数据<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>安装Hugging Face datasets</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">datasets</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>加载数据集</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="c1"># Load our data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;rotten_tomatoes&quot;</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DatasetDict</span><span class="p">({</span>
+    <span class="n">train</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">({</span>
+        <span class="n">features</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">],</span>
+        <span class="n">num_rows</span><span class="p">:</span> <span class="mi">8530</span>
+    <span class="p">})</span>
+    <span class="n">validation</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">({</span>
+        <span class="n">features</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">],</span>
+        <span class="n">num_rows</span><span class="p">:</span> <span class="mi">1066</span>
+    <span class="p">})</span>
+    <span class="n">test</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">({</span>
+        <span class="n">features</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">],</span>
+        <span class="n">num_rows</span><span class="p">:</span> <span class="mi">1066</span>
+    <span class="p">})</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<ol class="arabic" start="3">
+<li><p>查看训练集</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;the rock is destined to be the 21st century</span><span class="se">\&#39;</span><span class="s1">s new &quot; conan &quot; and that he</span><span class="se">\&#39;</span><span class="s1">s going to make a splash even greater than arnold schwarzenegger , jean-claud van damme or steven segal .&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;things really get weird , though not particularly scary : the movie is all portent and no content .&#39;</span><span class="p">],</span>
+ <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]}</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="id4">
+<h2>模型选择<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>选择模型是一件复杂的事情，在Hugging Face上有6万多个文本分类模型，一般来说可以从如下几个方面来评估：</p>
+<ol class="arabic simple">
+<li><p>明确任务需求。首先确定你的具体任务，比如情感分析、垃圾邮件检测或主题分类，并明确对模型性能、速度和资源消耗的要求。</p></li>
+<li><p>查看模型描述与文档。详细阅读模型页面上的描述、训练数据、使用场景以及相关论文。了解模型是如何预训练和微调的，以及它是否适合你的领域。</p></li>
+<li><p>参考性能指标。检查模型在公开基准数据集上的表现（如准确率、F1 分数等），选取那些在与你任务相似的数据集上表现较好的模型。</p></li>
+<li><p>关注用户反馈和社区讨论。在 Hugging Face 的模型页面中查看用户评价和讨论，可以帮助你了解模型在实际使用中的优缺点和潜在问题。</p></li>
+<li><p>考虑模型大小和部署要求。根据你的硬件条件和部署场景选择合适的模型大小。较大的模型可能性能更好，但资源消耗也更高；而较小的模型则更适合资源受限的场景。</p></li>
+<li><p>试验与验证。在有限的数据集上先进行试验，验证模型是否满足你的预期效果，再决定是否进行大规模部署和进一步的微调。</p></li>
+</ol>
+</section>
+<section id="id5">
+<h2>使用表示模型<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>本任务重选择：Twitter-RoBERTa-base for Sentiment Analysis</p>
+<p>该模型基于 RoBERTa-base 架构，专门针对 Twitter 数据中的情感分析任务进行了微调。该模型利用大量 Twitter 语料库训练，能够较好地捕捉推文中常见的非正式语言、缩写、表情符号和标签，从而对文本情感（如正面、负面或中性）进行准确分类。</p>
+<ol class="arabic">
+<li><p>加载模型</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">pipeline</span>
+<span class="c1"># Path to our HF model</span>
+<span class="n">model_path</span> <span class="o">=</span> <span class="s2">&quot;cardiffnlp/twitter-roberta-base-sentiment-latest&quot;</span>
+<span class="c1"># Load model into pipeline</span>
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span>
+<span class="n">model</span><span class="o">=</span><span class="n">model_path</span><span class="p">,</span>
+<span class="n">tokenizer</span><span class="o">=</span><span class="n">model_path</span><span class="p">,</span>
+<span class="n">return_all_scores</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="n">device</span><span class="o">=</span><span class="s2">&quot;cuda:0&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>执行分类任务</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">transformers.pipelines.pt_utils</span> <span class="kn">import</span> <span class="n">KeyDataset</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+
+<span class="c1"># Run inference</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">pipe</span><span class="p">(</span><span class="n">KeyDataset</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">],</span> <span class="s2">&quot;text&quot;</span><span class="p">)),</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">])):</span>
+    <span class="n">negative_score</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;score&quot;</span><span class="p">]</span>
+    <span class="n">positive_score</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s2">&quot;score&quot;</span><span class="p">]</span>
+    <span class="n">assignment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">([</span><span class="n">negative_score</span><span class="p">,</span> <span class="n">positive_score</span><span class="p">])</span>
+    <span class="n">y_pred</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">assignment</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>评估模型性能</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">evaluate_performance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create and print the classification report&quot;&quot;&quot;</span>
+    <span class="n">performance</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span>
+        <span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span>
+        <span class="n">target_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Negative Review&quot;</span><span class="p">,</span> <span class="s2">&quot;Positive Review&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">performance</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>评估结果：</p>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>                 precision    recall  f1-score   support
+
+Negative Review       0.76      0.88      0.81       533
+Positive Review       0.86      0.72      0.78       533
+
+       accuracy                           0.80      1066
+      macro avg       0.81      0.80      0.80      1066
+   weighted avg       0.81      0.80      0.80      1066
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>使用生成式模型（1）<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<ol class="arabic">
+<li><p>加载模型</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span>
+<span class="s2">&quot;text2text-generation&quot;</span><span class="p">,</span>
+<span class="n">model</span><span class="o">=</span><span class="s2">&quot;google/flan-t5-small&quot;</span><span class="p">,</span>
+<span class="n">device</span><span class="o">=</span><span class="s2">&quot;cuda:0&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>准备数据</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;Is the following sentence positive or negative? &quot;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">example</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;t5&quot;</span><span class="p">:</span> <span class="n">prompt</span> <span class="o">+</span> <span class="n">example</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]})</span>
+<span class="n">data</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<ol class="arabic" start="3">
+<li><p>开始提取</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run inference</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">pipe</span><span class="p">(</span><span class="n">KeyDataset</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">],</span> <span class="s2">&quot;t5&quot;</span><span class="p">)),</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">])):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;generated_text&quot;</span><span class="p">]</span>
+    <span class="n">y_pred</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;negative&quot;</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>评估效果</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">evaluate_performance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">][</span><span class="s2">&quot;label&quot;</span><span class="p">],</span> <span class="n">y_pred</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>输出：</p>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>                 precision    recall  f1-score   support
+
+Negative Review       0.83      0.85      0.84       533
+Positive Review       0.85      0.83      0.84       533
+
+       accuracy                           0.84      1066
+      macro avg       0.84      0.84      0.84      1066
+   weighted avg       0.84      0.84      0.84      1066
+</pre></div>
+</div>
+<p>F1 得分为 0.84，表明 Flan-T5 这类生成式模型的强大能力。</p>
+</section>
+<section id="id7">
+<h2>使用生成式模型（2）<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<ol class="arabic">
+<li><p>创建openai client</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openai</span>
+<span class="c1"># Create client</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">OpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;YOUR_KEY_HERE&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>创建生成函数</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">chatgpt_generation</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo-0125&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate an output based on a prompt and an input document.&quot;&quot;&quot;</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;You are a helpful assistant.&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">prompt</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;[DOCUMENT]&quot;</span><span class="p">,</span> <span class="n">document</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+    <span class="n">chat_completion</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+        <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">chat_completion</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+</pre></div>
+</div>
+</li>
+<li><p>创建提示词</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define a prompt template as a base</span>
+<span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Predict whether the following document is a positive or negative</span>
+<span class="s2">movie review:</span>
+<span class="s2">[DOCUMENT]</span>
+<span class="s2">If it is positive return 1 and if it is negative return 0. Do not give any</span>
+<span class="s2">other answers.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="c1"># Predict the target using GPT</span>
+<span class="n">document</span> <span class="o">=</span> <span class="s2">&quot;unpretentious , charming , quirky , original&quot;</span>
+<span class="n">chatgpt_generation</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">document</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>分类</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="p">[</span>
+<span class="n">chatgpt_generation</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">])</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p>查看分类结果</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span> <span class="k">for</span> <span class="n">pred</span> <span class="ow">in</span> <span class="n">predictions</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p>评估性能</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span> <span class="k">for</span> <span class="n">pred</span> <span class="ow">in</span> <span class="n">predictions</span><span class="p">]</span>
+<span class="n">evaluate_performance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">][</span><span class="s2">&quot;label&quot;</span><span class="p">],</span> <span class="n">y_pred</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>输出：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>                 <span class="n">precision</span>    <span class="n">recall</span>  <span class="n">f1</span><span class="o">-</span><span class="n">score</span>   <span class="n">support</span>
+
+<span class="n">Negative</span> <span class="n">Review</span>       <span class="mf">0.85</span>      <span class="mf">0.97</span>      <span class="mf">0.90</span>       <span class="mi">533</span>
+<span class="n">Positive</span> <span class="n">Review</span>       <span class="mf">0.96</span>      <span class="mf">0.83</span>      <span class="mf">0.89</span>       <span class="mi">533</span>
+
+       <span class="n">accuracy</span>                           <span class="mf">0.90</span>      <span class="mi">1066</span>
+      <span class="n">macro</span> <span class="n">avg</span>       <span class="mf">0.91</span>      <span class="mf">0.90</span>      <span class="mf">0.90</span>      <span class="mi">1066</span>
+   <span class="n">weighted</span> <span class="n">avg</span>       <span class="mf">0.91</span>      <span class="mf">0.90</span>      <span class="mf">0.90</span>      <span class="mi">1066</span>
+</pre></div>
+</div>
+<section id="gpt">
+<h3>使用GPT最新模型<a class="headerlink" href="#gpt" title="Link to this heading">#</a></h3>
+<p>模型：<code class="docutils literal notranslate"> <span class="pre">gpt-4o-mini-2024-07-18</span></code></p>
+<p>结果：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>                 <span class="n">precision</span>    <span class="n">recall</span>  <span class="n">f1</span><span class="o">-</span><span class="n">score</span>   <span class="n">support</span>
+
+<span class="n">Negative</span> <span class="n">Review</span>       <span class="mf">0.88</span>      <span class="mf">0.96</span>      <span class="mf">0.92</span>       <span class="mi">533</span>
+<span class="n">Positive</span> <span class="n">Review</span>       <span class="mf">0.96</span>      <span class="mf">0.87</span>      <span class="mf">0.91</span>       <span class="mi">533</span>
+
+       <span class="n">accuracy</span>                           <span class="mf">0.91</span>      <span class="mi">1066</span>
+      <span class="n">macro</span> <span class="n">avg</span>       <span class="mf">0.92</span>      <span class="mf">0.91</span>      <span class="mf">0.91</span>      <span class="mi">1066</span>
+   <span class="n">weighted</span> <span class="n">avg</span>       <span class="mf">0.92</span>      <span class="mf">0.91</span>      <span class="mf">0.91</span>      <span class="mi">1066</span>
+</pre></div>
+</div>
+<p>模型：<code class="docutils literal notranslate"><span class="pre">gpt-4o-2024-08-06</span></code></p>
+<p>结果：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>                 <span class="n">precision</span>    <span class="n">recall</span>  <span class="n">f1</span><span class="o">-</span><span class="n">score</span>   <span class="n">support</span>
+
+<span class="n">Negative</span> <span class="n">Review</span>       <span class="mf">0.88</span>      <span class="mf">0.97</span>      <span class="mf">0.92</span>       <span class="mi">533</span>
+<span class="n">Positive</span> <span class="n">Review</span>       <span class="mf">0.97</span>      <span class="mf">0.86</span>      <span class="mf">0.91</span>       <span class="mi">533</span>
+
+       <span class="n">accuracy</span>                           <span class="mf">0.92</span>      <span class="mi">1066</span>
+      <span class="n">macro</span> <span class="n">avg</span>       <span class="mf">0.92</span>      <span class="mf">0.92</span>      <span class="mf">0.92</span>      <span class="mi">1066</span>
+   <span class="n">weighted</span> <span class="n">avg</span>       <span class="mf">0.92</span>      <span class="mf">0.92</span>      <span class="mf">0.92</span>      <span class="mi">1066</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../2-Basics/llm-basics.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">LLM 基础</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">任务</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">准备数据</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">模型选择</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">使用表示模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">使用生成式模型（1）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">使用生成式模型（2）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt">使用GPT最新模型</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Zhijun Gao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 高志军.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
