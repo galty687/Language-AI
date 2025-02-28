@@ -109,6 +109,10 @@
 
 
 
+## 学习资料
+
+- [大模型原理可视化](https://bbycroft.net/llm)
+
 ## 大模型催生的新协议
 
 - [Model Context Protocol (MCP)](https://supabase.com/docs/guides/getting-started/mcp)
