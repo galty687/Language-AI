@@ -27,7 +27,7 @@
 
 0. 准备
 
-   - 在大模型时代，选择合适的模型非常重要，可以使用 [MTEB leaderboard](https://huggingface.co/spaces/mteb/leaderboard) ，帮助我们决定用哪个模型。选择"Clusterring"任务，目前（2024年2月28日）得分最高的是 `SFR-Embedding-2_R`(7B)，54.62分。这里我们用阿里达摩院的 gte-small模型，得分41.08，参数量33M。
+   - 在大模型时代，选择合适的模型非常重要，可以使用 [MTEB leaderboard](https://huggingface.co/spaces/mteb/leaderboard) ，帮助我们决定用哪个模型。选择"Clusterring"任务，目前（2024年2月28日）得分最高的是 `SFR-Embedding-2_R`(7B)，54.62分。这里我们用阿里达摩院的 [gte-small](https://huggingface.co/thenlper/gte-small)模型，得分41.08，参数量33M。
    - 安装所需类 `!pip install datasets`
 
    

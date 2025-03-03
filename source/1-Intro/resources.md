@@ -43,7 +43,9 @@
 
 - [通义万象](https://tongyi.aliyun.com/wanxiang/videoCreation) | [官方提示词](https://alidocs.dingtalk.com/i/nodes/jb9Y4gmKWrx9eo4dCql9LlbYJGXn6lpz?spm=5176.29623064.0.0.41ed1ecerZpS4I&utm_scene=person_space)
 
+### difussion LLM
 
+- [Mercury-Coder](https://www.inceptionlabs.ai)
 
 ## 本地推理框架
 
@@ -55,7 +57,7 @@
 
 
 
-## 微调
+## 微调工具
 
 - [Firefly](https://github.com/yangjianxin1/Firefly)
 - [Unsloth](https://unsloth.ai/)
@@ -68,7 +70,8 @@
 
 ## 大模型测评
 
-- Chatbot Arena
+- [Chatbot Arena](https://lmarena.ai/)
+- [Humanity's Last Exam](https://agi.safe.ai)
 
 
 
@@ -76,6 +79,7 @@
 
 - [Notebook LM](https://notebooklm.google/) (生成英文博客)
 - [FoloUP](https://github.com/FoloUp/FoloUp) （模拟面试）
+- [Whisk](https://labs.google/fx/tools/whisk) （图片混合，Google Labs）
 
 
 

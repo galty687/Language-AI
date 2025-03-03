@@ -22,7 +22,7 @@ copyright = '高志军'
 author = 'Zhijun Gao'
 
 # The full version, including alpha/beta/rc tags
-release = ''
+release = '0.1'
 
 
 # -- General configuration ---------------------------------------------------
@@ -75,6 +75,9 @@ html_theme = 'sphinx_book_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+#Copy CNAME to docs
+html_extra_path = ['CNAME']
 
 # These paths are either relative to html_static_path
 # or fully qualified paths (eg. https://...)
