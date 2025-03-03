@@ -62,6 +62,7 @@
 - [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory)
 - [ModelScope  SWIFT](https://github.com/modelscope/ms-swift)
 - [Hugging Face PEFT](https://huggingface.co/docs/peft/en/index)
+- [SuperAdapters](https://github.com/cckuailong/SuperAdapters/tree/master)
 
 
 

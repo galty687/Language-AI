@@ -1,0 +1,982 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45957014-6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-45957014-6');
+    </script>
+    
+    <title>微调Phi-4 &#8212; 人工智能实践  文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=946197a6"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'fine-tunning/ft-phi4';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="prev" title="文档聚类" href="../3-Practice/clusttering.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">人工智能实践  文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程简介</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/intro.html">课程大纲</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/terms.html">术语</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/setup.html">环境准备</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/llm-basics.html">LLM 基础</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型的应用</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/classification.html">文本分类</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/clusttering.html">文档聚类</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">微调Phi-4</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/fine-tunning/ft-phi4.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>微调Phi-4</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">测试模型的改写能力：</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">尝试改进提示词</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">全部风格的提示词</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">单一规则：</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-questions-sparingly">测试实例：Use questions sparingly.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-semicolons-sparingly">测试实例2: Use semicolons sparingly.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">小结</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">微调模型</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">数据准备</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">使用微调后的模型</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="phi-4">
+<h1>微调Phi-4<a class="headerlink" href="#phi-4" title="Link to this heading">#</a></h1>
+<section id="id1">
+<h2>测试模型的改写能力：<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ol class="arabic">
+<li><p>加载模型</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModelForCausalLM</span><span class="p">,</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">pipeline</span>
+ 
+<span class="n">torch</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">model_path</span> <span class="o">=</span> <span class="s2">&quot;microsoft/Phi-4-mini-instruct&quot;</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+    <span class="n">model_path</span><span class="p">,</span>
+    <span class="n">device_map</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+    <span class="n">torch_dtype</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+    <span class="n">trust_remote_code</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span>
+    <span class="s2">&quot;text-generation&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>提示词</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sent</span> <span class="o">=</span> <span class="s2">&quot;Follow these steps in order to change your password.&quot;</span>
+
+<span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;You are a professional content editor with extensive knowledge of the Microsoft Manual of Style. Your task is to edit and improve any content I provide, ensuring it adheres to the Microsoft Manual of Style guidelines. Focus on clarity, grammar, punctuation, and overall readability, while maintaining the original meaning. Follow any additional specific instructions I include in my messages.&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">sent</span><span class="p">}</span>
+<span class="p">]</span>
+
+<span class="n">generation_args</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;max_new_tokens&quot;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="s2">&quot;return_full_text&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="s2">&quot;do_sample&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span><span class="n">messages</span><span class="p">,</span> <span class="o">**</span><span class="n">generation_args</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;generated_text&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</li>
+<li><p>模型输出：</p>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>Follow these steps to change your password:
+
+<span class="k">1.</span> Go to the login page of the website or application.
+<span class="k">2.</span> Click on the &quot;Forgot Password&quot; or &quot;Can&#39;t access your account?&quot; link.
+<span class="k">3.</span> Enter your account information, such as your email address or username, to receive a password reset link.
+<span class="k">4.</span> Check your email inbox for the password reset link and click on it.
+<span class="k">5.</span> Follow the instructions provided in the link to create a new password.
+<span class="k">6.</span> Make sure your new password is strong and unique, and save it in a secure place.
+<span class="k">7.</span> Log in to your account using your new password.
+</pre></div>
+</div>
+</li>
+<li><p>其他例子：</p>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>input: It isn’t terribly difficult to change your password.
+
+output: It isn&#39;t terribly difficult to change your password.
+
+input: When you lock down your computer . . .
+output: When you lock down your computer, you are taking steps to secure it and protect your data from unauthorized access. This can involve setting a strong password, enabling a firewall, and installing antivirus software. By doing so, you help ensure the safety and privacy of your personal information.
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="id2">
+<h2>尝试改进提示词<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>全部风格的提示词<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sent</span> <span class="o">=</span> <span class="s2">&quot;Forgot your password? Provide your secret answer.&quot;</span>
+
+<span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="p">(</span>
+            <span class="s2">&quot;You are an expert editor specializing in Microsoft style. Please revise any text you receive &quot;</span>
+            <span class="s2">&quot;according to official Microsoft style guidelines. In particular, ensure the following:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;1. **Be concise**</span><span class="se">\n</span><span class="s2">   - Don’t use two or three words when one will do (for example, avoid “in order to” &quot;</span>
+            <span class="s2">&quot;when “to” suffices).</span><span class="se">\n</span><span class="s2">   - Keep sentences short and direct.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;2. **Prefer “because” to indicate cause**</span><span class="se">\n</span><span class="s2">   - Use “because” instead of “as” or “since” to explain why &quot;</span>
+            <span class="s2">&quot;something happens.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;3. **Use words as defined in the dictionary or style sheet**</span><span class="se">\n</span><span class="s2">   - Avoid coining new terms unnecessarily.</span><span class="se">\n</span><span class="s2">   - &quot;</span>
+            <span class="s2">&quot;Use consistent terminology for the same concept.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;4. **Adhere to correct usage for phrases like “set up” vs. “setup”**</span><span class="se">\n</span><span class="s2">   - “Setup” is the noun (for example, &quot;</span>
+            <span class="s2">&quot;“The setup took five minutes.”).</span><span class="se">\n</span><span class="s2">   - “Set up” is the verb (for example, “Set up your account.”).</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;5. **Choose countable vs. non-countable terms carefully**</span><span class="se">\n</span><span class="s2">   - Use “number” for countable items (e.g., “A &quot;</span>
+            <span class="s2">&quot;significant number of users...”)</span><span class="se">\n</span><span class="s2">   - Use “amount” for non-countable items (e.g., “A large amount of data...”)</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;6. **Use the imperative voice for instructions**</span><span class="se">\n</span><span class="s2">   - Address the user directly (e.g., “Select,” “Choose,” &quot;</span>
+            <span class="s2">&quot;or “Go to”).</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;7. **Avoid unnecessary synonyms that might confuse the reader**</span><span class="se">\n</span><span class="s2">   - Use the same term for a concept throughout &quot;</span>
+            <span class="s2">&quot;to maintain clarity, especially for technical terms.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;Please transform any text you receive into a version that meets these guidelines. If necessary, break down &quot;</span>
+            <span class="s2">&quot;run-on sentences, use active voice, and focus on clarity, accuracy, and directness. Return only your edited &quot;</span>
+            <span class="s2">&quot;version, without additional commentary.&quot;</span>
+        <span class="p">)</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">sent</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span><span class="n">messages</span><span class="p">,</span> <span class="o">**</span><span class="n">generation_args</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;generated_text&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>输出结果：</p>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>Forgot your password? Enter your secret answer.
+</pre></div>
+</div>
+<p>全部实现改写比较难：</p>
+</section>
+<section id="id4">
+<h3>单一规则：<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<section id="use-questions-sparingly">
+<h4>测试实例：Use questions sparingly.<a class="headerlink" href="#use-questions-sparingly" title="Link to this heading">#</a></h4>
+<p>提示词：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sent</span> <span class="o">=</span> <span class="s2">&quot;Like what you see? Get more nature themes online.&quot;</span>
+
+<span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;You are an expert writer specializing in Microsoft style. The user will provide text that may contain questions and casual phrasing. Your job is to revise it into a clear, concise, and direct Microsoft style voice. In particular:</span><span class="se">\n\n</span><span class="s2">1. Avoid overusing questions or rhetorical questions. Focus on providing answers and clear instructions.</span><span class="se">\n</span><span class="s2">2. Maintain a trustworthy tone by giving guidance rather than inventing questions.</span><span class="se">\n</span><span class="s2">3. Use the imperative voice when giving instructions (e.g., &#39;If you forgot your password, provide your secret answer.&#39;)</span><span class="se">\n</span><span class="s2">4. Be concise and eliminate unnecessary words or phrases.</span><span class="se">\n\n</span><span class="s2">Transform the user’s text according to these guidelines and return only the revised text without additional commentary.&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">sent</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span><span class="n">messages</span><span class="p">,</span> <span class="o">**</span><span class="n">generation_args</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;generated_text&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>Explore more nature-themed content online.
+</pre></div>
+</div>
+<p>微软答案：</p>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>More nature themes are available online.
+</pre></div>
+</div>
+<p>其他例子：</p>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>input: Are you sure you want to delete the file? It might be gone forever.
+output: Confirm the file deletion. If you are certain, proceed to delete the file.
+
+input2: Did you remember to install the latest update? It’s important for security.
+output2: Install the latest update to ensure security.
+</pre></div>
+</div>
+</section>
+<section id="use-semicolons-sparingly">
+<h4>测试实例2: Use semicolons sparingly.<a class="headerlink" href="#use-semicolons-sparingly" title="Link to this heading">#</a></h4>
+<p>提示词：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sent</span> <span class="o">=</span> <span class="s2">&quot;Ensure that you have a backup; check your network connectivity; and verify that your firewall is active.&quot;</span>
+
+<span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;You are an expert writer specializing in Microsoft style. The text you receive may contain semicolons, which are characteristic of a more formal, academic writing style. Your task is to transform the text by replacing semicolons with two separate sentences or a list when possible. For example:</span><span class="se">\n\n</span><span class="s2">Not Microsoft style:</span><span class="se">\n\&quot;</span><span class="s2">Antivirus software helps stop unwanted programs from accessing your computer; ensure that your antivirus software is up to date. For more information, see Semicolons (Chapter 9).</span><span class="se">\&quot;\n\n</span><span class="s2">Microsoft style:</span><span class="se">\n\&quot;</span><span class="s2">Antivirus software helps stop unwanted programs from accessing your computer. Make sure your antivirus software is up to date.</span><span class="se">\&quot;\n\n</span><span class="s2">Please rewrite the provided text following these guidelines and return only the revised text without any additional commentary.&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">sent</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span><span class="n">messages</span><span class="p">,</span> <span class="o">**</span><span class="n">generation_args</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;generated_text&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Ensure</span> <span class="n">that</span> <span class="n">you</span> <span class="n">have</span> <span class="n">a</span> <span class="n">backup</span><span class="o">.</span> <span class="n">Check</span> <span class="n">your</span> <span class="n">network</span> <span class="n">connectivity</span><span class="o">.</span> <span class="n">Verify</span> <span class="n">that</span> <span class="n">your</span> <span class="n">firewall</span> <span class="ow">is</span> <span class="n">active</span><span class="o">.</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h4>小结<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+<p>通过单个逐一描述修改规则，模型是可以理解需求的，可以将单一的规则变为编辑的按钮，由人工选用。</p>
+</section>
+</section>
+</section>
+<section id="id6">
+<h2>微调模型<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>如果希望模型能全文改写为微软的风格，则需要通过微调模型的方式，使得模型能主动探测所需要的规则。</p>
+<section id="id7">
+<h3>数据准备<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;|im_start|&gt;system&lt;|im_sep|&gt;You are a Microsoft Style Editor. Your role is to review and edit text to ensure it follows Microsoft&#39;s style guidelines: clear, concise, and professional language, with appropriate punctuation and formatting. Always aim for clarity and consistency, transforming technical or dense content into easily understandable text.&lt;|im_end|&gt;\n&lt;|im_start|&gt;user&lt;|im_sep|&gt;Antivirus software helps stop unwanted programs from accessing your computer; ensure that your antivirus software is up to date.&lt;|im_end|&gt;\n&lt;|im_start|&gt;assistant&lt;|im_sep|&gt;Antivirus software helps stop unwanted programs from accessing your computer. Make sure your antivirus software is up to date.&lt;|im_end|&gt;&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;|im_start|&gt;system&lt;|im_sep|&gt;You are a Microsoft Style Editor. Your role is to review and edit text to ensure it follows Microsoft&#39;s style guidelines: clear, concise, and professional language, with appropriate punctuation and formatting. Always aim for clarity and consistency, transforming technical or dense content into easily understandable text.&lt;|im_end|&gt;\n&lt;|im_start|&gt;user&lt;|im_sep|&gt;Open the settings menu; select &#39;Privacy&#39;; adjust your preferences.&lt;|im_end|&gt;\n&lt;|im_start|&gt;assistant&lt;|im_sep|&gt;Open the settings menu. Select &#39;Privacy&#39; and adjust your preferences.&lt;|im_end|&gt;&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;|im_start|&gt;system&lt;|im_sep|&gt;You are a Microsoft Style Editor. Your role is to review and edit text to ensure it follows Microsoft&#39;s style guidelines: clear, concise, and professional language, with appropriate punctuation and formatting. Always aim for clarity and consistency, transforming technical or dense content into easily understandable text.&lt;|im_end|&gt;\n&lt;|im_start|&gt;user&lt;|im_sep|&gt;Connect your printer to the network; check that the printer is turned on; start printing.&lt;|im_end|&gt;\n&lt;|im_start|&gt;assistant&lt;|im_sep|&gt;Connect your printer to the network. Check that the printer is turned on. Start printing.&lt;|im_end|&gt;&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="err">...</span>
+<span class="p">]</span><span class="w">  </span>
+</pre></div>
+</div>
+<ol class="arabic">
+<li><p>安装unsloth</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%capture
+import os
+if &quot;COLAB_&quot; not in &quot;&quot;.join(os.environ.keys()):
+    !pip install unsloth
+else:
+    # Do this only in Colab and Kaggle notebooks! Otherwise use pip install unsloth
+    !pip install --no-deps bitsandbytes accelerate xformers==0.0.29 peft trl triton
+    !pip install --no-deps cut_cross_entropy unsloth_zoo
+    !pip install sentencepiece protobuf datasets huggingface_hub hf_transfer
+    !pip install --no-deps unsloth
+</pre></div>
+</div>
+</li>
+<li><p>加载Phi‑4并配置参数</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">unsloth</span> <span class="kn">import</span> <span class="n">FastLanguageModel</span>  <span class="c1"># FastVisionModel for LLMs</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="n">max_seq_length</span> <span class="o">=</span> <span class="mi">2048</span>  <span class="c1"># Choose any! We auto support RoPE Scaling internally!</span>
+<span class="n">load_in_4bit</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Use 4bit quantization to reduce memory usage. Can be False.</span>
+
+<span class="c1"># 4bit pre quantized models we support for 4x faster downloading + no OOMs.</span>
+<span class="n">fourbit_models</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;unsloth/Meta-Llama-3.1-8B-bnb-4bit&quot;</span><span class="p">,</span>  <span class="c1"># Llama-3.1 2x faster</span>
+    <span class="s2">&quot;unsloth/Mistral-Small-Instruct-2409&quot;</span><span class="p">,</span>  <span class="c1"># Mistral 22b 2x faster!</span>
+    <span class="s2">&quot;unsloth/Phi-4&quot;</span><span class="p">,</span>  <span class="c1"># Phi-4 2x faster!</span>
+    <span class="s2">&quot;unsloth/Phi-4-unsloth-bnb-4bit&quot;</span><span class="p">,</span>  <span class="c1"># Phi-4 Unsloth Dynamic 4-bit Quant</span>
+    <span class="s2">&quot;unsloth/gemma-2-9b-bnb-4bit&quot;</span><span class="p">,</span>  <span class="c1"># Gemma 2x faster!</span>
+    <span class="s2">&quot;unsloth/Qwen2.5-7B-Instruct-bnb-4bit&quot;</span>  <span class="c1"># Qwen 2.5 2x faster!</span>
+    <span class="s2">&quot;unsloth/Llama-3.2-1B-bnb-4bit&quot;</span><span class="p">,</span>  <span class="c1"># NEW! Llama 3.2 models</span>
+    <span class="s2">&quot;unsloth/Llama-3.2-1B-Instruct-bnb-4bit&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;unsloth/Llama-3.2-3B-bnb-4bit&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;unsloth/Llama-3.2-3B-Instruct-bnb-4bit&quot;</span><span class="p">,</span>
+<span class="p">]</span>  <span class="c1"># More models at https://docs.unsloth.ai/get-started/all-our-models</span>
+
+<span class="n">model</span><span class="p">,</span> <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">FastLanguageModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+    <span class="n">model_name</span> <span class="o">=</span> <span class="s2">&quot;unsloth/Phi-4&quot;</span><span class="p">,</span>
+    <span class="n">max_seq_length</span> <span class="o">=</span> <span class="n">max_seq_length</span><span class="p">,</span>
+    <span class="n">load_in_4bit</span> <span class="o">=</span> <span class="n">load_in_4bit</span><span class="p">,</span>
+    <span class="c1"># token = &quot;hf_...&quot;, # use one if using gated models like meta-llama/Llama-2-7b-hf</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>添加LoRA PEFT</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">FastLanguageModel</span><span class="o">.</span><span class="n">get_peft_model</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="c1"># Choose any number &gt; 0 ! Suggested 8, 16, 32, 64, 128</span>
+    <span class="n">target_modules</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;q_proj&quot;</span><span class="p">,</span> <span class="s2">&quot;k_proj&quot;</span><span class="p">,</span> <span class="s2">&quot;v_proj&quot;</span><span class="p">,</span> <span class="s2">&quot;o_proj&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;gate_proj&quot;</span><span class="p">,</span> <span class="s2">&quot;up_proj&quot;</span><span class="p">,</span> <span class="s2">&quot;down_proj&quot;</span><span class="p">,],</span>
+    <span class="n">lora_alpha</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
+    <span class="n">lora_dropout</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="c1"># Supports any, but = 0 is optimized</span>
+    <span class="n">bias</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>    <span class="c1"># Supports any, but = &quot;none&quot; is optimized</span>
+    <span class="c1"># [NEW] &quot;unsloth&quot; uses 30% less VRAM, fits 2x larger batch sizes!</span>
+    <span class="n">use_gradient_checkpointing</span> <span class="o">=</span> <span class="s2">&quot;unsloth&quot;</span><span class="p">,</span> <span class="c1"># True or &quot;unsloth&quot; for very long context</span>
+    <span class="n">random_state</span> <span class="o">=</span> <span class="mi">3407</span><span class="p">,</span>
+    <span class="n">use_rslora</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># We support rank stabilized LoRA</span>
+    <span class="n">loftq_config</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="c1"># And LoftQ</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>添加微调数据</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="c1"># 假设文件名为 data.json</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;json&quot;</span><span class="p">,</span> <span class="n">data_files</span><span class="o">=</span><span class="s2">&quot;/content/standardized-ms-style.json&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>&lt;|im_start|&gt;system&lt;|im_sep|&gt;You are a Microsoft Style Editor. Your role is to review and edit text to ensure it follows Microsoft&#39;s style guidelines: clear, concise, and professional language, with appropriate punctuation and formatting. Always aim for clarity and consistency, transforming technical or dense content into easily understandable text.&lt;|im_end|&gt;\n&lt;|im_start|&gt;user&lt;|im_sep|&gt;Open the settings menu; select &#39;Privacy&#39;; adjust your preferences.&lt;|im_end|&gt;\n&lt;|im_start|&gt;assistant&lt;|im_sep|&gt;Open the settings menu. Select &#39;Privacy&#39; and adjust your preferences.&lt;|im_end|&gt;
+</pre></div>
+</div>
+</li>
+<li><p>微调模型</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">trl</span> <span class="kn">import</span> <span class="n">SFTTrainer</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">TrainingArguments</span><span class="p">,</span> <span class="n">DataCollatorForSeq2Seq</span>
+<span class="kn">from</span> <span class="nn">unsloth</span> <span class="kn">import</span> <span class="n">is_bfloat16_supported</span>
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">SFTTrainer</span><span class="p">(</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span>
+    <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">,</span>
+    <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">,</span>
+    <span class="n">dataset_text_field</span> <span class="o">=</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+    <span class="n">max_seq_length</span> <span class="o">=</span> <span class="n">max_seq_length</span><span class="p">,</span>
+    <span class="n">data_collator</span> <span class="o">=</span> <span class="n">DataCollatorForSeq2Seq</span><span class="p">(</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">),</span>
+    <span class="n">dataset_num_proc</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">packing</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="c1"># Can make training 5x faster for short sequences.</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">TrainingArguments</span><span class="p">(</span>
+        <span class="n">per_device_train_batch_size</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">gradient_accumulation_steps</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="n">warmup_steps</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="c1"># num_train_epochs = 1, # Set this for 1 full training run.</span>
+        <span class="n">max_steps</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+        <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">2e-4</span><span class="p">,</span>
+        <span class="n">fp16</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">is_bfloat16_supported</span><span class="p">(),</span>
+        <span class="n">bf16</span> <span class="o">=</span> <span class="n">is_bfloat16_supported</span><span class="p">(),</span>
+        <span class="n">logging_steps</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">optim</span> <span class="o">=</span> <span class="s2">&quot;adamw_8bit&quot;</span><span class="p">,</span>
+        <span class="n">weight_decay</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+        <span class="n">lr_scheduler_type</span> <span class="o">=</span> <span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+        <span class="n">seed</span> <span class="o">=</span> <span class="mi">3407</span><span class="p">,</span>
+        <span class="n">output_dir</span> <span class="o">=</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span>
+        <span class="n">report_to</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="c1"># Use this for WandB etc</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>仅训练助手输出，忽略用户输入损失</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">unsloth.chat_templates</span> <span class="kn">import</span> <span class="n">train_on_responses_only</span>
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">train_on_responses_only</span><span class="p">(</span>
+    <span class="n">trainer</span><span class="p">,</span>
+    <span class="n">instruction_part</span><span class="o">=</span><span class="s2">&quot;&lt;|im_start|&gt;user&lt;|im_sep|&gt;&quot;</span><span class="p">,</span>
+    <span class="n">response_part</span><span class="o">=</span><span class="s2">&quot;&lt;|im_start|&gt;assistant&lt;|im_sep|&gt;&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>数据验证</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">trainer</span><span class="o">.</span><span class="n">train_dataset</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="s2">&quot;input_ids&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;|</span><span class="n">im_start</span><span class="o">|&gt;</span><span class="n">system</span><span class="o">&lt;|</span><span class="n">im_sep</span><span class="o">|&gt;</span><span class="n">You</span> <span class="n">are</span> <span class="n">a</span> <span class="n">Microsoft</span> <span class="n">Style</span> <span class="n">Editor</span><span class="o">.</span> <span class="n">Your</span> <span class="n">role</span> <span class="ow">is</span> <span class="n">to</span> <span class="n">review</span> <span class="ow">and</span> <span class="n">edit</span> <span class="n">text</span> <span class="n">to</span> <span class="n">ensure</span> <span class="n">it</span> <span class="n">follows</span> <span class="n">Microsoft</span><span class="s1">&#39;s style guidelines: clear, concise, and professional language, with appropriate punctuation and formatting. Always aim for clarity and consistency, transforming technical or dense content into easily understandable text.&lt;|im_end|&gt;&lt;|im_start|&gt;user&lt;|im_sep|&gt;Download the file; install the software; and restart your computer.&lt;|im_end|&gt;&lt;|im_start|&gt;assistant&lt;|im_sep|&gt;Download the file. Install the software. Restart your computer.&lt;|im_end|&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">space</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">add_special_tokens</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">([</span><span class="n">space</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="o">-</span><span class="mi">100</span> <span class="k">else</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">trainer</span><span class="o">.</span><span class="n">train_dataset</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="s2">&quot;labels&quot;</span><span class="p">]])</span>
+</pre></div>
+</div>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>                                                                               Download the file. Install the software. Restart your computer.&lt;|im_end|&gt;
+                                                                               
+                                                                      
+</pre></div>
+</div>
+</li>
+<li><p>显示内存统计信息</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># @title Show current memory stats</span>
+<span class="n">gpu_stats</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_properties</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">start_gpu_memory</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">max_memory_reserved</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">max_memory</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">gpu_stats</span><span class="o">.</span><span class="n">total_memory</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GPU = </span><span class="si">{</span><span class="n">gpu_stats</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">. Max memory = </span><span class="si">{</span><span class="n">max_memory</span><span class="si">}</span><span class="s2"> GB.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">start_gpu_memory</span><span class="si">}</span><span class="s2"> GB of memory reserved.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>GPU = NVIDIA A100-SXM4-40GB. Max memory = 39.557 GB.
+10.0 GB of memory reserved.
+</pre></div>
+</div>
+</li>
+<li><p>开始训练</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">trainer_stats</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>INFO|trainer.py:917] 2025-03-02 05:38:02,976 &gt;&gt; The following columns in the training set don&#39;t have a corresponding argument in <span class="sb">`PeftModelForCausalLM.forward`</span> and have been ignored: text. If text are not expected by <span class="sb">`PeftModelForCausalLM.forward`</span>,  you can safely ignore this message.
+[WARNING|&lt;string&gt;:215] 2025-03-02 05:38:03,057 &gt;&gt; ==((====))==  Unsloth - 2x faster free finetuning | Num GPUs = 1
+   \\   /|    Num examples = 521 | Num Epochs = 1
+O^O/ \_/ \    Batch size per device = 2 | Gradient Accumulation steps = 4
+\        /    Total batch size = 8 | Total steps = 30
+ &quot;-____-&quot;     Number of trainable parameters = 65,536,000
+ [30/30 01:07, Epoch 0/1]
+Step	Training Loss
+1	2.714500
+2	1.765400
+3	1.759100
+4	1.596600
+5	1.414300
+6	1.047200
+7	1.303400
+8	0.344500
+9	0.708700
+10	0.537400
+11	0.620300
+12	0.443100
+13	1.297000
+14	0.812800
+15	0.524500
+16	0.923000
+17	0.266100
+18	0.695000
+19	0.635100
+20	0.504400
+21	0.346200
+22	0.379400
+23	0.462500
+24	0.253700
+25	0.223400
+26	1.184900
+27	0.726200
+28	0.578300
+29	0.287900
+30	0.174400
+</pre></div>
+</div>
+</li>
+<li><p>查看训练后的内容</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># @title Show final memory and time stats</span>
+<span class="n">used_memory</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">max_memory_reserved</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">used_memory_for_lora</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">used_memory</span> <span class="o">-</span> <span class="n">start_gpu_memory</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">used_percentage</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">used_memory</span> <span class="o">/</span> <span class="n">max_memory</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">lora_percentage</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">used_memory_for_lora</span> <span class="o">/</span> <span class="n">max_memory</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">trainer_stats</span><span class="o">.</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;train_runtime&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> seconds used for training.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">trainer_stats</span><span class="o">.</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;train_runtime&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">60</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2"> minutes used for training.&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Peak reserved memory = </span><span class="si">{</span><span class="n">used_memory</span><span class="si">}</span><span class="s2"> GB.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Peak reserved memory for training = </span><span class="si">{</span><span class="n">used_memory_for_lora</span><span class="si">}</span><span class="s2"> GB.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Peak reserved memory % of max memory = </span><span class="si">{</span><span class="n">used_percentage</span><span class="si">}</span><span class="s2"> %.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Peak reserved memory for training % of max memory = </span><span class="si">{</span><span class="n">lora_percentage</span><span class="si">}</span><span class="s2"> %.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>76.2308 seconds used for training.
+1.27 minutes used for training.
+Peak reserved memory = 10.959 GB.
+Peak reserved memory for training = 0.959 GB.
+Peak reserved memory % of max memory = 27.704 %.
+Peak reserved memory for training % of max memory = 2.424 %.
+</pre></div>
+</div>
+</li>
+<li><p>使用微调后的模型推理</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">FastLanguageModel</span><span class="o">.</span><span class="n">for_inference</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="c1"># Enable native 2x faster inference</span>
+
+<span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;You are a Microsoft Style Editor. Your role is to review and edit text to ensure it follows Microsoft&#39;s style guidelines: clear, concise, and professional language, with appropriate punctuation and formatting. Always aim for clarity and consistency, transforming technical or dense content into easily understandable text.&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;A significant amount of people access the website monthly.&quot;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+<span class="n">inputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">apply_chat_template</span><span class="p">(</span>
+    <span class="n">messages</span><span class="p">,</span>
+    <span class="n">tokenize</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">add_generation_prompt</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="c1"># Must add for generation</span>
+    <span class="n">return_tensors</span> <span class="o">=</span> <span class="s2">&quot;pt&quot;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">TextStreamer</span>
+<span class="n">text_streamer</span> <span class="o">=</span> <span class="n">TextStreamer</span><span class="p">(</span><span class="n">tokenizer</span><span class="p">,</span> <span class="n">skip_prompt</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+    <span class="n">input_ids</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">streamer</span> <span class="o">=</span> <span class="n">text_streamer</span><span class="p">,</span> <span class="n">max_new_tokens</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+    <span class="n">use_cache</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">temperature</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">,</span> <span class="n">min_p</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="n">significant</span> <span class="n">number</span> <span class="n">of</span> <span class="n">people</span> <span class="n">access</span> <span class="n">the</span> <span class="n">website</span> <span class="n">monthly</span><span class="o">.&lt;|</span><span class="n">im_end</span><span class="o">|&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p>保存模型到Hugging Face</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Save to 8bit Q8_0</span>
+<span class="k">if</span> <span class="kc">False</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">save_pretrained_gguf</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,)</span>
+<span class="c1"># Remember to go to https://huggingface.co/settings/tokens for a token!</span>
+<span class="c1"># And change hf to your username!</span>
+<span class="k">if</span> <span class="kc">False</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">push_to_hub_gguf</span><span class="p">(</span><span class="s2">&quot;hf/model&quot;</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">quantization_method</span> <span class="o">=</span> <span class="s2">&quot;q4_k_m&quot;</span><span class="p">,</span> <span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+<span class="c1"># Save to 16bit GGUF</span>
+<span class="k">if</span> <span class="kc">True</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">save_pretrained_gguf</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">quantization_method</span> <span class="o">=</span> <span class="s2">&quot;f16&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="kc">True</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">push_to_hub_gguf</span><span class="p">(</span><span class="s2">&quot;hf/model&quot;</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">quantization_method</span> <span class="o">=</span> <span class="s2">&quot;f16&quot;</span><span class="p">,</span> <span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;hf_MqJZBiJQUEdZYMzIsGqP....M&quot;</span><span class="p">)</span>
+
+<span class="c1"># Save to q4_k_m GGUF</span>
+<span class="k">if</span> <span class="kc">False</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">save_pretrained_gguf</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">quantization_method</span> <span class="o">=</span> <span class="s2">&quot;q4_k_m&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="kc">False</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">push_to_hub_gguf</span><span class="p">(</span><span class="s2">&quot;hf/model&quot;</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">quantization_method</span> <span class="o">=</span> <span class="s2">&quot;q4_k_m&quot;</span><span class="p">,</span> <span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+<span class="c1"># Save to multiple GGUF options - much faster if you want multiple!</span>
+<span class="k">if</span> <span class="kc">False</span><span class="p">:</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">push_to_hub_gguf</span><span class="p">(</span>
+        <span class="s2">&quot;hf/model&quot;</span><span class="p">,</span> <span class="c1"># Change hf to your username!</span>
+        <span class="n">tokenizer</span><span class="p">,</span>
+        <span class="n">quantization_method</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;q4_k_m&quot;</span><span class="p">,</span> <span class="s2">&quot;q8_0&quot;</span><span class="p">,</span> <span class="s2">&quot;q5_k_m&quot;</span><span class="p">,],</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="c1"># Get a token at https://huggingface.co/settings/tokens</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+<section id="id8">
+<h2>使用微调后的模型<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<p>因为模型是量化后的，需要使用支持量化模型的推理框架，这里选择llama.cpp</p>
+<ol class="arabic">
+<li><p>安装llama-cpp-python</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!pip install llama-cpp-python
+</pre></div>
+</div>
+</li>
+<li><p>加载模型</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">llama_cpp</span> <span class="kn">import</span> <span class="n">Llama</span>
+
+<span class="n">llm</span> <span class="o">=</span> <span class="n">Llama</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+	<span class="n">repo_id</span><span class="o">=</span><span class="s2">&quot;galty687/Microsoft-Style-Editor&quot;</span><span class="p">,</span>
+	<span class="n">filename</span><span class="o">=</span><span class="s2">&quot;unsloth.F16.gguf&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>运行</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">llm</span><span class="o">.</span><span class="n">create_chat_completion</span><span class="p">(</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;You are a Microsoft Style Editor. Your role is to review and edit text to ensure it follows Microsoft&#39;s style guidelines: clear, concise, and professional language, with appropriate punctuation and formatting. Always aim for clarity and consistency, transforming technical or dense content into easily understandable text.&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Open the settings menu; select &#39;Privacy&#39;; adjust your preferences.&quot;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="c1"># Extract and print the generated content from the assistant&#39;s response:</span>
+<span class="n">generated_content</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;choices&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;message&#39;</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">generated_content</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Open</span> <span class="n">the</span> <span class="n">settings</span> <span class="n">menu</span><span class="o">.</span> <span class="n">Select</span> <span class="s1">&#39;Privacy&#39;</span><span class="o">.</span> <span class="n">Adjust</span> <span class="n">your</span> <span class="n">preferences</span><span class="o">.</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../3-Practice/clusttering.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">文档聚类</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">测试模型的改写能力：</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">尝试改进提示词</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">全部风格的提示词</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">单一规则：</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-questions-sparingly">测试实例：Use questions sparingly.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-semicolons-sparingly">测试实例2: Use semicolons sparingly.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">小结</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">微调模型</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">数据准备</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">使用微调后的模型</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Zhijun Gao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 高志军.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

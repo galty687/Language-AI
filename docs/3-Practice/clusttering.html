@@ -60,6 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '3-Practice/clusttering';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="微调Phi-4" href="../fine-tunning/ft-phi4.html" />
     <link rel="prev" title="文本分类" href="classification.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
@@ -165,6 +166,10 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="classification.html">文本分类</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">文档聚类</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">微调Phi-4</a></li>
 </ul>
 
     </div>
@@ -282,7 +287,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -298,6 +305,15 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">常见流程</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">练习</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -309,6 +325,150 @@
                   
   <section id="id1">
 <h1>文档聚类<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>文本聚类是一种无监督学习方法，旨在将大量文本数据根据内容相似性自动分组，形成若干类别或主题。主要过程包括：</p>
+<ul class="simple">
+<li><p>预处理：文本进行分词、去停用词、词形还原等处理，以便提取有效信息。</p></li>
+<li><p>特征提取：利用TF-IDF、词袋模型或深度学习方法（如词向量、句向量）将文本转化为数值向量表示。</p></li>
+<li><p>聚类算法：常用的方法有K-means、层次聚类、密度聚类（如DBSCAN）等，根据向量间的相似度对文本进行分组。</p></li>
+<li><p>评估与应用：通过轮廓系数等指标评估聚类效果，广泛应用于新闻分类、舆情分析、信息检索和主题挖掘等场景。</p></li>
+</ul>
+<p>数据集：<a class="reference internal" href="#MaartenGr/arxiv_nlp"><span class="xref myst">MaartenGr/arxiv_nlp</span></a></p>
+<section id="id2">
+<h2>常见流程<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>文本聚类有许多方法，从基于图的神经网络到基于质心的聚类技术，但一个普遍流行的流程包括以下三个步骤和相应算法：</p>
+<p>​	1.	使用嵌入模型将输入文档转换为向量表示。</p>
+<p>​	2.	使用降维模型降低这些向量的维度。</p>
+<p>​	3.	利用聚类模型找出语义上相似的文档群体。</p>
+</section>
+<section id="id3">
+<h2>练习<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>对ArXiv上”Computation and Language”领域的论文摘要进行聚类。</p>
+<ol class="arabic" start="0">
+<li><p>准备</p>
+<ul class="simple">
+<li><p>在大模型时代，选择合适的模型非常重要，可以使用 <a class="reference external" href="https://huggingface.co/spaces/mteb/leaderboard">MTEB leaderboard</a> ，帮助我们决定用哪个模型。选择”Clusterring”任务，目前（2024年2月28日）得分最高的是 <code class="docutils literal notranslate"><span class="pre">SFR-Embedding-2_R</span></code>(7B)，54.62分。这里我们用阿里达摩院的 gte-small模型，得分41.08，参数量33M。</p></li>
+<li><p>安装所需类 <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span> <span class="pre">datasets</span></code></p></li>
+</ul>
+</li>
+<li><p>从HF上加载数据所需数据</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load data from Hugging Face</span>
+<span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;maartengr/arxiv_nlp&quot;</span><span class="p">)[</span><span class="s2">&quot;train&quot;</span><span class="p">]</span>
+<span class="c1"># Extract metadata</span>
+<span class="n">abstracts</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;Abstracts&quot;</span><span class="p">]</span>
+<span class="n">titles</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;Titles&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p>将摘要转为embeddings</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+<span class="c1"># Create an embedding for each abstract</span>
+<span class="n">embedding_model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;thenlper/gte-small&quot;</span><span class="p">)</span>
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">embedding_model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">abstracts</span><span class="p">,</span> <span class="n">show_progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>查看embedding的形状：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">embeddings</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">44949</span><span class="p">,</span> <span class="mi">384</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>表示有44949个摘要，每个摘要被转换成了384维的向量表示</p>
+</li>
+<li><p>使用降维工具</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">umap</span> <span class="kn">import</span> <span class="n">UMAP</span>
+<span class="c1"># We reduce the input embeddings from 384 dimensions to 5 dimensions</span>
+<span class="n">umap_model</span> <span class="o">=</span> <span class="n">UMAP</span><span class="p">(</span>
+<span class="n">n_components</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">min_dist</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;cosine&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+<span class="n">reduced_embeddings</span> <span class="o">=</span> <span class="n">umap_model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">n_components</span></code> 参数来决定低维空间的形状，例如设置为 5 维。一般来说，将维度设置在 5 到 10 之间能够较好地捕捉高维数据的全局结构。</p>
+<p><code class="docutils literal notranslate"><span class="pre">min_dist</span></code> 参数表示嵌入点之间的最小距离，我们将其设置为 0</p>
+<p><code class="docutils literal notranslate"><span class="pre">random_state</span> </code>可以使结果在不同会话中可复现，但这会禁用并行计算，从而导致训练速度变慢。</p>
+</li>
+<li><p>将降维后的Embedding进行聚类</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">hdbscan</span> <span class="kn">import</span> <span class="n">HDBSCAN</span>
+<span class="c1"># We fit the model and extract the clusters</span>
+<span class="n">hdbscan_model</span> <span class="o">=</span> <span class="n">HDBSCAN</span><span class="p">(</span>
+<span class="n">min_cluster_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">,</span> <span class="n">cluster_selection_method</span><span class="o">=</span><span class="s2">&quot;eom&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">reduced_embeddings</span><span class="p">)</span>
+<span class="n">clusters</span> <span class="o">=</span> <span class="n">hdbscan_model</span><span class="o">.</span><span class="n">labels_</span>
+<span class="c1"># How many clusters did we generate?</span>
+<span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">clusters</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">153</span>
+</pre></div>
+</div>
+</li>
+<li><p>查看聚类结果</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="c1"># Print first three documents in cluster 0</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">clusters</span><span class="o">==</span><span class="n">cluster</span><span class="p">)[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">3</span><span class="p">]:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">abstracts</span><span class="p">[</span><span class="n">index</span><span class="p">][:</span><span class="mi">300</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;... </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>  This works aims to design a statistical machine translation from English text
+to American Sign Language (ASL). The system is based on Moses tool with some
+modifications and the results are synthesized through a 3D avatar for
+interpretation. First, we translate the input text to gloss, a written fo... 
+
+  Researches on signed languages still strongly dissociate lin- guistic issues
+related on phonological and phonetic aspects, and gesture studies for
+recognition and synthesis purposes. This paper focuses on the imbrication of
+motion and meaning for the analysis, synthesis and evaluation of sign lang... 
+
+  Modern computational linguistic software cannot produce important aspects of
+sign language translation. Using some researches we deduce that the majority of
+automatic sign language translation systems ignore many aspects when they
+generate animation; therefore the interpretation lost the truth inf... 
+</pre></div>
+</div>
+</li>
+<li><p>可视化聚类结果</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">umap</span> <span class="kn">import</span> <span class="n">UMAP</span>
+
+<span class="c1"># 将384维的嵌入向量降维到二维，以便更容易可视化</span>
+<span class="n">reduced_embeddings</span> <span class="o">=</span> <span class="n">UMAP</span><span class="p">(</span>
+    <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">min_dist</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cosine&quot;</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+
+<span class="c1"># 创建DataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">reduced_embeddings</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">titles</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">clusters</span><span class="p">]</span>
+
+<span class="c1"># 选择非离群点和离群点（对应的聚类）</span>
+<span class="n">to_plot</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">cluster</span> <span class="o">!=</span> <span class="s2">&quot;-1&quot;</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">outliers</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">cluster</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">to_plot</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">to_plot</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+    <span class="n">c</span><span class="o">=</span><span class="n">to_plot</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;tab20b&quot;</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>输出结果：</p>
+<p><img alt="plot" src="../_images/plot.png" /></p>
+</li>
+</ol>
+</section>
 </section>
 
 
@@ -331,12 +491,38 @@
         <p class="prev-next-title">文本分类</p>
       </div>
     </a>
+    <a class="right-next"
+       href="../fine-tunning/ft-phi4.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">微调Phi-4</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">常见流程</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">练习</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

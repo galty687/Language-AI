@@ -35,3 +35,8 @@
    3-Practice/clusttering.md
    
 
+.. toctree::
+   :maxdepth: 1
+   :caption: 微调
+
+   fine-tunning/ft-phi4.md

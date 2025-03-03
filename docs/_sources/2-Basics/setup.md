@@ -14,7 +14,7 @@ Google Colab 是由 Google Research 开发的基于云的平台，可使用 Jupy
 | Colab Pro    | $9.99/月   | 优先获取更高性能 GPU（如 T4/P100，有时可获得 V100）   | 最长 24 小时  | 可选高内存，约 32 GB | 中大型项目、需要更高性能和更长连续运行时间 | 同免费版                         |
 | Colab Pro+   | $49.99/月  | 更高优先级、更丰富的计算单元，GPU 资源更优             | 最长 24 小时  | 可选高内存，约 52 GB | 对性能要求极高、长时间连续运行的复杂任务 | 提供更多磁盘空间（约 150 GB）     |
 
-
+基本使用教程：[Overview of Colab](https://colab.research.google.com/notebooks/basic_features_overview.ipynb)
 
 ## Googe Drive
 
@@ -75,6 +75,7 @@ Hugging Face 是一家专注于自然语言处理（NLP）和人工智能（AI�
       在提示时粘贴刚才复制的 Token。
    2). 设置环境变量  
       在 Colab Notebook 中执行以下代码：
+   
       ```python
       import os
       os.environ["HF_HOME"] = "/content/huggingface"
