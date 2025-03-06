@@ -22,7 +22,7 @@ copyright = '高志军'
 author = 'Zhijun Gao'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1'
+release = '0.2'
 
 
 # -- General configuration ---------------------------------------------------
@@ -78,6 +78,7 @@ html_static_path = ['_static']
 
 #Copy CNAME to docs
 html_extra_path = ['CNAME']
+
 
 # These paths are either relative to html_static_path
 # or fully qualified paths (eg. https://...)

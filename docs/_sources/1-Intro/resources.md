@@ -80,6 +80,7 @@
 - [Notebook LM](https://notebooklm.google/) (生成英文博客)
 - [FoloUP](https://github.com/FoloUp/FoloUp) （模拟面试）
 - [Whisk](https://labs.google/fx/tools/whisk) （图片混合，Google Labs）
+- [PDF 翻译](https://pdf2zh.com)
 
 
 
@@ -117,6 +118,10 @@
 ## 学习资料
 
 - [大模型原理可视化](https://bbycroft.net/llm)
+
+- [大模型基础论文列表](https://github.com/ZJU-LLMs/Foundations-of-LLMs/tree/main/大模型经典论文列表)
+
+- [LLM Sampling Visualization](https://artefact2.github.io/llm-sampling/index.xhtml)
 
 ## 大模型催生的新协议
 

@@ -29,8 +29,10 @@
 
 .. toctree::
    :maxdepth: 1
-   :caption: 大模型的应用
+   :caption: 基于Transformer的自然语言处理
 
+   3-Practice/nlp-tasks.md
+   3-Practice/transformer-nlp.md
    3-Practice/classification.md
    3-Practice/clusttering.md
    

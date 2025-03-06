@@ -1,0 +1,762 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45957014-6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-45957014-6');
+    </script>
+    
+    <title>基于HF Transformer的NLP实践 &#8212; 人工智能实践 0.2 文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=25ad8440"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '3-Practice/transformer-nlp';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="文本分类" href="classification.html" />
+    <link rel="prev" title="NLP 任务" href="nlp-tasks.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">人工智能实践 0.2 文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程简介</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/intro.html">课程大纲</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/terms.html">术语</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/setup.html">环境准备</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/llm-basics.html">LLM 基础</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">基于Transformer的自然语言处理</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="nlp-tasks.html">NLP 任务</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">基于HF Transformer的NLP实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classification.html">文本分类</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clusttering.html">文档聚类</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">微调Phi-4</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/3-Practice/transformer-nlp.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>基于HF Transformer的NLP实践</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hugging-face-transformer">Hugging Face Transformer简介</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#huggingface">HuggingFace 的模型类型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformer">Transformer 快速入门</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">安装与环境准备</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">加载模型</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#auto">使用 “Auto” 系列类自动加载模型</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline">常见的Pipeline任务</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ner">NER识别实例</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenizer">加载 Tokenizer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">模型与 Tokenizer 版本匹配的重要性</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">动手练习</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">练习1：</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">练习2：</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">进一步学习</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">实践</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="hf-transformernlp">
+<h1>基于HF Transformer的NLP实践<a class="headerlink" href="#hf-transformernlp" title="Link to this heading">#</a></h1>
+<section id="hugging-face-transformer">
+<h2>Hugging Face Transformer简介<a class="headerlink" href="#hugging-face-transformer" title="Link to this heading">#</a></h2>
+<p><strong>Hugging Face Transformers</strong> 是目前最流行的 NLP 模型库之一。它提供了大量预训练的 Transformer 模型（如 BERT、GPT-2、T5 等），支持多种流行深度学习框架（PyTorch 和 TensorFlow），并简化了在各种 NLP 任务上使用这些模型的流程。通过 Transformers 库，开发者可以非常方便地加载<strong>预训练模型</strong>并对文本进行<strong>推理</strong>或者进行<strong>微调</strong>（本教材仅讨论推理）。该库的主要特点包括：</p>
+<ul class="simple">
+<li><p><strong>模型丰富</strong>：Transformers 库通过 Hugging Face <strong>模型中心</strong> (Model Hub) 提供了上千种预训练模型，涵盖了文本分类、机器翻译、文本生成、问答、命名实体识别等各类任务。用户可以根据任务需要选择合适的现成模型，无需从零训练。</p></li>
+<li><p><strong>统一的API</strong>：库提供了简洁统一的接口，例如 <code class="docutils literal notranslate"><span class="pre">pipeline</span></code> API，使用户可以一行代码完成复杂的 NLP 任务推理。同时还有各种 <code class="docutils literal notranslate"><span class="pre">AutoModel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">AutoTokenizer</span></code> 类，可以根据模型名称自动加载对应的模型和分词器。</p></li>
+<li><p><strong>跨框架与易用性</strong>：Transformers 支持 PyTorch 和 TensorFlow，并有详细的文档和教程。即使没有深厚的深度学习背景，具有基本 Python 编程技能的学生也能通过高级 API 快速上手，在几行代码内实现 NLP 模型的推理。</p></li>
+</ul>
+<p>简而言之，Hugging Face Transformers 库大大降低了使用先进 NLP 模型的门槛，让我们能够以<strong>最低的代码量</strong>完成强大的文本理解和生成任务。在深入实践之前，我们需要了解如何为不同任务选择合适的模型，以及 Transformers 库提供的 pipeline 功能。</p>
+</section>
+<section id="huggingface">
+<h2>HuggingFace 的模型类型<a class="headerlink" href="#huggingface" title="Link to this heading">#</a></h2>
+<p>在使用 Transformers 库进行推理时，选择<strong>合适的预训练模型</strong>非常重要。不同的 NLP 任务需要不同架构或预训练目标的模型。以下是一些模型选择的指导建议：</p>
+<ul class="simple">
+<li><p><strong>文本分类（如新闻主题分类、垃圾邮件检测）</strong>：选择在<strong>序列分类</strong>任务上预训练或微调的模型，例如 BERT、RoBERTa、DistilBERT 等的<strong>微调版本</strong>。例如，<code class="docutils literal notranslate"><span class="pre">bert-base-uncased</span></code> 在 GLUE 基准上预训练，可用于通用的文本分类任务；还有专门在某些数据集上微调的模型（如在 AG News 新闻数据集上微调的 BERT）。</p></li>
+<li><p><strong>情感分析</strong>：情感分析本质上是二分类或多分类的文本分类任务。可选择在情感数据上微调过的 BERT 系列模型。例如，<code class="docutils literal notranslate"><span class="pre">distilbert-base-uncased-finetuned-sst-2-english</span></code> 是一个在电影评论情感分类(SST-2)数据集上微调的 DistilBERT 模型，适合用于英语正面/负面情感判断。</p></li>
+<li><p><strong>命名实体识别（NER）</strong>：NER 属于<strong>序列标注</strong>（token classification）任务。常用模型是在通用语料上预训练、并在标注数据（如 CoNLL-2003）上微调的 BERT 或其衍生模型。例如，<code class="docutils literal notranslate"><span class="pre">bert-base-cased</span></code> 或 <code class="docutils literal notranslate"><span class="pre">roberta-base</span></code> 在 CoNLL-2003 上微调的版本，可识别人名、地名、组织名等实体。Transformers 提供了一些开箱即用的 NER 模型，如 <code class="docutils literal notranslate"><span class="pre">dbmdz/bert-large-cased-finetuned-conll03-english</span></code> 或更小的 <code class="docutils literal notranslate"><span class="pre">dslim/bert-base-NER</span></code>（DistilBERT 微调NER）。</p></li>
+<li><p><strong>词性标注（POS tagging）</strong>：POS 标注也是序列标注任务，但标签是词性。选择在大型语料上微调的模型，例如在通用英语树库上微调的 BERT 模型。Hugging Face 上有现成模型如 <code class="docutils literal notranslate"><span class="pre">vblagoje/bert-english-uncased-finetuned-pos</span></code>，可以直接用于英文词性标注。</p></li>
+<li><p><strong>文本生成</strong>：文本生成需要<strong>自回归语言模型</strong>，如 GPT-2、GPT-3（通过 API）、GPT-Neo、XLNet 或 T5 等。对于自由文本续写，GPT-2 是常用选择；对于摘要、翻译等<strong>序列到序列</strong>生成任务，T5、BART 等Encoder-Decoder架构更适合。Transformers 提供了 GPT-2 等模型的直接使用，以及像 T5、BART 这种在特定任务上微调的生成模型（如新闻摘要生成等）。</p></li>
+<li><p><strong>其他任务</strong>：如<strong>问答</strong>可以选择 <code class="docutils literal notranslate"><span class="pre">bert-large-uncased-whole-word-masking-finetuned-squad</span></code>（在 SQuAD 上微调的 BERT）；<strong>机器翻译</strong>可选择 Facebook 的 mBART50 或 Helsinki NLP 提供的翻译模型等等。</p></li>
+</ul>
+<p>总的来说，选模型时需要考虑<strong>任务类型</strong>和<strong>模型规模</strong>：若需要速度快、资源有限，考虑蒸馏小模型（DistilBERT、TinyBERT 等）；若追求准确率，可使用大型模型（BERT-large、RoBERTa-large）。在 Hugging Face 模型库网站，可以按照任务过滤模型，并查看每个模型的描述和性能指标，选择最符合需求的模型。本教材后续实践部分将在每个任务中给出具体模型的选择和使用示例。</p>
+<p><strong>HF上NLP任务筛选</strong></p>
+<p><img alt="hf-nlp-tasks" src="../_images/hf-nlp-tasks.png" /></p>
+</section>
+<section id="transformer">
+<h2>Transformer 快速入门<a class="headerlink" href="#transformer" title="Link to this heading">#</a></h2>
+<p>以在Google Colab中为例：</p>
+<section id="id1">
+<h3>安装与环境准备<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<ol class="arabic">
+<li><p>安装transformers</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>！pip<span class="w"> </span>install<span class="w"> </span>transformers
+</pre></div>
+</div>
+</li>
+<li><p>安装 datasets</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">datasets</span>
+</pre></div>
+</div>
+</li>
+<li><p>安装PyTorch以便使用GPU推理</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!pip<span class="w"> </span>install<span class="w"> </span>torch
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="id2">
+<h3>加载模型<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<section id="auto">
+<h4>使用 “Auto” 系列类自动加载模型<a class="headerlink" href="#auto" title="Link to this heading">#</a></h4>
+<p>Hugging Face 提供了多种便捷的 “Auto” 类，如 <code class="docutils literal notranslate"><span class="pre">AutoModel</span></code>, <code class="docutils literal notranslate"><span class="pre">AutoModelForSequenceClassification</span></code>, <code class="docutils literal notranslate"><span class="pre">AutoModelForTokenClassification</span></code>, <code class="docutils literal notranslate"><span class="pre">AutoModelForCausalLM</span></code> 等，它们可以根据你指定的模型名称（或本地目录）自动实例化对应的模型。常见用法如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModel</span><span class="p">,</span> <span class="n">AutoModelForSequenceClassification</span>
+
+<span class="c1"># 1) 通用AutoModel，不带特定任务头</span>
+<span class="n">model_name</span> <span class="o">=</span> <span class="s2">&quot;bert-base-uncased&quot;</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span>
+
+<span class="c1"># 2) 特定任务，例如文本分类</span>
+<span class="n">model_name_cls</span> <span class="o">=</span> <span class="s2">&quot;textattack/bert-base-uncased-ag-news&quot;</span>
+<span class="n">model_for_classification</span> <span class="o">=</span> <span class="n">AutoModelForSequenceClassification</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_name_cls</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p>在上例中，<code class="docutils literal notranslate"><span class="pre">model</span></code> 是通用的 BERT 主体，不含分类层等任务头；<code class="docutils literal notranslate"><span class="pre">model_for_classification</span></code> 则是带有序列分类头的 BERT。选择哪个类取决于你想要执行的任务。如果只是想要提取文本特征（embedding）或进一步手动搭建输出层，可以使用 <code class="docutils literal notranslate"><span class="pre">AutoModel</span></code>；如果打算直接做序列分类推理或微调，就使用 <code class="docutils literal notranslate"><span class="pre">AutoModelForSequenceClassification</span></code>。</p>
+<blockquote>
+<div><p class="rubric" id="id3">从哪里查找模型名称？</p>
+<p>你可以前往 Hugging Face Model Hub 搜索所需模型，例如输入关键字“bert sentiment”找到在情感分析上微调的 BERT 模型。然后复制模型名称（如 <code class="docutils literal notranslate"><span class="pre">&quot;nlptown/bert-base-multilingual-uncased-sentiment&quot;</span></code>）到 <code class="docutils literal notranslate"><span class="pre">from_pretrained(...)</span></code> 中即可。</p>
+<p class="rubric" id="id4"></p>
+</div></blockquote>
+</section>
+</section>
+<section id="pipeline">
+<h3>常见的Pipeline任务<a class="headerlink" href="#pipeline" title="Link to this heading">#</a></h3>
+<p>Hugging Face Transformers 提供了高级的 <code class="docutils literal notranslate"><span class="pre">pipeline</span></code> API，封装了常见 NLP 任务的完整处理流程，包括文本预处理、模型推理和输出后处理。通过指定任务名称，<code class="docutils literal notranslate"><span class="pre">pipeline</span></code> 会自动选择默认模型（或你指定的模型）并返回一个<strong>可调用对象</strong>，之后直接传入文本即可获得结果。下面介绍几个常见的 Pipeline 任务及其用法。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p><strong>任务</strong></p></th>
+<th class="head text-center"><p><strong>描述</strong></p></th>
+<th class="head text-center"><p><strong>模态</strong></p></th>
+<th class="head text-center"><p><strong>Pipeline</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>文本分类</p></td>
+<td class="text-center"><p>为给定的文本序列分配一个标签</p></td>
+<td class="text-center"><p>NLP</p></td>
+<td class="text-center"><p>pipeline(task=“sentiment-analysis”)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>文本生成</p></td>
+<td class="text-center"><p>根据给定的提示生成文本</p></td>
+<td class="text-center"><p>NLP</p></td>
+<td class="text-center"><p>pipeline(task=“text-generation”)</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>命名实体识别</p></td>
+<td class="text-center"><p>为序列里的每个 token 分配一个标签（人, 组织, 地址等等）</p></td>
+<td class="text-center"><p>NLP</p></td>
+<td class="text-center"><p>pipeline(task=“ner”)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>问答系统</p></td>
+<td class="text-center"><p>通过给定的上下文和问题, 在文本中提取答案</p></td>
+<td class="text-center"><p>NLP</p></td>
+<td class="text-center"><p>pipeline(task=“question-answering”)</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>掩盖填充</p></td>
+<td class="text-center"><p>预测出正确的在序列中被掩盖的token</p></td>
+<td class="text-center"><p>NLP</p></td>
+<td class="text-center"><p>pipeline(task=“fill-mask”)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>文本摘要</p></td>
+<td class="text-center"><p>为文本序列或文档生成总结</p></td>
+<td class="text-center"><p>NLP</p></td>
+<td class="text-center"><p>pipeline(task=“summarization”)</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>文本翻译</p></td>
+<td class="text-center"><p>将文本从一种语言翻译为另一种语言</p></td>
+<td class="text-center"><p>NLP</p></td>
+<td class="text-center"><p>pipeline(task=“translation”)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>图像分类</p></td>
+<td class="text-center"><p>为图像分配一个标签</p></td>
+<td class="text-center"><p>Computer vision</p></td>
+<td class="text-center"><p>pipeline(task=“image-classification”)</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>图像分割</p></td>
+<td class="text-center"><p>为图像中每个独立的像素分配标签（支持语义、全景和实例分割）</p></td>
+<td class="text-center"><p>Computer vision</p></td>
+<td class="text-center"><p>pipeline(task=“image-segmentation”)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>目标检测</p></td>
+<td class="text-center"><p>预测图像中目标对象的边界框和类别</p></td>
+<td class="text-center"><p>Computer vision</p></td>
+<td class="text-center"><p>pipeline(task=“object-detection”)</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>音频分类</p></td>
+<td class="text-center"><p>给音频文件分配一个标签</p></td>
+<td class="text-center"><p>Audio</p></td>
+<td class="text-center"><p>pipeline(task=“audio-classification”)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>自动语音识别</p></td>
+<td class="text-center"><p>将音频文件中的语音提取为文本</p></td>
+<td class="text-center"><p>Audio</p></td>
+<td class="text-center"><p>pipeline(task=“automatic-speech-recognition”)</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>视觉问答</p></td>
+<td class="text-center"><p>给定一个图像和一个问题，正确地回答有关图像的问题</p></td>
+<td class="text-center"><p>Multimodal</p></td>
+<td class="text-center"><p>pipeline(task=“vqa”)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="ner">
+<h3>NER识别实例<a class="headerlink" href="#ner" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">pipeline</span>
+
+<span class="c1"># create pipeline for NER</span>
+<span class="n">ner</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s1">&#39;ner&#39;</span><span class="p">,</span> <span class="n">aggregation_strategy</span> <span class="o">=</span> <span class="s1">&#39;simple&#39;</span><span class="p">)</span>
+
+<span class="n">ner</span><span class="p">(</span><span class="s2">&quot;Hi, my name is Zhijun Gao. I am from China. I work in Peking University.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>这会自动下载（若本地无缓存）并加载<code class="docutils literal notranslate"> <span class="pre">dbmdz/bert-large-cased-finetuned-conll03-english</span></code> 的序列分类模型以及匹配的 tokenizer，然后完成推理。若不指定 <code class="docutils literal notranslate"><span class="pre">model</span></code> 参数，它会使用默认模型（往往是通用的英语小模型）。对初学者来说，<code class="docutils literal notranslate"><span class="pre">pipeline</span></code> 是非常方便的高层 API，只需关心输入和输出即可。</p>
+</div></blockquote>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[{</span><span class="s1">&#39;entity_group&#39;</span><span class="p">:</span> <span class="s1">&#39;PER&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mf">0.9911611</span><span class="p">,</span>
+  <span class="s1">&#39;word&#39;</span><span class="p">:</span> <span class="s1">&#39;Zhijun Gao&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+  <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">},</span>
+ <span class="p">{</span><span class="s1">&#39;entity_group&#39;</span><span class="p">:</span> <span class="s1">&#39;LOC&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mf">0.9997775</span><span class="p">,</span>
+  <span class="s1">&#39;word&#39;</span><span class="p">:</span> <span class="s1">&#39;China&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">37</span><span class="p">,</span>
+  <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">},</span>
+ <span class="p">{</span><span class="s1">&#39;entity_group&#39;</span><span class="p">:</span> <span class="s1">&#39;ORG&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mf">0.99745685</span><span class="p">,</span>
+  <span class="s1">&#39;word&#39;</span><span class="p">:</span> <span class="s1">&#39;Peking University&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">54</span><span class="p">,</span>
+  <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">71</span><span class="p">}]</span>
+</pre></div>
+</div>
+<section id="tokenizer">
+<h4>加载 Tokenizer<a class="headerlink" href="#tokenizer" title="Link to this heading">#</a></h4>
+<p><strong>Tokenizer</strong> 的作用是把原始文本拆分为 tokens，再将每个 token 转换成模型可理解的 ID（通常是数字索引）。不同模型使用了不尽相同的分词算法和词汇表，因此通常需要加载 <strong>与模型对应的 tokenizer</strong>。</p>
+<p><strong>使用 AutoTokenizer</strong></p>
+<p>与模型对应的 “Auto” 类类似，Hugging Face 提供了 <code class="docutils literal notranslate"><span class="pre">AutoTokenizer</span></code> 来自动加载正确的分词器。用法很像 <code class="docutils literal notranslate"><span class="pre">AutoModel</span></code>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span>
+
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;bert-base-uncased&quot;</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p>这会下载并实例化与 <code class="docutils literal notranslate"><span class="pre">bert-base-uncased</span></code> 模型对应的分词器。如果你使用了其它模型，例如 GPT-2，换成 <code class="docutils literal notranslate"><span class="pre">&quot;gpt2&quot;</span></code> 即可：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tokenizer_gpt2</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;gpt2&quot;</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p><strong>手动指定分词参数</strong></p>
+<p>有时我们想对 tokenizer 做一些自定义配置，比如大小写是否保留、特殊符号如何处理等。可以在 <code class="docutils literal notranslate"><span class="pre">from_pretrained</span></code> 中传入额外参数，比如：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+    <span class="s2">&quot;bert-base-uncased&quot;</span><span class="p">,</span>
+    <span class="n">do_lower_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>    <span class="c1"># 是否将所有字母转为小写（大多数英文模型默认为True）</span>
+    <span class="n">use_fast</span><span class="o">=</span><span class="kc">True</span>          <span class="c1"># 是否使用快速分词器（Rust实现，通常更快）</span>
+<span class="p">)</span>
+
+</pre></div>
+</div>
+<p><strong>Tokenizer的基本用法</strong>
+实例化 tokenizer 后，可使用 encode, encode_plus, 或 <strong>call</strong> 等方法对文本进行编码。最常见的是直接调用 tokenizer，将文本字符串转换成模型可输入的格式（包含 input_ids, attention_mask 等）。示例：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Hello, how are you?&quot;</span>
+<span class="n">inputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">truncation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p>输出可能是一个包含以下字段的字典：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s1">&#39;input_ids&#39;</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([[</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">7592</span><span class="p">,</span> <span class="mi">1010</span><span class="p">,</span> <span class="mi">2129</span><span class="p">,</span> <span class="mi">2024</span><span class="p">,</span> <span class="mi">2017</span><span class="p">,</span>  <span class="mi">102</span><span class="p">]]),</span> 
+  <span class="s1">&#39;attention_mask&#39;</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="p">}</span>
+
+</pre></div>
+</div>
+<p>其中 <code class="docutils literal notranslate"><span class="pre">input_ids</span></code> 是分词后对照词表的数字索引，<code class="docutils literal notranslate"><span class="pre">attention_mask</span></code> 指示哪些位置是实际单词（1）以及哪些是填充（0）。如果是 BERT 模型，通常会在开头插入 <code class="docutils literal notranslate"><span class="pre">[CLS]</span></code>（id=101）或 <code class="docutils literal notranslate"><span class="pre">[UNK]</span></code> 等特殊标记，在末尾插入 <code class="docutils literal notranslate"><span class="pre">[SEP]</span></code>（id=102）。不同模型的特殊标记略有不同。</p>
+<p>在推理或训练时，将这些张量输入到对应的模型即可。例如：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model_outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="o">**</span><span class="n">inputs</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="id5">
+<h2>模型与 Tokenizer 版本匹配的重要性<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>在实践中，一定要确保 <strong>模型与 tokenizer 名称匹配</strong>。如果你加载了某个 GPT-2 模型，却使用了 BERT 的 tokenizer，可能会出现警告或导致结果不正确，因为它们的词表、特殊标记方式完全不同。</p>
+<p>在大多数情况下，你可以做以下二选一：</p>
+<ol class="arabic simple">
+<li><p><strong>直接使用 pipeline 并指定 <code class="docutils literal notranslate"><span class="pre">model</span></code></strong>：它会同时下载正确的分词器，自动匹配。</p></li>
+<li><p><strong>通过相同的名称分别调用 <code class="docutils literal notranslate"><span class="pre">AutoModelForXxx.from_pretrained(...)</span></code> 和 <code class="docutils literal notranslate"><span class="pre">AutoTokenizer.from_pretrained(...)</span></code></strong>，这样就能保证二者版本对应。</p></li>
+</ol>
+</section>
+<section id="id6">
+<h2>动手练习<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>使用<code class="docutils literal notranslate"><span class="pre">nlptown/bert-base-multilingual-uncased-sentiment</span></code>识别”I absolutely love this new phone!”这句话的情感。</p>
+<section id="id7">
+<h3>练习1：<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>要求：使用transformer的pipeline 实现</p>
+</section>
+<section id="id8">
+<h3>练习2：<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>要求：<strong>不使用 pipeline，而是手动实现情感分析任务</strong></p>
+<p>任务提示：</p>
+<ul class="simple">
+<li><p>使用 Hugging Face 的 transformers 库手动加载 <code class="docutils literal notranslate"><span class="pre">nlptown/bert-base-multilingual-uncased-sentiment</span></code> 模型和分词器。</p></li>
+<li><p>对输入句子 <code class="docutils literal notranslate"><span class="pre">&quot;I</span> <span class="pre">absolutely</span> <span class="pre">love</span> <span class="pre">this</span> <span class="pre">new</span> <span class="pre">phone!&quot;</span></code> 进行编码预处理。</p></li>
+<li><p>使用模型进行前向传播，得到 logits。</p></li>
+<li><p>利用 softmax 函数将 logits 转换为概率分布。</p></li>
+<li><p>根据概率分布确定预测的情感标签，并输出该标签及其对应的得分。</p></li>
+</ul>
+</section>
+</section>
+<section id="id9">
+<h2>进一步学习<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Hugging Face 官方文档</strong>: https://huggingface.co/docs/transformers
+这里有最全面的使用示例，包括 <code class="docutils literal notranslate"><span class="pre">pipeline</span></code>、<code class="docutils literal notranslate"><span class="pre">Trainer</span></code>、tokenizer 介绍等。</p></li>
+<li><p><strong>模型库</strong>: https://huggingface.co/models
+搜索关键词或按照任务、语言过滤找到自己需要的预训练模型。</p></li>
+<li><p><strong>分词器介绍</strong>: https://huggingface.co/docs/transformers/main_classes/tokenizer
+介绍了“fast tokenizers”的优势以及各种操作细节，适合进阶时深入了解。</p></li>
+<li><p><strong>pipeline API</strong>: https://huggingface.co/docs/transformers/main_classes/pipelines
+如果你想快速试用或只做推理，这里讲解了最简洁的方式。</p></li>
+<li><p><strong>GitHub 示例</strong>: https://github.com/huggingface/transformers/tree/main/examples
+展示了如何进行各种任务的微调训练和推理，是了解完整流程的好参考。</p></li>
+</ol>
+</section>
+<section id="id10">
+<h2>实践<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<p>实战任务1：命名实体识别（NER）
+实战任务2：情感分析（基于电影评论或社交媒体数据）
+实战任务3：语法分析
+实战任务4：文本分类</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="nlp-tasks.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">NLP 任务</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="classification.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">文本分类</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hugging-face-transformer">Hugging Face Transformer简介</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#huggingface">HuggingFace 的模型类型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformer">Transformer 快速入门</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">安装与环境准备</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">加载模型</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#auto">使用 “Auto” 系列类自动加载模型</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline">常见的Pipeline任务</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ner">NER识别实例</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenizer">加载 Tokenizer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">模型与 Tokenizer 版本匹配的重要性</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">动手练习</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">练习1：</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">练习2：</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">进一步学习</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">实践</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Zhijun Gao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 高志军.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
