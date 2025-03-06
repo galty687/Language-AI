@@ -1,4 +1,4 @@
-# 基于HF Transformer的NLP实践的联系答案
+# 基于HF Transformer的NLP实践的练习答案
 
 ## 练习1答案
 
@@ -18,7 +18,6 @@ result = sentiment_analysis(text)
 # 4. 输出结果
 print("情感分析结果:", result)
 
-# 5. 
 ```
 
 输出：
@@ -88,13 +87,35 @@ Predicted label: 5 stars
 
    - **tokenizer = ...**：加载与模型对应的分词器，确保输入文本的编码格式与模型一致。
 
-3. 模型推理，获取 logits
+2. 模型推理，获取 logits
+
+   logits 是模型输出的原始值，它是每个类别的得分（score），**尚未进行概率转换**（未经过softmax函数处理），每个类别的logit越大，表示模型越倾向预测为对应的标签。
+
+   
+
+   > 举个简单的例子： 假设模型预测三个类别（积极、中性、消极）， logits 为 `[3.2, -1.1, 0.5]` 表示模型更倾向于第一个类别（积极）。
+
+   
+
    - **with torch.no_grad()**：在推理过程中禁用梯度计算，这样可以节省内存并提高推理速度，因为这里不需要反向传播计算梯度。
-   - **outputs = model(**inputs)**：将编码后的输入数据传入模型，得到模型的输出。
+
+   - **outputs = model (**inputs)**：将编码后的输入数据传入模型，得到模型的输出。
+
    - **logits = outputs.logits**：从输出中提取 logits，logits 是模型在各个类别上的原始预测分数（未归一化）。
+
+     
 
 3. 将 logits 转换为概率
     - **torch.softmax**：对 logits 进行 softmax 操作，转换成概率分布。这里的 `dim=-1` 表示在最后一个维度上应用 softmax（即每个样本在所有类别上的概率和为 1）
+
+      通过分类头输出 logits：
+
+      - 比如 `[1.1, 0.3, -0.5, 0.2, 4.2]`
+
+      softmax后转化为概率：
+
+      - 比如 `[0.04, 0.02, 0.01, 0.03, 0.91]`
+
 4. 找到概率最大的标签
 
     - torch.argmax(probs, dim=-1)：找到概率最高的类别索引，代表模型的预测结果。调用 .item() 将单个张量转换为 Python 的数值类型。

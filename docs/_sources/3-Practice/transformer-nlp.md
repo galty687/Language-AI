@@ -261,26 +261,14 @@ model_outputs = model(**inputs)
 
 ## 进一步学习
 
-1. **Hugging Face 官方文档**: https://huggingface.co/docs/transformers
-   这里有最全面的使用示例，包括 `pipeline`、`Trainer`、tokenizer 介绍等。
-
-2. **模型库**: https://huggingface.co/models
-   搜索关键词或按照任务、语言过滤找到自己需要的预训练模型。
-
-3. **分词器介绍**: https://huggingface.co/docs/transformers/main_classes/tokenizer
-   介绍了“fast tokenizers”的优势以及各种操作细节，适合进阶时深入了解。
-
-4. **pipeline API**: https://huggingface.co/docs/transformers/main_classes/pipelines
-   如果你想快速试用或只做推理，这里讲解了最简洁的方式。
-
-5. **GitHub 示例**: https://github.com/huggingface/transformers/tree/main/examples
-   展示了如何进行各种任务的微调训练和推理，是了解完整流程的好参考。
+1. **[Hugging Face 官方文档](https://huggingface.co/docs/transformers)**。这里有最全面的使用示例，包括 `pipeline`、`Trainer`、tokenizer 介绍等。
+   
+2. **[模型库](https://huggingface.co/models)**。搜索关键词或按照任务、语言过滤找到自己需要的预训练模型。
+   
+3. **[分词器介绍](https://huggingface.co/docs/transformers/main_classes/tokenizer)**。介绍了“fast tokenizers”的优势以及各种操作细节，适合进阶时深入了解。
+   
+4. **[pipeline API](https://huggingface.co/docs/transformers/main_classes/pipelines)**。如果你想快速试用或只做推理，这里讲解了最简洁的方式。
+   
+5. **[GitHub 示例](https://github.com/huggingface/transformers/tree/main/examples)**。展示了如何进行各种任务的微调训练和推理，是了解完整流程的好参考。
 
 
-
-## 实践
-
-实战任务1：命名实体识别（NER）
-实战任务2：情感分析（基于电影评论或社交媒体数据）
-实战任务3：语法分析
-实战任务4：文本分类

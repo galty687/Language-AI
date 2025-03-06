@@ -17,7 +17,7 @@
         gtag('config', 'UA-45957014-6');
     </script>
     
-    <title>基于HF Transformer的NLP实践的联系答案 &#8212; 人工智能实践 0.2 文档</title>
+    <title>基于HF Transformer的NLP实践的练习答案 &#8212; 人工智能实践 0.2 文档</title>
   
   
   
@@ -169,6 +169,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../3-Practice/classification.html">文本分类</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../3-Practice/clusttering.html">文档聚类</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">课程实践项目</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../projects/projects.html">课程实践项目候选</a></li>
+</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">微调Phi-4</a></li>
@@ -302,7 +306,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>基于HF Transformer的NLP实践的联系答案</h1>
+    <h1>基于HF Transformer的NLP实践的练习答案</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -329,7 +333,7 @@
                 <article class="bd-article">
                   
   <section id="hf-transformernlp">
-<h1>基于HF Transformer的NLP实践的联系答案<a class="headerlink" href="#hf-transformernlp" title="Link to this heading">#</a></h1>
+<h1>基于HF Transformer的NLP实践的练习答案<a class="headerlink" href="#hf-transformernlp" title="Link to this heading">#</a></h1>
 <section id="id1">
 <h2>练习1答案<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">pipeline</span>
@@ -347,7 +351,6 @@
 <span class="c1"># 4. 输出结果</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;情感分析结果:&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
 
-<span class="c1"># 5. </span>
 </pre></div>
 </div>
 <p>输出：</p>
@@ -402,7 +405,7 @@
 </div>
 <section id="id3">
 <h3>解释：<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
-<ol class="arabic simple">
+<ol class="arabic">
 <li><p>加载模型和分词器</p>
 <ul class="simple">
 <li><p><strong>model_name</strong>：指定了要加载的模型名称。在这里，使用的是一个多语言的 BERT 模型，专门用于情感分析任务。</p></li>
@@ -411,15 +414,28 @@
 </ul>
 </li>
 <li><p>模型推理，获取 logits</p>
+<p>logits 是模型输出的原始值，它是每个类别的得分（score），<strong>尚未进行概率转换</strong>（未经过softmax函数处理），每个类别的logit越大，表示模型越倾向预测为对应的标签。</p>
+<blockquote>
+<div><p>举个简单的例子： 假设模型预测三个类别（积极、中性、消极）， logits 为 <code class="docutils literal notranslate"><span class="pre">[3.2,</span> <span class="pre">-1.1,</span> <span class="pre">0.5]</span></code> 表示模型更倾向于第一个类别（积极）。</p>
+</div></blockquote>
 <ul class="simple">
 <li><p><strong>with torch.no_grad()</strong>：在推理过程中禁用梯度计算，这样可以节省内存并提高推理速度，因为这里不需要反向传播计算梯度。</p></li>
-<li><p>**outputs = model(<strong>inputs)</strong>：将编码后的输入数据传入模型，得到模型的输出。</p></li>
+<li><p>**outputs = model (<strong>inputs)</strong>：将编码后的输入数据传入模型，得到模型的输出。</p></li>
 <li><p><strong>logits = outputs.logits</strong>：从输出中提取 logits，logits 是模型在各个类别上的原始预测分数（未归一化）。</p></li>
 </ul>
 </li>
 <li><p>将 logits 转换为概率</p>
+<ul>
+<li><p><strong>torch.softmax</strong>：对 logits 进行 softmax 操作，转换成概率分布。这里的 <code class="docutils literal notranslate"><span class="pre">dim=-1</span></code> 表示在最后一个维度上应用 softmax（即每个样本在所有类别上的概率和为 1）</p>
+<p>通过分类头输出 logits：</p>
 <ul class="simple">
-<li><p><strong>torch.softmax</strong>：对 logits 进行 softmax 操作，转换成概率分布。这里的 <code class="docutils literal notranslate"><span class="pre">dim=-1</span></code> 表示在最后一个维度上应用 softmax（即每个样本在所有类别上的概率和为 1）</p></li>
+<li><p>比如 <code class="docutils literal notranslate"><span class="pre">[1.1,</span> <span class="pre">0.3,</span> <span class="pre">-0.5,</span> <span class="pre">0.2,</span> <span class="pre">4.2]</span></code></p></li>
+</ul>
+<p>softmax后转化为概率：</p>
+<ul class="simple">
+<li><p>比如 <code class="docutils literal notranslate"><span class="pre">[0.04,</span> <span class="pre">0.02,</span> <span class="pre">0.01,</span> <span class="pre">0.03,</span> <span class="pre">0.91]</span></code></p></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p>找到概率最大的标签</p>
