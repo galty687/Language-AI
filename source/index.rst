@@ -36,6 +36,11 @@
    3-Practice/classification.md
    3-Practice/clusttering.md
    
+.. toctree::
+   :maxdepth: 1
+   :caption: 课程实践项目
+
+   projects/projects.md
 
 .. toctree::
    :maxdepth: 1
