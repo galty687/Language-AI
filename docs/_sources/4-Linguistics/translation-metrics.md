@@ -87,7 +87,7 @@ METEOR （Metric for Evaluation of Translation with Explicit ORdering）是一�
 **参考译文**："猫坐在垫子上。"  
 **候选译文**："猫蹲在垫子上。"  
 
-由于**"蹲"**和**"坐"**在某些语境下可互换，METEOR可能会给予一定程度的匹配分，而BLEU无法检测出这种相似性。此外，如果候选译文的词序严重不同，METEOR会给予更高的惩罚，导致得分下降。
+由于"蹲"和"坐"在某些语境下可互换，METEOR可能会给予一定程度的匹配分，而BLEU无法检测出这种相似性。此外，如果候选译文的词序严重不同，METEOR会给予更高的惩罚，导致得分下降。
 
 ### TER（Translation Edit Rate）
 
