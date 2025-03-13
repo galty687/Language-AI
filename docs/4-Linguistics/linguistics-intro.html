@@ -1,0 +1,1050 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45957014-6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-45957014-6');
+    </script>
+    
+    <title>语言学简介 &#8212; 人工智能实践 0.4 文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=64ceb196"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '4-Linguistics/linguistics-intro';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="应用语言学" href="applied-linguistics.html" />
+    <link rel="prev" title="译文质量评价方法" href="translation-metrics.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">人工智能实践 0.4 文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程简介</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/intro.html">课程大纲</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/terms.html">术语</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/setup.html">环境准备</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/llm-basics.html">LLM 基础</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">基于Transformer的自然语言处理</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/nlp-tasks.html">NLP 任务</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/transformer-nlp.html">基于HF Transformer的NLP实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/classification.html">文本分类</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/clusttering.html">文档聚类</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">语言学基础</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="linguistics-llm.html">大语言模型与语言学</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llm-metrics.html">常见大模型评价指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation-metrics.html">译文质量评价方法</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">语言学简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applied-linguistics.html">应用语言学</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">课程实践项目</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../projects/projects.html">课程实践项目候选</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">微调Phi-4</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../answers/transformer-practice-answers.html">基于HF Transformer的NLP实践的练习答案</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/4-Linguistics/linguistics-intro.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>语言学简介</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#phonetics">语音学（Phonetics）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#morphology">形态学（Morphology）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">形态学的两种主要构词过程</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">语言的形态复杂性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">形态分析的例子</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">练习</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax">句法学（Syntax）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1. 词序的重要性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2. 句法的递归和嵌套</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vs">3. 句法 vs. 语义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">4. 句法结构分析</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">练习</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semantics">语义学（Semantics）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1. 词汇语义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2. 组合语义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">3. 语义歧义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vs-vs">4. 语义 vs. 句法 vs. 语用</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">练习</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stylistics">文体学（Stylistics）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">1. 语言风格的变化</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">2. 文体学关注的方面</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id16"><strong>(1) 词汇层面</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id17"><strong>(2) 句法层面</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id18"><strong>(3) 语音语调</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id19"><strong>(4) 修辞手法</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">3. 文体学的应用</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">4. 文体风格对比</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">活动</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pragmatics">语用学（Pragmatics）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">1. 语境的重要性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">2. 言语行为理论</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">3. 会话含义与合作原则</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">4. 指示与指代</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">5. 礼貌原则与面子理论</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">练习</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">总结</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>语言学简介<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>语言学作为一门科学，研究语言的各个层面，包括声音、构词、语法和含义等。本节我们将介绍语言学的几个核心分支：语音学、形态学、句法学和语义学，并简要提及语用学。理解这些概念有助于分析任何一种语言的内部结构和规律。</p>
+<section id="phonetics">
+<h2>语音学（Phonetics）<a class="headerlink" href="#phonetics" title="Link to this heading">#</a></h2>
+<p><strong>语音学</strong>是研究人类语言声音的学科。它关注人类如何发出和感知语言声音，以及声音的物理特征。语音学通常分为三个子领域：</p>
+<ul class="simple">
+<li><p>发音语音学（articulatory phonetics）：研究发音器官（如舌头、嘴唇、声带）如何运动以产生声音。例如，发辅音时，声道某处会有阻碍或闭合；发元音时，声道开放，不同舌位和唇形产生不同的元音音色。</p></li>
+<li><p>声学语音学（acoustic phonetics）：研究语音的声波特征，如频率、振幅等，借助声谱图等工具分析声音波形。</p></li>
+<li><p>听觉语音学（auditory phonetics）：研究人耳和大脑如何感知和处理语音信号。</p></li>
+</ul>
+<p>语音学的基本单位是<strong>音素（phoneme）</strong>，这是在特定语言中可以区别意义的最小声音单位。例如，在汉语中**/m/<strong>和</strong>/n/<strong>是不同的音素，因为“妈”和“拿”意义不同。而语音学还涉及具体的</strong>音位实现**（音素的实际发音变体），称为<strong>音位变体</strong>或<strong>音段</strong>。</p>
+</section>
+<section id="morphology">
+<h2>形态学（Morphology）<a class="headerlink" href="#morphology" title="Link to this heading">#</a></h2>
+<p>形态学研究单词的内部结构及其如何由更小的有意义单位（词素，morphemes）构成[1][3][5]。这一层面的语言学分析对于许多 NLP 任务至关重要，例如分词（Tokenization）、词干提取（Stemming）和词形还原（Lemmatization）。</p>
+<p>形态学研究词的内部结构和构成规则。一个单词往往可以拆分为更小的有意义单位，称为<strong>词素（morpheme）</strong>。词素是语言中最小的意义单位，包括<strong>词根</strong>（能独立成词的核心部分）和<strong>词缀</strong>（附加在词根上的部分，如前缀、后缀等）。</p>
+<p>例如，英文单词“catching”可以拆分为：</p>
+<ul class="simple">
+<li><p><strong>catch</strong>（词根，意为“抓”）</p></li>
+<li><p><strong>-ing</strong>（后缀，表示进行时态）</p></li>
+</ul>
+<p>再如，中文里“不舒服”可以看作由“舒服”这个词根加上否定前缀“不-”构成，其中“舒服”本身又可拆为“舒”和“服”两个语素。这些例子显示<strong>词是可以分解的</strong>，形态学就是要揭示这些构词规则。</p>
+<section id="id2">
+<h3>形态学的两种主要构词过程<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>屈折变化（inflection）</strong>：改变词的形态以表达不同的语法功能，但不改变词的基本含义或词性。</p>
+<ul class="simple">
+<li><p>例：英文名词加“-s”表示复数（<em>dog</em> → <em>dogs</em>）</p></li>
+<li><p>例：动词加“-ed”表示过去式（<em>play</em> → <em>played</em>）</p></li>
+</ul>
+</li>
+<li><p><strong>派生构词（derivation）</strong>：通过添加词缀等方式派生出一个新词，可能改变词性或基本意义。</p>
+<ul class="simple">
+<li><p>例：英文在名词 <em>modern</em> 后加“-ize”派生出动词 <em>modernize</em>（使现代化）。</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="id3">
+<h3>语言的形态复杂性<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>不同语言的形态复杂程度差异很大。有的语言（如汉语、英语）形态变化较少，更多依靠<strong>语序</strong>或<strong>独立词</strong>来表达语法关系；而有些语言（如<strong>土耳其语</strong>、<strong>拉丁语</strong>）有丰富的词形变化，一个词往往带有多种语法信息。形态学通过比较不同语言的构词法，帮助我们了解<strong>语言结构的多样性和共性</strong>。</p>
+</section>
+<section id="id4">
+<h3>形态分析的例子<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>在英语中，前缀 <strong>un-</strong> 通常表示否定或相反：</p>
+<ul class="simple">
+<li><p><em>happy</em>（高兴）+ <strong>un-</strong> → <em>unhappy</em>（不高兴）</p></li>
+</ul>
+<p>后缀 <strong>-ness</strong> 可以把形容词变成名词：</p>
+<ul class="simple">
+<li><p><em>happy</em> → <em>happiness</em>（幸福，快乐）</p></li>
+</ul>
+<p>因此，<strong>unhappiness</strong> 可以分解为：</p>
+<ul class="simple">
+<li><p><strong>un-</strong>（否定前缀）</p></li>
+<li><p><strong>happi</strong>（词根，<em>happy</em> 的变体）</p></li>
+<li><p><strong>-ness</strong>（名词后缀）</p></li>
+</ul>
+<p>合起来表示“不快乐”这一概念。</p>
+</section>
+<section id="id5">
+<h3>练习<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<p>请将以下英文单词划分词素并解释含义：</p>
+<ol class="arabic simple">
+<li><p><strong>redo</strong></p></li>
+<li><p><strong>teacher</strong></p></li>
+<li><p><strong>unlockable</strong></p></li>
+</ol>
+<p>讨论这些词中词缀的位置和作用（提示：“unlockable”有歧义：<em>un-lockable</em> vs. <em>unlock-able</em>）。</p>
+</section>
+</section>
+<section id="syntax">
+<h2>句法学（Syntax）<a class="headerlink" href="#syntax" title="Link to this heading">#</a></h2>
+<p>句法学研究词语如何组合成短语和句子的规则。每种语言都有一套语法规则，决定了单词的排列顺序和句子结构。句法学关注的问题包括：</p>
+<ul class="simple">
+<li><p><strong>词序</strong>（如主语-动词-宾语的顺序）</p></li>
+<li><p><strong>句法关系</strong>（主语、宾语等功能）</p></li>
+<li><p><strong>层次结构</strong>（小句内部嵌套关系）</p></li>
+</ul>
+<p>句法规则使我们能够判定一个句子在语言上是否成立（即语法正确），即使这个句子可能在意义上没有道理。</p>
+<section id="id6">
+<h3>1. 词序的重要性<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<p>例如，英语通常遵循**主语-动词-宾语（SVO）**语序：</p>
+<ul class="simple">
+<li><p><strong>正确：</strong> <em>The cat (主语) chased (动词) the mouse (宾语).</em></p></li>
+<li><p><strong>错误：</strong> <em>Chased the mouse the cat.</em>（不符合英语句法规则）</p></li>
+</ul>
+<p>同样，在汉语中：</p>
+<ul class="simple">
+<li><p><strong>正确：</strong> “我吃苹果”</p></li>
+<li><p><strong>错误：</strong> “我苹果吃”（除非用于特殊语境下的强调）</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>2. 句法的递归和嵌套<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>句法学也关心<strong>递归</strong>和<strong>嵌套结构</strong>，这赋予语言无限的表达力。例如：</p>
+<ul class="simple">
+<li><p>“我知道 <strong>[你喜欢 [他写的那本书] ]</strong>。”<br />
+句法规则允许层层嵌套，使得有限的词汇能够表达无限多样的思想。</p></li>
+</ul>
+</section>
+<section id="vs">
+<h3>3. 句法 vs. 语义<a class="headerlink" href="#vs" title="Link to this heading">#</a></h3>
+<p>一个经典的<strong>句法-语义分离</strong>例子来自<strong>乔姆斯基</strong>：</p>
+<ul class="simple">
+<li><p><strong>“无色的绿色思想在疯狂地沉睡。”</strong>（<em>Colorless green ideas sleep furiously.</em>）</p></li>
+</ul>
+<p>这句话在<strong>句法上正确</strong>（结构符合英文句法规则），但<strong>语义上没有明显意义</strong>。这个例子说明：</p>
+<ul class="simple">
+<li><p><strong>句法学</strong>关注句子的结构形式。</p></li>
+<li><p><strong>语义学</strong>关注句子的意义。</p></li>
+<li><p>句法和语义既相关又独立。</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>4. 句法结构分析<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>对比句子：</p>
+<ul class="simple">
+<li><p><strong>“小明把小红打了。”</strong></p></li>
+<li><p><strong>“小红把小明打了。”</strong></p></li>
+</ul>
+<p>两句调换了人名的位置，<strong>语法结构相似，但意义截然相反</strong>。<br />
+句法学研究者会用<strong>句法树（Syntax Tree）<strong>表示句子结构，显示</strong>主语、谓语、宾语</strong>等成分的层次关系。<br />
+通过画<strong>句法树</strong>可以清楚看到：</p>
+<ul class="simple">
+<li><p><strong>哪个名词短语充当主语</strong></p></li>
+<li><p><strong>哪个是宾语</strong></p></li>
+<li><p><strong>为何意义不同</strong></p></li>
+</ul>
+</section>
+<section id="id9">
+<h3>练习<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<p>请尝试为中文句子：</p>
+<blockquote>
+<div><p><strong>“学生在教室里讨论问题。”</strong></p>
+</div></blockquote>
+<ul class="simple">
+<li><p>划分<strong>层次结构</strong>（主谓宾和介词短语等）。</p></li>
+<li><p>讨论如果改变词序或添加/删除某些功能词（例如**“了”<strong>、</strong>“把”**等），如何影响句法结构和意义。</p></li>
+</ul>
+<p>这个练习有助于理解<strong>句法规则的作用</strong>。</p>
+</section>
+</section>
+<section id="semantics">
+<h2>语义学（Semantics）<a class="headerlink" href="#semantics" title="Link to this heading">#</a></h2>
+<p>语义学研究<strong>语言的意义</strong>，即<strong>词、短语、句子的含义</strong>以及<strong>意义是如何产生的</strong>。<br />
+语义学探讨的问题包括：</p>
+<ul class="simple">
+<li><p><strong>词汇意义</strong>（单词的含义及其关系）</p></li>
+<li><p><strong>句子意义</strong>（句子如何表达特定的意义）</p></li>
+<li><p><strong>语义组合规则</strong>（句子意义如何由词的意义组合而成）</p></li>
+<li><p><strong>语义歧义</strong>（句子可能有不止一种解释）</p></li>
+</ul>
+<p>语义学的研究范围从单词一直延伸到<strong>句子</strong>乃至更大的<strong>篇章</strong>。</p>
+<section id="id10">
+<h3>1. 词汇语义<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p>研究词的意义及其相互关系，例如：</p>
+<ul class="simple">
+<li><p><strong>同义词</strong>（意思相近的词）</p></li>
+<li><p><strong>反义词</strong>（意思相反的词）</p></li>
+<li><p><strong>多义词</strong>（一个词有多种相关意义）</p></li>
+<li><p><strong>同形异义词</strong>（拼写相同但意义不同）<br />
+例如，<strong>英文单词 <em>bank</em></strong> 可以指：</p>
+<ul>
+<li><p><strong>河岸</strong></p></li>
+<li><p><strong>银行</strong></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id11">
+<h3>2. 组合语义<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<p>研究<strong>短语和句子的意义</strong>如何由其组成部分的意义合成。<br />
+<strong>例子：</strong></p>
+<ul class="simple">
+<li><p><em>狗咬人</em> vs. <em>人咬狗</em></p>
+<ul>
+<li><p>这两个句子虽然由相同词汇组成，但由于<strong>词序不同</strong>，意义<strong>完全不同</strong>。</p></li>
+<li><p>语义学通过<strong>组合原则</strong>解释这种现象，即：<strong>句子的意义取决于词的意义及其组合方式</strong>。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id12">
+<h3>3. 语义歧义<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<p>有些句子可能有<strong>不止一种解释</strong>，需要通过<strong>上下文</strong>消除歧义。</p>
+<p><strong>例子：</strong></p>
+<ul class="simple">
+<li><p>“他看见了摇篮里的孩子用望远镜。”</p>
+<ul>
+<li><p><strong>可能的解释 1</strong>：他<strong>用望远镜</strong>看孩子。</p></li>
+<li><p><strong>可能的解释 2</strong>：孩子<strong>用望远镜</strong>（他看到这一幕）。</p></li>
+</ul>
+</li>
+</ul>
+<p>语义学会分析<strong>歧义产生的原因</strong>（如句法结构或词义多解），并研究如何<strong>消除歧义</strong>。</p>
+</section>
+<section id="vs-vs">
+<h3>4. 语义 vs. 句法 vs. 语用<a class="headerlink" href="#vs-vs" title="Link to this heading">#</a></h3>
+<p>语义学与<strong>句法学</strong>紧密相关但有所区别：</p>
+<ul class="simple">
+<li><p><strong>句法学</strong>提供结构框架（句子的排列规则）。</p></li>
+<li><p><strong>语义学</strong>赋予语言意义（句子的含义）。</p></li>
+</ul>
+<p>此外，语义学和<strong>语用学</strong>也有所区别：</p>
+<ul class="simple">
+<li><p><strong>语义学</strong>关注<strong>字面意义</strong>。</p></li>
+<li><p><strong>语用学</strong>关注<strong>言外之意</strong>（在特定语境下的理解）。</p></li>
+</ul>
+<p><strong>例子：</strong></p>
+<ul class="simple">
+<li><p>英文句子 <strong>“It’s cold in here.”</strong></p>
+<ul>
+<li><p><strong>语义学分析</strong>：字面意思是“房间里很冷”。</p></li>
+<li><p><strong>语用学分析</strong>：</p>
+<ul>
+<li><p>对朋友说，可能是在<strong>抱怨</strong>，希望关窗。</p></li>
+<li><p>对客人说，可能是<strong>间接建议</strong>他们穿上外套。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>这体现了<strong>语义 vs. 语用</strong>的区别：</p>
+<ul class="simple">
+<li><p><strong>语义学</strong>描述字面的“冷”。</p></li>
+<li><p><strong>语用学</strong>理解背后的意图。</p></li>
+</ul>
+</section>
+<section id="id13">
+<h3>练习<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<p>翻译以下句子，并解释其<strong>两种可能的意义</strong>：</p>
+<blockquote>
+<div><p><strong>“我骑着自行车看见了一只狗。”</strong><br />
+（谁骑自行车？谁看见谁？）</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>讨论这句话为何会产生<strong>语义歧义</strong>。</p></li>
+<li><p>试着修改句子以<strong>消除歧义</strong>，例如：</p>
+<ul>
+<li><p><strong>调整词序</strong>。</p></li>
+<li><p><strong>加入明确的说明词</strong>。</p></li>
+</ul>
+</li>
+<li><p>通过这个练习体会<strong>语义表达的准确性</strong>对理解的重要性。</p></li>
+</ul>
+</section>
+</section>
+<section id="stylistics">
+<h2>文体学（Stylistics）<a class="headerlink" href="#stylistics" title="Link to this heading">#</a></h2>
+<p>文体学是<strong>应用语言学</strong>的一个分支，侧重于研究<strong>不同文本和语境中的语言风格</strong>。<br />
+简单来说，文体学探讨**“风格”<strong>——即</strong>不同个人、群体或场合使用语言的特点**。<br />
+风格可以体现在<strong>词汇选择</strong>、<strong>句法结构</strong>、<strong>语调语气</strong>等方面。</p>
+<section id="id14">
+<h3>1. 语言风格的变化<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<p>不同场合往往要求不同的<strong>语言风格</strong>：</p>
+<ul class="simple">
+<li><p><strong>日常聊天</strong>：通俗口语</p></li>
+<li><p><strong>工作面试 / 正式书信</strong>：正式规范的语言</p></li>
+</ul>
+<p>文体学分析这些差异，并解释<strong>为什么</strong>以及<strong>如何</strong>在不同情境下语言会发生变化。</p>
+</section>
+<section id="id15">
+<h3>2. 文体学关注的方面<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
+<section id="id16">
+<h4><strong>(1) 词汇层面</strong><a class="headerlink" href="#id16" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>正式场合</strong>：倾向使用书面语词汇</p></li>
+<li><p><strong>非正式场合</strong>：多用俚语、俗语</p></li>
+</ul>
+<p><strong>例子：</strong></p>
+<ul class="simple">
+<li><p><strong>正式文体</strong>：“儿童”</p></li>
+<li><p><strong>口语表达</strong>：“娃娃”</p></li>
+</ul>
+</section>
+<section id="id17">
+<h4><strong>(2) 句法层面</strong><a class="headerlink" href="#id17" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>正式文体</strong>：句子结构完整，包含从句</p></li>
+<li><p><strong>口语风格</strong>：常见省略、非完整句</p></li>
+</ul>
+<p><strong>例子：</strong></p>
+<ul class="simple">
+<li><p><strong>正式写作</strong>：“基于上述数据可以推断……”</p></li>
+<li><p><strong>口头表达</strong>：“所以，我觉得……”</p></li>
+</ul>
+</section>
+<section id="id18">
+<h4><strong>(3) 语音语调</strong><a class="headerlink" href="#id18" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>书面文本</strong>：没有语音信息</p></li>
+<li><p><strong>口语风格</strong>：语速、重音、语调构成风格的一部分</p></li>
+</ul>
+<p><strong>例子：</strong></p>
+<ul class="simple">
+<li><p><strong>演讲</strong>：语调庄重缓慢</p></li>
+<li><p><strong>日常聊天</strong>：语调轻快随意</p></li>
+</ul>
+</section>
+<section id="id19">
+<h4><strong>(4) 修辞手法</strong><a class="headerlink" href="#id19" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>文学作品</strong>：隐喻、拟人、排比等修辞方式形成独特风格</p></li>
+<li><p><strong>文体学分析</strong>：研究这些修辞如何影响读者体验</p></li>
+</ul>
+</section>
+</section>
+<section id="id20">
+<h3>3. 文体学的应用<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
+<p>文体学将<strong>语言学分析方法</strong>应用到<strong>文学批评</strong>、<strong>广告解读</strong>、<strong>法律语言分析</strong>等领域。<br />
+例如：</p>
+<ul class="simple">
+<li><p><strong>统计词频、句长</strong> → 定量比较不同作者的写作风格</p></li>
+<li><p><strong>语言分析</strong> → 揭示广告文案中的<strong>潜在说服技巧</strong></p></li>
+</ul>
+</section>
+<section id="id21">
+<h3>4. 文体风格对比<a class="headerlink" href="#id21" title="Link to this heading">#</a></h3>
+<p><strong>古典文学 vs. 网络小说</strong></p>
+<ul>
+<li><p><strong>古典文学</strong>：用词考究、句式复杂</p>
+<blockquote>
+<div><p>“人生自古谁无死，留取丹心照汗青。”</p>
+</div></blockquote>
+</li>
+<li><p><strong>网络小说</strong>：口语化、直白</p>
+<blockquote>
+<div><p>“他竟然真的回来了！太不可思议了！”</p>
+</div></blockquote>
+</li>
+</ul>
+<p>文体学的视角可以帮助我们<strong>分析文本的词汇丰富度、句子结构、语气语态</strong>，理解不同风格如何<strong>营造不同的阅读体验</strong>。</p>
+</section>
+<section id="id22">
+<h3>活动<a class="headerlink" href="#id22" title="Link to this heading">#</a></h3>
+<p><strong>任务</strong>：<br />
+<strong>将一段口语对话改写成正式书面通知</strong>，或者<strong>将正式公告改写成聊天语气</strong>。<br />
+<strong>小组讨论</strong>：</p>
+<ul class="simple">
+<li><p>交换改写的文本</p></li>
+<li><p>讨论文体的<strong>转换点</strong>（如<strong>用词、句式、礼貌程度</strong>）</p></li>
+<li><p>体会<strong>不同风格的语言特点</strong></p></li>
+</ul>
+<p>这个练习可以<strong>加深对文体差异的理解</strong>。</p>
+</section>
+</section>
+<section id="pragmatics">
+<h2>语用学（Pragmatics）<a class="headerlink" href="#pragmatics" title="Link to this heading">#</a></h2>
+<p><strong>语用学</strong>是语言学的一个分支，研究语言在具体语境中的使用情况，关注语境如何影响语言的理解和表达。与<strong>语义学</strong>主要研究语言的字面意义不同，语用学更侧重于语言的实际使用和交际功能。</p>
+<section id="id23">
+<h3>1. 语境的重要性<a class="headerlink" href="#id23" title="Link to this heading">#</a></h3>
+<p>语境包括：</p>
+<ul class="simple">
+<li><p><strong>物理环境</strong>：交流发生的时间和地点。</p></li>
+<li><p><strong>社会关系</strong>：交流者之间的身份和关系。</p></li>
+<li><p><strong>文化背景</strong>：特定文化中的习惯和规范。</p></li>
+</ul>
+<p>这些因素都会影响语言的使用和理解。</p>
+<p><strong>例子：</strong></p>
+<ul class="simple">
+<li><p>“你能关门吗？”</p>
+<ul>
+<li><p><strong>字面理解</strong>：询问对方是否有能力关门。</p></li>
+<li><p><strong>实际意图</strong>：请求对方关门。</p></li>
+</ul>
+</li>
+</ul>
+<p>在不同语境下，听者需要根据情况推断说话者的真实意图。</p>
+</section>
+<section id="id24">
+<h3>2. 言语行为理论<a class="headerlink" href="#id24" title="Link to this heading">#</a></h3>
+<p><strong>言语行为理论</strong>由哲学家约翰·奥斯汀和约翰·塞尔提出，探讨语言不仅用于传递信息，还用于执行动作。言语行为分为：</p>
+<ul>
+<li><p>陈述行为</p>
+<p>：提供信息或描述事实。</p>
+<ul class="simple">
+<li><p>例：“天气很好。”</p></li>
+</ul>
+</li>
+<li><p>指令行为</p>
+<p>：请求或命令他人做某事。</p>
+<ul class="simple">
+<li><p>例：“请关门。”</p></li>
+</ul>
+</li>
+<li><p>承诺行为</p>
+<p>：承诺或保证某事。</p>
+<ul class="simple">
+<li><p>例：“我明天会来。”</p></li>
+</ul>
+</li>
+<li><p>表达行为</p>
+<p>：表达情感或态度。</p>
+<ul class="simple">
+<li><p>例：“我很抱歉。”</p></li>
+</ul>
+</li>
+<li><p>宣告行为</p>
+<p>：通过语言使某种状态生效。</p>
+<ul class="simple">
+<li><p>例：“我宣布会议开始。”</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id25">
+<h3>3. 会话含义与合作原则<a class="headerlink" href="#id25" title="Link to this heading">#</a></h3>
+<p>哲学家赫伯特·保罗·格莱斯提出了<strong>合作原则</strong>，认为对话参与者通常遵循以下准则以确保交流顺畅：</p>
+<ul class="simple">
+<li><p><strong>数量准则</strong>：提供足够但不过多的信息。</p></li>
+<li><p><strong>质量准则</strong>：提供真实的信息。</p></li>
+<li><p><strong>关联准则</strong>：提供相关的信息。</p></li>
+<li><p><strong>方式准则</strong>：表达清晰、简洁、避免模糊。</p></li>
+</ul>
+<p>然而，人们有时会故意违反这些准则，产生<strong>会话含义</strong>，即言外之意。</p>
+<p><strong>例子：</strong></p>
+<ul class="simple">
+<li><p><strong>A</strong>：“你去过那个新餐厅吗？”</p></li>
+<li><p><strong>B</strong>：“嗯，服务员很友好。”</p></li>
+</ul>
+<p>B没有直接评价食物，但可能暗示食物不佳。</p>
+</section>
+<section id="id26">
+<h3>4. 指示与指代<a class="headerlink" href="#id26" title="Link to this heading">#</a></h3>
+<p><strong>指示</strong>（Deixis）涉及语言中指向特定时间、地点、人物的词语，如：</p>
+<ul class="simple">
+<li><p><strong>人称代词</strong>：我、你、他/她/它。</p></li>
+<li><p><strong>时间词</strong>：现在、昨天、明天。</p></li>
+<li><p><strong>地点词</strong>：这里、那里。</p></li>
+</ul>
+<p>这些词的意义依赖于具体的语境。</p>
+<p><strong>例子：</strong></p>
+<ul class="simple">
+<li><p>“我明天在那里见你。”</p></li>
+</ul>
+<p>要理解这句话，需要知道“我”和“你”指的是谁，“明天”是哪一天，“那里”是哪里。</p>
+</section>
+<section id="id27">
+<h3>5. 礼貌原则与面子理论<a class="headerlink" href="#id27" title="Link to this heading">#</a></h3>
+<p><strong>礼貌原则</strong>研究人们如何在交流中维护彼此的“面子”或社会尊严。布朗和莱文森提出了<strong>面子理论</strong>，将“面子”分为：</p>
+<ul class="simple">
+<li><p><strong>积极面子</strong>：被认同、赞赏的需求。</p></li>
+<li><p><strong>消极面子</strong>：不被打扰、自由行动的需求。</p></li>
+</ul>
+<p>在交流中，人们常使用<strong>礼貌策略</strong>来照顾他人的面子需求。</p>
+<p><strong>例子：</strong></p>
+<ul class="simple">
+<li><p><strong>直接请求</strong>：“给我盐。”</p></li>
+<li><p><strong>礼貌请求</strong>：“您能把盐递给我吗？”</p></li>
+</ul>
+<p>后者更礼貌，照顾了对方的消极面子。</p>
+</section>
+<section id="id28">
+<h3>练习<a class="headerlink" href="#id28" title="Link to this heading">#</a></h3>
+<p><strong>任务</strong>：分析以下对话中的语用现象。</p>
+<p><strong>对话：</strong></p>
+<ul class="simple">
+<li><p><strong>甲</strong>：“你会参加今晚的聚会吗？”</p></li>
+<li><p><strong>乙</strong>：“我明天一早有个重要会议。”</p></li>
+</ul>
+<p><strong>讨论：</strong></p>
+<ul class="simple">
+<li><p><strong>乙</strong>的回答是否直接？他可能的意图是什么？</p></li>
+<li><p>这种回答体现了哪些语用原则？</p></li>
+</ul>
+<p>通过这个练习，可以理解语用学在实际交流中的应用，以及语境如何影响语言的使用和理解。</p>
+</section>
+</section>
+<section id="id29">
+<h2>总结<a class="headerlink" href="#id29" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>概念</p></th>
+<th class="head"><p>定义</p></th>
+<th class="head"><p>在 NLP 中的相关性</p></th>
+<th class="head"><p>示例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>语音学/音系学</p></td>
+<td><p>研究语言中的语音及其模式</p></td>
+<td><p>对语音识别、TTS（文本转语音）合成至关重要</p></td>
+<td><p>在 ASR（自动语音识别）中区分 “cat” 中的 /k/ 和 /t/</p></td>
+</tr>
+<tr class="row-odd"><td><p>形态学</p></td>
+<td><p>研究词的构成及词素的组合</p></td>
+<td><p>关键用于分词、词干提取、词形还原</p></td>
+<td><p>将 “running” 拆分为 “run” + “-ing”</p></td>
+</tr>
+<tr class="row-even"><td><p>句法学</p></td>
+<td><p>研究句子的结构和规则</p></td>
+<td><p>对语法解析、机器翻译、问答系统至关重要</p></td>
+<td><p>将 “The cat chased the mouse” 解析为 NP-VP-NP</p></td>
+</tr>
+<tr class="row-odd"><td><p>语义学</p></td>
+<td><p>研究单词和句子的意义</p></td>
+<td><p>对情感分析、文本摘要等任务至关重要</p></td>
+<td><p>解析 “bank” 是金融机构还是河岸</p></td>
+</tr>
+<tr class="row-even"><td><p>语用学</p></td>
+<td><p>研究语言使用中的上下文和意图</p></td>
+<td><p>重要用于对话系统、意图检测</p></td>
+<td><p>将 “Can you pass the salt?” 解析为请求</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="translation-metrics.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">译文质量评价方法</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="applied-linguistics.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">应用语言学</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#phonetics">语音学（Phonetics）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#morphology">形态学（Morphology）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">形态学的两种主要构词过程</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">语言的形态复杂性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">形态分析的例子</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">练习</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax">句法学（Syntax）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1. 词序的重要性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2. 句法的递归和嵌套</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vs">3. 句法 vs. 语义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">4. 句法结构分析</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">练习</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semantics">语义学（Semantics）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1. 词汇语义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2. 组合语义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">3. 语义歧义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vs-vs">4. 语义 vs. 句法 vs. 语用</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">练习</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stylistics">文体学（Stylistics）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">1. 语言风格的变化</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">2. 文体学关注的方面</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id16"><strong>(1) 词汇层面</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id17"><strong>(2) 句法层面</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id18"><strong>(3) 语音语调</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id19"><strong>(4) 修辞手法</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">3. 文体学的应用</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">4. 文体风格对比</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">活动</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pragmatics">语用学（Pragmatics）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">1. 语境的重要性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">2. 言语行为理论</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">3. 会话含义与合作原则</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">4. 指示与指代</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">5. 礼貌原则与面子理论</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">练习</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">总结</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Zhijun Gao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 高志军.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

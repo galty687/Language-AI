@@ -17,7 +17,7 @@
         gtag('config', 'UA-45957014-6');
     </script>
     
-    <title>资源 &#8212; 人工智能实践 0.2 文档</title>
+    <title>资源 &#8212; 人工智能实践 0.4 文档</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=25ad8440"></script>
+    <script src="../_static/documentation_options.js?v=64ceb196"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -139,7 +139,7 @@
   
   
   
-    <p class="title logo__title">人工智能实践 0.2 文档</p>
+    <p class="title logo__title">人工智能实践 0.4 文档</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -169,9 +169,25 @@
 <li class="toctree-l1"><a class="reference internal" href="../3-Practice/classification.html">文本分类</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../3-Practice/clusttering.html">文档聚类</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">语言学基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/linguistics-llm.html">大语言模型与语言学</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/llm-metrics.html">常见大模型评价指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/translation-metrics.html">译文质量评价方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/linguistics-intro.html">语言学简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/applied-linguistics.html">应用语言学</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">课程实践项目</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../projects/projects.html">课程实践项目候选</a></li>
+</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">微调Phi-4</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../answers/transformer-practice-answers.html">基于HF Transformer的NLP实践的练习答案</a></li>
 </ul>
 
     </div>
@@ -316,21 +332,25 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">重要会议</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">模型</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">小模型</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">翻译大模型</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">视觉大模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">推理/思考模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">翻译大模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">视觉大模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">语音模型</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#difussion-llm">difussion LLM</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">本地推理框架</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">微调工具</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">大模型测评</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">有趣的应用</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">本地推理框架</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">微调工具</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">大模型测评</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">有趣的应用</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ai">AI编程工具</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">工作流</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">基于知识库的问答</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">智能体</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">学习资料</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">大模型催生的新协议</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">提示词</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">工作流</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">基于知识库的问答</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">智能体</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">学习资料</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">大模型催生的新协议</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">工具</a></li>
 </ul>
             </nav>
         </div>
@@ -374,15 +394,28 @@
 </ul>
 </section>
 <section id="id6">
-<h3>翻译大模型<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<h3>推理/思考模型<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://qwenlm.github.io/blog/qwq-32b/">qwq-32B</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/deepseek-ai/DeepSeek-R1">deepseek-ai/DeepSeek-R1</a></p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>翻译大模型<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://help.aliyun.com/zh/model-studio/user-guide/machine-translation">Qwen-MT</a></p></li>
 </ul>
 </section>
-<section id="id7">
-<h3>视觉大模型<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<section id="id8">
+<h3>视觉大模型<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://tongyi.aliyun.com/wanxiang/videoCreation">通义万象</a> | <a class="reference external" href="https://alidocs.dingtalk.com/i/nodes/jb9Y4gmKWrx9eo4dCql9LlbYJGXn6lpz?spm=5176.29623064.0.0.41ed1ecerZpS4I&amp;amp;utm_scene=person_space">官方提示词</a></p></li>
+</ul>
+</section>
+<section id="id9">
+<h3>语音模型<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://sparkaudio.github.io/spark-tts/">Spark TTS</a>  | <a class="reference external" href="https://sparktts.org">Demo</a></p></li>
 </ul>
 </section>
 <section id="difussion-llm">
@@ -392,8 +425,8 @@
 </ul>
 </section>
 </section>
-<section id="id8">
-<h2>本地推理框架<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<section id="id10">
+<h2>本地推理框架<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://ollama.com">Ollama</a></p></li>
 <li><p><a class="reference external" href="https://lmstudio.ai">LM Studio</a></p></li>
@@ -402,8 +435,8 @@
 <li><p><a class="reference external" href="https://localai.io">LocalAI</a></p></li>
 </ul>
 </section>
-<section id="id9">
-<h2>微调工具<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<section id="id11">
+<h2>微调工具<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/yangjianxin1/Firefly">Firefly</a></p></li>
 <li><p><a class="reference external" href="https://unsloth.ai/">Unsloth</a></p></li>
@@ -413,15 +446,18 @@
 <li><p><a class="reference external" href="https://github.com/cckuailong/SuperAdapters/tree/master">SuperAdapters</a></p></li>
 </ul>
 </section>
-<section id="id10">
-<h2>大模型测评<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<section id="id12">
+<h2>大模型测评<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://lmarena.ai/">Chatbot Arena</a></p></li>
 <li><p><a class="reference external" href="https://agi.safe.ai">Humanity’s Last Exam</a></p></li>
+<li><p><a class="reference external" href="https://eqbench.com/creative_writing.html">Creative Writing</a></p></li>
+<li><p><a class="reference external" href="https://eqbench.com/index.html">EQ</a></p></li>
+<li><p><a class="reference external" href="https://livebench.ai/#/">Live Bench</a></p></li>
 </ul>
 </section>
-<section id="id11">
-<h2>有趣的应用<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<section id="id13">
+<h2>有趣的应用<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://notebooklm.google/">Notebook LM</a> (生成英文博客)</p></li>
 <li><p><a class="reference external" href="https://github.com/FoloUp/FoloUp">FoloUP</a> （模拟面试）</p></li>
@@ -437,42 +473,61 @@
 <li><p><a class="reference external" href="https://github.com/cline/cline">Cline Coding Agent</a>  （ VS Code 插件 ）</p></li>
 </ul>
 </section>
-<section id="id12">
-<h2>工作流<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<section id="id14">
+<h2>提示词<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://prompt.always200.com">提示词优化器</a> | <a class="reference external" href="https://github.com/linshenkx/prompt-optimizer?tab=readme-ov-file">源码</a></p></li>
+</ul>
+</section>
+<section id="id15">
+<h2>工作流<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="http://dify.ai">Dify</a></p></li>
 <li><p><a class="reference external" href="http://coze.com">Coze</a></p></li>
 <li><p><a class="reference external" href="https://github.com/PySpur-Dev/pyspur">PySpur</a></p></li>
 </ul>
 </section>
-<section id="id13">
-<h2>基于知识库的问答<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
+<section id="id16">
+<h2>基于知识库的问答<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/netease-youdao/QAnything">Qanything</a> (有道)</p></li>
 <li><p><a class="reference external" href="https://ima.qq.com">ima</a> (腾讯)</p></li>
 <li><p><a class="reference external" href="https://maxkb.cn">MaxKB</a></p></li>
 <li><p><a class="reference external" href="https://fastgpt.cn">FastGPT</a></p></li>
+<li><p><a class="reference external" href="https://rlama.dev">RLAMA</a></p></li>
 </ul>
 </section>
-<section id="id14">
-<h2>智能体<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<section id="id17">
+<h2>智能体<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://operator.browserbase.com">Open Operator</a></p></li>
+<li><p>Nanobroser</p></li>
+<li><p><a class="reference external" href="https://devin.ai">Devin</a></p></li>
+<li><p><a class="reference external" href="https://github.com/HKUDS/AutoAgent">AutoAgent</a></p></li>
 </ul>
 </section>
-<section id="id15">
-<h2>学习资料<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<section id="id18">
+<h2>学习资料<a class="headerlink" href="#id18" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://bbycroft.net/llm">大模型原理可视化</a></p></li>
 <li><p><a class="reference external" href="https://github.com/ZJU-LLMs/Foundations-of-LLMs/tree/main/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%BB%8F%E5%85%B8%E8%AE%BA%E6%96%87%E5%88%97%E8%A1%A8">大模型基础论文列表</a></p></li>
 <li><p><a class="reference external" href="https://artefact2.github.io/llm-sampling/index.xhtml">LLM Sampling Visualization</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/learn/agents-course/en/unit0/introduction">Hugging Face Agent Course</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/learn/nlp-course/chapter0/1">Hugging Face NLP Course</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ianand/spreadsheets-are-all-you-need">spreadsheets-are-all-you-need</a></p></li>
 </ul>
 </section>
-<section id="id16">
-<h2>大模型催生的新协议<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
+<section id="id19">
+<h2>大模型催生的新协议<a class="headerlink" href="#id19" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://supabase.com/docs/guides/getting-started/mcp">Model Context Protocol (MCP)</a></p></li>
 <li><p><a class="reference external" href="https://llmstxt.org">llms.txt</a></p></li>
+</ul>
+</section>
+<section id="id20">
+<h2>工具<a class="headerlink" href="#id20" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://ray.so">代码以图片输出</a></p></li>
 </ul>
 </section>
 </section>
@@ -527,21 +582,25 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">重要会议</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">模型</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">小模型</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">翻译大模型</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">视觉大模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">推理/思考模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">翻译大模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">视觉大模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">语音模型</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#difussion-llm">difussion LLM</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">本地推理框架</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">微调工具</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">大模型测评</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">有趣的应用</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">本地推理框架</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">微调工具</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">大模型测评</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">有趣的应用</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ai">AI编程工具</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">工作流</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">基于知识库的问答</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">智能体</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">学习资料</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">大模型催生的新协议</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">提示词</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">工作流</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">基于知识库的问答</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">智能体</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">学习资料</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">大模型催生的新协议</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">工具</a></li>
 </ul>
   </nav></div>
 

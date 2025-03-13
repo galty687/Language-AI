@@ -1,0 +1,1369 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45957014-6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-45957014-6');
+    </script>
+    
+    <title>大语言模型与语言学 &#8212; 人工智能实践 0.4 文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=64ceb196"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '4-Linguistics/linguistics-llm';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="常见大模型评价指标" href="llm-metrics.html" />
+    <link rel="prev" title="文档聚类" href="../3-Practice/clusttering.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">人工智能实践 0.4 文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程简介</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/intro.html">课程大纲</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/terms.html">术语</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/setup.html">环境准备</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/llm-basics.html">LLM 基础</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">基于Transformer的自然语言处理</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/nlp-tasks.html">NLP 任务</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/transformer-nlp.html">基于HF Transformer的NLP实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/classification.html">文本分类</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/clusttering.html">文档聚类</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">语言学基础</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">大语言模型与语言学</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llm-metrics.html">常见大模型评价指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation-metrics.html">译文质量评价方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linguistics-intro.html">语言学简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applied-linguistics.html">应用语言学</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">课程实践项目</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../projects/projects.html">课程实践项目候选</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">微调Phi-4</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../answers/transformer-practice-answers.html">基于HF Transformer的NLP实践的练习答案</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/4-Linguistics/linguistics-llm.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>大语言模型与语言学</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">演示1：衡量文本的连贯程度。</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">素材</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">工具</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><strong>主要功能</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">计算连贯</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">连贯性的语言学解释</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">为什么连贯性重要？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vs">连贯性 vs. 衔接性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">连贯性的认知机制</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">如何实现连贯性</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#theme-rheme-structure">主题-述题结构（Theme-Rheme Structure）</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">逻辑关系与连贯性</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">语境与连贯性</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">连贯性的层级</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">局部连贯与整体连贯</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">连贯性的实际应用</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">在写作中的应用</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">在口语交流中的应用</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">结论</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">衔接的语言学概念</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">语篇衔接的主要类型</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">指代（Reference）</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#substitution">替代（Substitution）</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ellipsis">省略（Ellipsis）</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conjunction">连接（Conjunction）</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lexical-cohesion">词汇衔接（Lexical Cohesion）</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">衔接与连贯的区别</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">语篇衔接的作用</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">小结</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">演示2：衡量文本的可读性。</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">素材</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">计算可读性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">指标解读</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gunning-fog">Gunning-Fog 指数</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#smog">SMOG 指数</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#flesch">Flesch 阅读易度</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#flesch-kincaid">Flesch-Kincaid 年级水平</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ari">自动可读性指数（ARI）</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#coleman-liau">Coleman-Liau 指数</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lix">Lix 指数</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rix">Rix 指数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>大语言模型与语言学<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>大模型的语言能力有目共睹，但我们应如何科学地评估其语言能力？在设计语言类产品时，尤其是设定性能基线时，通常需要定义一系列评估标准，以确保模型的输出质量满足预期需求，并具备稳定性和一致性。</p>
+<p>然而，在缺乏通用指标的情况下，如何衡量模型的语言表现成为一个挑战。这时，语言学的知识便能发挥关键作用，为模型的评估提供理论依据，帮助设定合理的基线，并确保模型在不同应用场景中的有效性。</p>
+<section id="id2">
+<h2>演示1：衡量文本的连贯程度。<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>素材<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>提示词：写一个北京大学软件与微电子学院的介绍，限3句话。
+
+ChatGPT 4o: 北京大学软件与微电子学院成立于2002年，致力于培养高水平的软件工程和微电子技术人才，融合计算机科学、工程技术与产业实践。学院依托北大的学术优势，注重国际化、交叉学科与产学研合作，为国家和全球科技创新输送优秀人才。学院设有多个研究方向，包括人工智能、软件工程、集成电路设计等，推动前沿技术的发展和应用。
+
+DeepSeek: 北京大学软件与微电子学院是教育部首批国家示范性软件学院之一，聚焦软件工程、微电子、集成电路、人工智能等前沿领域，构建“学科交叉、产学融合”的创新教育体系。学院依托北京大学学科优势，以培养高层次、复合型领军人才为目标，通过产学研协同育人模式，推动核心技术研发与产业转化。其师资团队汇聚国内外顶尖学者，科研实力位居全球前列，为国家信息产业发展和科技自主创新持续输出尖端成果与专业人才。
+
+Qwen: 北京大学软件与微电子学院是中国顶尖的软件与微电子领域高等教育机构，致力于培养具有创新能力和国际视野的高端技术人才。学院以跨学科融合为特色，聚焦软件工程、集成电路设计与应用等前沿领域，推动产学研深度结合。依托北大的学术积淀和资源优势，学院不断探索信息技术发展的新方向，服务于国家重大战略需求。
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>工具<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p><a class="reference external" href="https://hlasse.github.io/TextDescriptives/usingthepackage.html">TextDescriptives</a> 是一个用于文本分析的 Python 库，旨在计算各种文本特征（textual features），包括基本统计、可读性指标、句法复杂度和文本情感等。它基于 <code class="docutils literal notranslate"><span class="pre">spaCy</span></code> 进行文本处理，并提供了一套易用的 API，适用于 NLP 研究、文本数据探索和自动化文本评估。</p>
+</section>
+<section id="id5">
+<h3><strong>主要功能</strong><a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>基本文本统计</strong>：字数、词数、句数、平均单词长度、平均句子长度等。</p></li>
+<li><p><strong>可读性指标</strong>：Flesch-Kincaid 级别、Gunning Fog 指数、SMOG 指数等。</p></li>
+<li><p><strong>词汇复杂度</strong>：词汇多样性（TTR、MTLD、VOCD）、长词比例、罕见词比例等。</p></li>
+<li><p><strong>句法复杂度</strong>：依存关系分析、从句比例、平均从句深度等。</p></li>
+<li><p><strong>文本情感分析</strong>（可选模块）：结合 NLP 模型进行情感倾向分析。</p></li>
+</ol>
+<blockquote>
+<div><p><strong>软件安装</strong>：</p>
+</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 安装 TextDescriptives 库，用于计算文本的各种统计指标</span>
+pip<span class="w"> </span>install<span class="w"> </span>textdescriptives
+
+<span class="c1"># 安装 spaCy，自然语言处理库</span>
+pip<span class="w"> </span>install<span class="w"> </span>spacy
+
+<span class="c1"># 下载并安装 spaCy 的中文语言模型 zh_core_web_sm</span>
+python<span class="w"> </span>-m<span class="w"> </span>spacy<span class="w"> </span>download<span class="w"> </span>zh_core_web_sm
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3>计算连贯<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacy</span>
+<span class="kn">import</span> <span class="nn">textdescriptives</span> <span class="k">as</span> <span class="nn">td</span>
+
+<span class="c1"># 加载中文语言模型</span>
+<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;zh_core_web_md&quot;</span><span class="p">)</span>
+
+<span class="c1"># 在处理管道中添加 TextDescriptives 的衔接性组件</span>
+<span class="n">nlp</span><span class="o">.</span><span class="n">add_pipe</span><span class="p">(</span><span class="s2">&quot;textdescriptives/coherence&quot;</span><span class="p">)</span>
+
+<span class="c1"># 定义待分析的中文文本</span>
+<span class="n">texts</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;chatgpt&quot;</span><span class="p">:</span> <span class="s2">&quot;北京大学软件与微电子学院成立于2002年，致力于培养高水平的软件工程和微电子技术人才，融合计算机科学、工程技术与产业实践。学院依托北大的学术优势，注重国际化、交叉学科与产学研合作，为国家和全球科技创新输送优秀人才。学院设有多个研究方向，包括人工智能、软件工程、集成电路设计等，推动前沿技术的发展和应用。&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deepseek&quot;</span><span class="p">:</span> <span class="s2">&quot;北京大学软件与微电子学院是教育部首批国家示范性软件学院之一，聚焦软件工程、微电子、集成电路、人工智能等前沿领域，构建“学科交叉、产学融合”的创新教育体系。学院依托北京大学学科优势，以培养高层次、复合型领军人才为目标，通过产学研协同育人模式，推动核心技术研发与产业转化。其师资团队汇聚国内外顶尖学者，科研实力位居全球前列，为国家信息产业发展和科技自主创新持续输出尖端成果与专业人才。&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;qwen&quot;</span><span class="p">:</span> <span class="s2">&quot;北京大学软件与微电子学院是中国顶尖的软件与微电子领域高等教育机构，致力于培养具有创新能力和国际视野的高端技术人才。学院以跨学科融合为特色，聚焦软件工程、集成电路设计与应用等前沿领域，推动产学研深度结合。依托北大的学术积淀和资源优势，学院不断探索信息技术发展的新方向，服务于国家重大战略需求。&quot;</span>
+<span class="p">}</span>
+
+<span class="c1"># 处理文本并提取衔接性指标</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">texts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">coherence_df</span> <span class="o">=</span> <span class="n">td</span><span class="o">.</span><span class="n">extract_df</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;文本 &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39; 的衔接性指标：&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">coherence_df</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p><strong>计算结果</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>模型</p></th>
+<th class="head"><p>text（部分截取）</p></th>
+<th class="head"><p>first_order_coherence</p></th>
+<th class="head"><p>second_order_coherence</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>chatgpt</p></td>
+<td><p>北京大学软件与微电子学院成立于2002年，致力于培养高水平的软件工程和微电子技术人才，融合计算机科学、工程技术与产业实践。学院依托北大的学术优势，…</p></td>
+<td><p>0.874783</p></td>
+<td><p>0.89672</p></td>
+</tr>
+<tr class="row-odd"><td><p>deepseek</p></td>
+<td><p>北京大学软件与微电子学院是教育部首批国家示范性软件学院之一，聚焦软件工程、微电子、集成电路、人工智能等前沿领域，构建“学科交叉、产学融合”的创…</p></td>
+<td><p>0.898429</p></td>
+<td><p>0.845563</p></td>
+</tr>
+<tr class="row-even"><td><p>qwen</p></td>
+<td><p>北京大学软件与微电子学院是中国顶尖的软件与微电子领域高等教育机构，致力于培养具有创新能力和国际视野的高端技术人才。学院以跨学科融合为特色，聚焦软…</p></td>
+<td><p>0.842737</p></td>
+<td><p>0.88426</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p><strong>first order coherence（第一阶衔接性）</strong>
+该指标主要衡量文本中<strong>相邻句子之间</strong>的衔接和连贯程度。它关注的是句子与句子之间的直接联系，比如是否有实体（如人名、地名、概念等）的连续出现和合理转换，从而保证读者能顺畅地从一个句子过渡到下一个句子。</p>
+<p><strong>second order coherence（第二阶衔接性）</strong>
+该指标则侧重于<strong>更长距离或整体文本结构</strong>的连贯性。它不仅考虑相邻句子的关系，还关注文本在更大范围内的组织和主题发展，衡量文本整体的结构性连贯，比如主题是否前后一致、论述是否有层次性和逻辑性。</p>
+<p>简单来说，第一阶衔接性关注局部句子之间的连接，而第二阶衔接性反映的是文本全局的连贯性和结构完整性。</p>
+</div></blockquote>
+</section>
+<section id="id7">
+<h3>连贯性的语言学解释<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>在语言学中，<strong>连贯性（coherence）</strong> 是使文本或话语在整体上具有意义和逻辑性的特性。连贯性确保信息能够自然流畅地传达，使读者或听者能够理解文本的逻辑。</p>
+<p>在语言交际中，连贯性决定了文本是否具有可读性和可理解性。一个连贯的文本不仅句子通顺，而且整体信息的组织方式合理，使人能够顺利理解其中的思想。</p>
+</section>
+<section id="id8">
+<h3>为什么连贯性重要？<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>连贯性是<strong>有效沟通的核心要素</strong>。无论是在日常交流、学术写作还是商业文本中，连贯性都能提高文本的可理解性，确保信息传递的清晰性。以下是连贯性的几个重要作用：</p>
+<ul class="simple">
+<li><p><strong>提高文本的易读性</strong>：使句子之间逻辑通顺，减少理解障碍。</p></li>
+<li><p><strong>增强信息的连贯性</strong>：帮助读者建立逻辑联系，使文本更具整体感。</p></li>
+<li><p><strong>提升语言表达能力</strong>：在写作和口语表达中，连贯性使信息传递更具逻辑性和说服力。</p></li>
+</ul>
+</section>
+<section id="vs">
+<h3>连贯性 vs. 衔接性<a class="headerlink" href="#vs" title="Link to this heading">#</a></h3>
+<p><strong>连贯性（coherence）</strong> 和 <strong>衔接性（cohesion）</strong> 是文本语言学中两个不同但相关的概念。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>概念</strong></p></th>
+<th class="head"><p><strong>定义</strong></p></th>
+<th class="head"><p><strong>特点</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>连贯性（coherence）</strong></p></td>
+<td><p>强调文本的整体逻辑性，使信息自然流畅地传达</p></td>
+<td><p>依赖上下文、逻辑关系、读者的背景知识</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>衔接性（cohesion）</strong></p></td>
+<td><p>通过语言手段（如代词、连接词等）建立句子之间的联系</p></td>
+<td><p>依赖具体的词汇和语法结构</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>示例：</strong></p>
+<ol class="arabic simple">
+<li><p><strong>衔接性强但缺乏连贯性</strong>：</p>
+<ul class="simple">
+<li><p>“猫在垫子上。它是黑色的。垫子很舒服。”</p></li>
+<li><p>这些句子之间存在衔接（代词“它”和重复的“垫子”），但整体意义可能不够清晰。</p></li>
+</ul>
+</li>
+<li><p><strong>连贯性强但缺乏衔接性</strong>：</p>
+<ul class="simple">
+<li><p>“A: 天气怎么样？”</p></li>
+<li><p>“B: 下雨了。”</p></li>
+<li><p>这里没有明显的衔接词，但语境使对话连贯。</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="id9">
+<h3>连贯性的认知机制<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<p>连贯性不仅仅依赖于文本内部的语言结构，还涉及<strong>读者或听者的认知能力</strong>，即他们如何利用已有知识来理解文本。这与<strong>图式理论（schema theory）</strong> 密切相关。</p>
+<p><strong>图式理论（Schema Theory）</strong> 由 F. C. Bartlett 提出，认为人们通过已有的<strong>知识框架（schema）</strong> 来组织和理解新信息。</p>
+<p><strong>示例：</strong></p>
+<ul class="simple">
+<li><p><strong>专家 vs. 初学者的理解差异</strong></p>
+<ul>
+<li><p>一篇关于<strong>人工智能（AI）</strong> 的论文，对 AI 研究员而言可能是连贯的，但对普通人来说可能难以理解。</p></li>
+<li><p>这表明连贯性<strong>取决于受众的背景知识</strong>。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id10">
+<h3>如何实现连贯性<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<section id="theme-rheme-structure">
+<h4>主题-述题结构（Theme-Rheme Structure）<a class="headerlink" href="#theme-rheme-structure" title="Link to this heading">#</a></h4>
+<p><strong>主题（theme）</strong> 是句子的出发点，通常是已知信息，而<strong>述题（rheme）</strong> 提供新信息。</p>
+<p><strong>示例：</strong></p>
+<ol class="arabic simple">
+<li><p>主题-述题连贯性示例：</p>
+<ul class="simple">
+<li><p><strong>句子 1</strong>：“彼得最近去伦敦看奥运会。”（主题：彼得；述题：去伦敦看奥运会）</p></li>
+<li><p><strong>句子 2</strong>：“他对开幕式印象深刻。”（主题：他；述题：对开幕式印象深刻）</p></li>
+<li><p>主题“彼得”在第二句话中被代词“他”承接，保证了连贯性。</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="id11">
+<h4>逻辑关系与连贯性<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
+<p>以下是几种常见的逻辑关系，它们在保持文本连贯性方面发挥着重要作用：</p>
+<ul class="simple">
+<li><p><strong>因果关系</strong>（例如：“因为…所以…”）</p></li>
+<li><p><strong>对比关系</strong>（例如：“然而”、“但是”）</p></li>
+<li><p><strong>递进关系</strong>（例如：“此外”、“更进一步”）</p></li>
+</ul>
+<p><strong>示例：</strong></p>
+<ul class="simple">
+<li><p><strong>无逻辑关系</strong>：“我喜欢苹果。今天下雨了。”（不连贯）</p></li>
+<li><p><strong>有逻辑关系</strong>：“我喜欢苹果，因为它们很甜。”（连贯）</p></li>
+</ul>
+</section>
+<section id="id12">
+<h4>语境与连贯性<a class="headerlink" href="#id12" title="Link to this heading">#</a></h4>
+<p>连贯性不仅取决于文本内部的结构，还受到外部<strong>语境（context）</strong> 的影响。例如：</p>
+<ul class="simple">
+<li><p><strong>对话中的连贯性</strong></p>
+<ul>
+<li><p>A: “你吃过饭了吗？”</p></li>
+<li><p>B: “刚吃过。”</p></li>
+<li><p>这里没有显性衔接手段，但在语境下是连贯的。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id13">
+<h3>连贯性的层级<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<section id="id14">
+<h4>局部连贯与整体连贯<a class="headerlink" href="#id14" title="Link to this heading">#</a></h4>
+<p><strong>连贯性可以分为局部连贯（local coherence）和整体连贯（global coherence）。</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>层级</strong></p></th>
+<th class="head"><p><strong>定义</strong></p></th>
+<th class="head"><p><strong>示例</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>局部连贯</strong></p></td>
+<td><p>句子之间的逻辑联系</p></td>
+<td><p>“我去商店了。我买了一瓶牛奶。”（合理的事件顺序）</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>整体连贯</strong></p></td>
+<td><p>文本整体的结构和意义</p></td>
+<td><p>一篇文章具有清晰的引言、主体和结论</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="id15">
+<h3>连贯性的实际应用<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
+<section id="id16">
+<h4>在写作中的应用<a class="headerlink" href="#id16" title="Link to this heading">#</a></h4>
+<p>在学术写作、商业文案和新闻报道中，连贯性都起着关键作用。</p>
+<p><strong>写作技巧：</strong></p>
+<ul class="simple">
+<li><p><strong>使用逻辑连接词</strong>（如“因此”、“然而”）</p></li>
+<li><p><strong>保持主题一致</strong>（如一个段落围绕一个核心思想）</p></li>
+<li><p><strong>确保信息顺序合理</strong>（如按时间顺序或因果关系排列）</p></li>
+</ul>
+</section>
+<section id="id17">
+<h4>在口语交流中的应用<a class="headerlink" href="#id17" title="Link to this heading">#</a></h4>
+<p><strong>连贯的表达</strong> 在日常对话、演讲和教学中至关重要。</p>
+<p><strong>示例：</strong></p>
+<ul class="simple">
+<li><p><strong>不连贯的表达：</strong> “我今天去商场。你知道数学很难学。”</p></li>
+<li><p><strong>连贯的表达：</strong> “我今天去商场买了一本数学书，因为数学很难学。”</p></li>
+</ul>
+</section>
+</section>
+<section id="id18">
+<h3>结论<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
+<p>连贯性是语言理解和表达的核心特征，它依赖于<strong>逻辑关系、语境、主题-述题结构以及受众的背景知识</strong>。无论是写作、口语表达还是学术研究，连贯性都是确保有效沟通的重要因素。</p>
+<p><strong>思考与练习：</strong></p>
+<ol class="arabic simple">
+<li><p>请找一个新闻报道，分析它是如何实现连贯性的。</p></li>
+<li><p>重新组织以下句子，使其更加连贯：</p>
+<ul class="simple">
+<li><p>“他喜欢跑步。他昨天去超市买了一瓶水。”</p></li>
+<li><p>“她学习很努力。她最近在研究人工智能。”</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<section id="id19">
+<h2>衔接的语言学概念<a class="headerlink" href="#id19" title="Link to this heading">#</a></h2>
+<p><strong>衔接（Cohesion）</strong> 是语言学中用于描述<strong>文本内部各部分之间连接方式</strong>的概念。它确保句子和段落之间形成有机整体，使读者或听者能够顺畅理解文本。  英国语言学家 <strong>M.A.K. Halliday 和 Ruqaiya Hasan</strong> 在 1976 年的著作 <em>Cohesion in English</em> 中提出了这一概念，认为衔接是**语篇（discourse）**连贯性的关键因素之一。</p>
+<p>衔接是<strong>表层语言结构</strong>的显性特征，它通过具体的语言手段（如代词、连接词、重复词汇等）建立句子之间的逻辑关系，使文本具有整体性。衔接的有效运用可以提高文本的可读性，并减少冗余表达。</p>
+<section id="id20">
+<h3>语篇衔接的主要类型<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
+<p>Halliday 和 Hasan 提出了五种主要的衔接手段：指代、替代、省略、连接和词汇衔接。以下分别介绍其定义、功能及具体示例。</p>
+<section id="reference">
+<h4>指代（Reference）<a class="headerlink" href="#reference" title="Link to this heading">#</a></h4>
+<p><strong>定义</strong>：指代是一种语言现象，指的是用<strong>代词、指示词</strong>等语言单位指代前文或后文中的实体，以避免重复。<br />
+<strong>功能</strong>：</p>
+<ul class="simple">
+<li><p>使信息紧密衔接，减少冗余。</p></li>
+<li><p>提供语境线索，帮助读者理解句间关系。</p></li>
+</ul>
+<p><strong>示例</strong>：</p>
+<ul class="simple">
+<li><p><strong>我昨天见到了张三。他</strong>看起来很高兴。（“他”指代“张三”）</p></li>
+<li><p><strong>这本书</strong>很好，我想借一下。（“这”指代一本特定的书）</p></li>
+</ul>
+<p>指代可以分为：</p>
+<ol class="arabic simple">
+<li><p><strong>内指（Endophoric reference）</strong>：指代文本内的信息。</p></li>
+<li><p><strong>外指（Exophoric reference）</strong>：指代文本外的现实世界实体。</p></li>
+</ol>
+</section>
+<section id="substitution">
+<h4>替代（Substitution）<a class="headerlink" href="#substitution" title="Link to this heading">#</a></h4>
+<p><strong>定义</strong>：替代是指用<strong>另一个词或短语</strong>代替已经出现的内容，以避免重复表达。<br />
+<strong>功能</strong>：</p>
+<ul class="simple">
+<li><p>通过变换表达方式，使语言更加丰富。</p></li>
+<li><p>使句子结构更加紧凑。</p></li>
+</ul>
+<p><strong>示例</strong>：</p>
+<ul class="simple">
+<li><p>A: 你想喝咖啡吗？</p></li>
+<li><p>B: <strong>我想喝茶。</strong>（这里用“茶”替代了可能会重复的“咖啡”）</p></li>
+<li><p>A: 我喜欢这部电影。</p></li>
+<li><p>B: <strong>我也是。</strong>（“也是”替代了完整的“我也喜欢这部电影”）</p></li>
+</ul>
+</section>
+<section id="ellipsis">
+<h4>省略（Ellipsis）<a class="headerlink" href="#ellipsis" title="Link to this heading">#</a></h4>
+<p><strong>定义</strong>：省略是指在语境允许的情况下，<strong>省略已知信息</strong>，使表达更加简洁。<br />
+<strong>功能</strong>：</p>
+<ul class="simple">
+<li><p>避免冗长表达，提高语言效率。</p></li>
+<li><p>让读者或听者通过上下文推断缺失的内容。</p></li>
+</ul>
+<p><strong>示例</strong>：</p>
+<ul class="simple">
+<li><p>A: 你吃饭了吗？</p></li>
+<li><p>B: <strong>吃了。</strong>（省略“我吃了饭”）</p></li>
+<li><p>A: 你喜欢哪部电影？</p></li>
+<li><p>B: <strong>这部。</strong>（省略“我喜欢这部电影”）</p></li>
+</ul>
+</section>
+<section id="conjunction">
+<h4>连接（Conjunction）<a class="headerlink" href="#conjunction" title="Link to this heading">#</a></h4>
+<p><strong>定义</strong>：连接是指通过<strong>连接词或逻辑标记词</strong>表明句子之间的关系，如因果、转折、递进等。<br />
+<strong>功能</strong>：</p>
+<ul class="simple">
+<li><p>使文本逻辑清晰，方便读者理解句间关系。</p></li>
+<li><p>提供层次感，使信息更加条理化。</p></li>
+</ul>
+<p><strong>示例</strong>：</p>
+<ul class="simple">
+<li><p><strong>因为</strong>天气不好，我们取消了旅行。（因果关系）</p></li>
+<li><p>我喜欢喝咖啡，<strong>但是</strong>不喜欢喝茶。（转折关系）</p></li>
+<li><p>先完成作业，<strong>然后</strong>去玩游戏。（时间顺序）</p></li>
+</ul>
+<p>常见的连接关系如下：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>连接关系</p></th>
+<th class="head"><p>连接词示例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>因果</strong></p></td>
+<td><p>因为、因此、所以</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>转折</strong></p></td>
+<td><p>但是、然而、不过</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>递进</strong></p></td>
+<td><p>而且、此外、并且</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>并列</strong></p></td>
+<td><p>和、以及、同时</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>时间</strong></p></td>
+<td><p>然后、随后、接着</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="lexical-cohesion">
+<h4>词汇衔接（Lexical Cohesion）<a class="headerlink" href="#lexical-cohesion" title="Link to this heading">#</a></h4>
+<p><strong>定义</strong>：词汇衔接指的是通过<strong>词汇的复现、同义词、近义词、反义词等</strong>手段，使文本保持连贯性。<br />
+<strong>功能</strong>：</p>
+<ul class="simple">
+<li><p>维持语篇的主题一致性。</p></li>
+<li><p>通过不同表达方式丰富语篇的词汇多样性。</p></li>
+</ul>
+<p><strong>示例</strong>：</p>
+<ul class="simple">
+<li><p><strong>复现（Repetition）：</strong></p>
+<ul>
+<li><p>昨天我看了一场<strong>足球比赛</strong>。这场<strong>比赛</strong>非常精彩。（“比赛”重复出现）</p></li>
+</ul>
+</li>
+<li><p><strong>同义词（Synonymy）：</strong></p>
+<ul>
+<li><p>我读了一本<strong>小说</strong>。这本<strong>书</strong>让我很感动。（“小说”和“书”是近义表达）</p></li>
+</ul>
+</li>
+<li><p><strong>反义词（Antonymy）：</strong></p>
+<ul>
+<li><p>白天很热，<strong>晚上</strong>却很冷。（“白天”和“晚上”形成对比）</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id21">
+<h3>衔接与连贯的区别<a class="headerlink" href="#id21" title="Link to this heading">#</a></h3>
+<p><strong>衔接（Cohesion）</strong> 和 <strong>连贯（Coherence）</strong> 虽然都与语篇的组织有关，但它们是不同的概念：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>术语</p></th>
+<th class="head"><p>定义</p></th>
+<th class="head"><p>例子</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>衔接（Cohesion）</strong></p></td>
+<td><p>通过显性语言手段（代词、连接词、重复词汇等）保持句子之间的连接</p></td>
+<td><p>“今天很冷，所以我穿了一件厚外套。”（使用连接词“所以”衔接前后句子）</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>连贯（Coherence）</strong></p></td>
+<td><p>语篇在语义上的合理性和可理解性，强调逻辑关系</p></td>
+<td><p>“天气很好，我们决定去野餐。”（没有明显的衔接手段，但逻辑清晰，符合语义连贯性）</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>示例对比</strong>：</p>
+<ul class="simple">
+<li><p><strong>衔接好但不连贯</strong>：</p>
+<ul>
+<li><p>“我今天吃了苹果。苹果是水果。水果很健康。”</p></li>
+<li><p>这里的“苹果”和“水果”形成词汇衔接，但句子之间缺乏清晰的逻辑连贯性。</p></li>
+</ul>
+</li>
+<li><p><strong>连贯但衔接性低</strong>：</p>
+<ul>
+<li><p>“天气很好，我们决定去野餐。”</p></li>
+<li><p>这里没有显式的衔接手段，但语义逻辑清晰，因此是连贯的。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id22">
+<h3>语篇衔接的作用<a class="headerlink" href="#id22" title="Link to this heading">#</a></h3>
+<p>良好的衔接有助于：</p>
+<ol class="arabic simple">
+<li><p><strong>提高文本的可读性</strong>：增强信息的连贯性，使读者能够流畅地理解内容。</p></li>
+<li><p><strong>减少冗余表达</strong>：通过指代、替代和省略等手段，提高语言表达的简洁性。</p></li>
+<li><p><strong>保证信息的逻辑连贯性</strong>：确保文本内容有条理，逻辑清晰。</p></li>
+</ol>
+</section>
+<section id="id23">
+<h3>小结<a class="headerlink" href="#id23" title="Link to this heading">#</a></h3>
+<p>本章介绍了语篇衔接的基本概念，并分析了五种主要的衔接手段：指代、替代、省略、连接和词汇衔接。<br />
+衔接是语篇结构的表层特征，它通过显性语言手段增强文本的整体性，而连贯性则涉及语篇的语义合理性和逻辑一致性。掌握衔接手段能够提高文本的表达质量，使信息更加连贯、清晰。</p>
+<p>练习：</p>
+<p>请将下列句子重新组织，使其衔接更加自然流畅：</p>
+<p><strong>原句1：</strong></p>
+<ul class="simple">
+<li><p>她买了一本新书。她在地铁上读这本书。</p></li>
+<li><p>这本书讲的是人工智能。</p></li>
+</ul>
+<p><strong>原句2：</strong></p>
+<ul class="simple">
+<li><p>会议将在明天举行。会议的主题是大模型。</p></li>
+<li><p>许多专家将参加这次会议。</p></li>
+<li><p>会议结束后，大家会进行自由讨论。</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id24">
+<h2>演示2：衡量文本的可读性。<a class="headerlink" href="#id24" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#下载英文语言模型</span>
+
+python<span class="w"> </span>-m<span class="w"> </span>spacy<span class="w"> </span>download<span class="w"> </span>en_core_web_sm
+</pre></div>
+</div>
+<section id="id25">
+<h3>素材<a class="headerlink" href="#id25" title="Link to this heading">#</a></h3>
+<p>用Chatgpt 4o写了三段关于 Readability的介绍。</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="gh"># Instruction Prompt</span>
+
+&quot;Write an introduction about &#39;Readability&#39; in three different versions, each tailored to a specific audience:
+
+<span class="w">    </span><span class="k">1.</span> Pupils (elementary school students) – Use simple words and short sentences to ensure young children can easily understand.
+<span class="w">    </span><span class="k">2.</span> Middle school students – Use slightly more advanced vocabulary and sentence structures appropriate for teenagers.
+<span class="w">    </span><span class="k">3.</span> College students – Use formal and academic language suitable for higher education, including technical terms if necessary.&quot;
+
+
+<span class="gh"># Results</span>
+
+<span class="gu">## Pupil Version (Elementary School Students)</span>
+What is Readability?
+Readability means how easy or hard it is to read something. If a book or story has simple words and short sentences, it is easy to read. But if it has big words and long sentences, it might be harder to understand.
+
+Imagine you are reading a fairy tale. The words are easy, and you can enjoy the story. But if you try to read a book for adults, the words may be too difficult. Readability helps writers choose the right words so everyone can understand and enjoy reading!
+
+
+<span class="gu">## Middle School Version</span>
+Readability is how easy or difficult a piece of writing is to understand. It depends on things like word choice, sentence length, and how information is organized.
+
+For example, a children&#39;s book is very readable because it uses short words and simple sentences. On the other hand, a science textbook may be harder to read because it has long sentences and difficult words. Writers and teachers use readability to make sure books match the reader&#39;s level, so learning and reading can be more enjoyable!
+
+<span class="gu">## College Student Version</span>
+
+Introduction to Readability
+Readability refers to the ease with which a reader can understand a written text. It is influenced by factors such as vocabulary complexity, sentence structure, and text organization. Readability is often measured using formulas such as the Flesch-Kincaid Readability Test, which evaluates sentence length and word difficulty to determine reading level.
+
+Ensuring appropriate readability is crucial in education, journalism, and technical writing. Writers must consider their audience when crafting content, as overly complex language can hinder comprehension, while overly simplified text may fail to convey necessary depth. Readability plays a key role in effective communication, helping to bridge the gap between information and understanding.
+</pre></div>
+</div>
+</section>
+<section id="id26">
+<h3>计算可读性<a class="headerlink" href="#id26" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacy</span>
+<span class="kn">import</span> <span class="nn">textdescriptives</span> <span class="k">as</span> <span class="nn">td</span>
+
+<span class="c1"># Load the spaCy model and add the textdescriptives readability pipe</span>
+<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
+<span class="n">nlp</span><span class="o">.</span><span class="n">add_pipe</span><span class="p">(</span><span class="s2">&quot;textdescriptives/readability&quot;</span><span class="p">)</span>
+
+<span class="c1"># Define the three text samples</span>
+<span class="n">texts</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Pupil Version&quot;</span><span class="p">:</span> <span class="p">(</span>
+        <span class="s2">&quot;What is Readability? &quot;</span>
+        <span class="s2">&quot;Readability means how easy or hard it is to read something. &quot;</span>
+        <span class="s2">&quot;If a book or story has simple words and short sentences, it is easy to read. &quot;</span>
+        <span class="s2">&quot;But if it has big words and long sentences, it might be harder to understand. &quot;</span>
+        <span class="s2">&quot;Imagine you are reading a fairy tale. The words are easy, and you can enjoy the story. &quot;</span>
+        <span class="s2">&quot;But if you try to read a book for adults, the words may be too difficult. &quot;</span>
+        <span class="s2">&quot;Readability helps writers choose the right words so everyone can understand and enjoy reading!&quot;</span>
+    <span class="p">),</span>
+    <span class="s2">&quot;Middle School Version&quot;</span><span class="p">:</span> <span class="p">(</span>
+        <span class="s2">&quot;Readability is how easy or difficult a piece of writing is to understand. &quot;</span>
+        <span class="s2">&quot;It depends on things like word choice, sentence length, and how information is organized. &quot;</span>
+        <span class="s2">&quot;For example, a children&#39;s book is very readable because it uses short words and simple sentences. &quot;</span>
+        <span class="s2">&quot;On the other hand, a science textbook may be harder to read because it has long sentences and difficult words. &quot;</span>
+        <span class="s2">&quot;Writers and teachers use readability to make sure books match the reader&#39;s level, so learning and reading can be more enjoyable!&quot;</span>
+    <span class="p">),</span>
+    <span class="s2">&quot;College Student Version&quot;</span><span class="p">:</span> <span class="p">(</span>
+        <span class="s2">&quot;Introduction to Readability &quot;</span>
+        <span class="s2">&quot;Readability refers to the ease with which a reader can understand a written text. &quot;</span>
+        <span class="s2">&quot;It is influenced by factors such as vocabulary complexity, sentence structure, and text organization. &quot;</span>
+        <span class="s2">&quot;Readability is often measured using formulas such as the Flesch-Kincaid Readability Test, which evaluates sentence length and word difficulty to determine reading level. &quot;</span>
+        <span class="s2">&quot;Ensuring appropriate readability is crucial in education, journalism, and technical writing. &quot;</span>
+        <span class="s2">&quot;Writers must consider their audience when crafting content, as overly complex language can hinder comprehension, while overly simplified text may fail to convey necessary depth. &quot;</span>
+        <span class="s2">&quot;Readability plays a key role in effective communication, helping to bridge the gap between information and understanding.&quot;</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1"># Process each text and print its readability scores</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">level</span><span class="p">,</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">texts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="c1"># Retrieve the readability metrics as a dictionary</span>
+    <span class="n">readability</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">readability</span>
+    <span class="c1"># Extract to a DataFrame (this returns a pandas DataFrame)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">td</span><span class="o">.</span><span class="n">extract_df</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+    <span class="n">results</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">readability</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== </span><span class="si">{</span><span class="n">level</span><span class="si">}</span><span class="s2"> ===&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Readability Dictionary:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">readability</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Readability DataFrame:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># Optionally, if you wish to combine results for comparison:</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">dfs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">level</span><span class="p">,</span> <span class="p">(</span><span class="n">readability</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Version&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">level</span>
+    <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">combined_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Combined Readability Results:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">combined_df</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p>输出结果</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>text</p></th>
+<th class="head text-right"><p>token_length_mean</p></th>
+<th class="head text-right"><p>token_length_median</p></th>
+<th class="head text-right"><p>token_length_std</p></th>
+<th class="head text-right"><p>sentence_length_mean</p></th>
+<th class="head text-right"><p>sentence_length_median</p></th>
+<th class="head text-right"><p>sentence_length_std</p></th>
+<th class="head text-right"><p>syllables_per_token_mean</p></th>
+<th class="head text-right"><p>syllables_per_token_median</p></th>
+<th class="head text-right"><p>syllables_per_token_std</p></th>
+<th class="head text-right"><p>n_tokens</p></th>
+<th class="head text-right"><p>n_unique_tokens</p></th>
+<th class="head text-right"><p>proportion_unique_tokens</p></th>
+<th class="head text-right"><p>n_characters</p></th>
+<th class="head text-right"><p>n_sentences</p></th>
+<th class="head text-right"><p>flesch_reading_ease</p></th>
+<th class="head text-right"><p>flesch_kincaid_grade</p></th>
+<th class="head text-right"><p>smog</p></th>
+<th class="head text-right"><p>gunning_fog</p></th>
+<th class="head text-right"><p>automated_readability_index</p></th>
+<th class="head text-right"><p>coleman_liau_index</p></th>
+<th class="head text-right"><p>lix</p></th>
+<th class="head text-right"><p>rix</p></th>
+<th class="head text-left"><p>Version</p></th>
+<th class="head text-left"><p>sample_text</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>What is Readability? Readability means how easy or hard it…</p></td>
+<td class="text-right"><p>4.8</p></td>
+<td class="text-right"><p>4</p></td>
+<td class="text-right"><p>3.24962</p></td>
+<td class="text-right"><p>5</p></td>
+<td class="text-right"><p>5</p></td>
+<td class="text-right"><p>2</p></td>
+<td class="text-right"><p>1.6</p></td>
+<td class="text-right"><p>1</p></td>
+<td class="text-right"><p>1.2</p></td>
+<td class="text-right"><p>10</p></td>
+<td class="text-right"><p>9</p></td>
+<td class="text-right"><p>0.9</p></td>
+<td class="text-right"><p>49</p></td>
+<td class="text-right"><p>2</p></td>
+<td class="text-right"><p>66.4</p></td>
+<td class="text-right"><p>5.24</p></td>
+<td class="text-right"><p>nan</p></td>
+<td class="text-right"><p>10</p></td>
+<td class="text-right"><p>3.678</p></td>
+<td class="text-right"><p>6.504</p></td>
+<td class="text-right"><p>25</p></td>
+<td class="text-right"><p>1</p></td>
+<td class="text-left"><p>Pupil Version</p></td>
+<td class="text-left"><p>What is Readability? Readability means how easy or hard it</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Readability is how easy or difficult a piece of writing…</p></td>
+<td class="text-right"><p>4.6</p></td>
+<td class="text-right"><p>3.5</p></td>
+<td class="text-right"><p>3.2</p></td>
+<td class="text-right"><p>10</p></td>
+<td class="text-right"><p>10</p></td>
+<td class="text-right"><p>0</p></td>
+<td class="text-right"><p>1.6</p></td>
+<td class="text-right"><p>1</p></td>
+<td class="text-right"><p>1.0198</p></td>
+<td class="text-right"><p>10</p></td>
+<td class="text-right"><p>10</p></td>
+<td class="text-right"><p>1</p></td>
+<td class="text-right"><p>46</p></td>
+<td class="text-right"><p>1</p></td>
+<td class="text-right"><p>61.325</p></td>
+<td class="text-right"><p>7.19</p></td>
+<td class="text-right"><p>nan</p></td>
+<td class="text-right"><p>12</p></td>
+<td class="text-right"><p>5.236</p></td>
+<td class="text-right"><p>8.288</p></td>
+<td class="text-right"><p>40</p></td>
+<td class="text-right"><p>3</p></td>
+<td class="text-left"><p>Middle School Version</p></td>
+<td class="text-left"><p>Readability is how easy or difficult a piece of writing</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Introduction to Readability Readability refers to the ease with which…</p></td>
+<td class="text-right"><p>6</p></td>
+<td class="text-right"><p>4.5</p></td>
+<td class="text-right"><p>3.68782</p></td>
+<td class="text-right"><p>10</p></td>
+<td class="text-right"><p>10</p></td>
+<td class="text-right"><p>0</p></td>
+<td class="text-right"><p>1.9</p></td>
+<td class="text-right"><p>1</p></td>
+<td class="text-right"><p>1.37477</p></td>
+<td class="text-right"><p>10</p></td>
+<td class="text-right"><p>8</p></td>
+<td class="text-right"><p>0.8</p></td>
+<td class="text-right"><p>60</p></td>
+<td class="text-right"><p>1</p></td>
+<td class="text-right"><p>35.945</p></td>
+<td class="text-right"><p>10.73</p></td>
+<td class="text-right"><p>nan</p></td>
+<td class="text-right"><p>16</p></td>
+<td class="text-right"><p>11.83</p></td>
+<td class="text-right"><p>16.52</p></td>
+<td class="text-right"><p>40</p></td>
+<td class="text-right"><p>3</p></td>
+<td class="text-left"><p>College Student Version</p></td>
+<td class="text-left"><p>Introduction to Readability Readability refers to the ease with which</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id27">
+<h3>指标解读<a class="headerlink" href="#id27" title="Link to this heading">#</a></h3>
+<section id="gunning-fog">
+<h4>Gunning-Fog 指数<a class="headerlink" href="#gunning-fog" title="Link to this heading">#</a></h4>
+<p><strong>来源</strong>：<a class="reference external" href="https://en.wikipedia.org/wiki/Gunning_fog_index"><code class="docutils literal notranslate"><span class="pre">Gunning-Fog</span></code></a></p>
+<p><strong>说明</strong>：Gunning-Fog 指数最初为英语写作设计，但可适用于任何语言。该指数估计了读者在首次阅读时所需具备的正规教育年数。</p>
+<ul class="simple">
+<li><p>公式：年级水平 = 0.4 × (ASL + PHW)</p>
+<ul>
+<li><p><strong>ASL</strong>：平均句子长度（总词数除以总句数）</p></li>
+<li><p><strong>PHW</strong>：难词百分比（指具有三个或更多音节的单词的比例）
+<strong>注意</strong>：需要连字符处理以正确划分单词音节。</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>含义解读</strong>：
+分数越高，说明文本需要更高的教育水平才能理解，即文本阅读难度越大；分数较低则表示文本较容易理解，适合较低年级的读者。</p>
+</section>
+<section id="smog">
+<h4>SMOG 指数<a class="headerlink" href="#smog" title="Link to this heading">#</a></h4>
+<p><strong>来源</strong>：<a class="reference external" href="https://en.wikipedia.org/wiki/SMOG"><code class="docutils literal notranslate"><span class="pre">SMOG</span></code></a>（简单胡言乱语测量）</p>
+<p><strong>说明</strong>：SMOG 指数通过统计文本中多音节单词的数量来估计理解文本所需的教育年数。</p>
+<ul class="simple">
+<li><p><strong>公式</strong>：
+SMOG 指数 = 1.043 × √(30 × (难词数 / 句子数)) + 3.1291
+<strong>注意</strong>：需要连字符处理。</p></li>
+</ul>
+</section>
+<section id="flesch">
+<h4>Flesch 阅读易度<a class="headerlink" href="#flesch" title="Link to this heading">#</a></h4>
+<p><strong>来源</strong>：<a class="reference external" href="https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests#Flesch_reading_ease"><code class="docutils literal notranslate"><span class="pre">Flesch</span> <span class="pre">reading</span> <span class="pre">ease</span></code></a></p>
+<p><strong>说明</strong>：
+Flesch 阅读易度分数衡量文本的易读性。</p>
+<ul class="simple">
+<li><p>公式：Flesch 阅读易度 = 206.835 - (1.015 × ASL) - (84.6 × ASW)</p>
+<ul>
+<li><p><strong>ASL</strong>：平均句子长度</p></li>
+</ul>
+</li>
+<li><p><strong>ASW</strong>：每个单词的平均音节数</p>
+<ul>
+<li><p><strong>含义解读</strong>：
+分数越高，表示文本越容易阅读；分数越低，则说明文本阅读起来更困难，适合受过较高教育水平的读者。</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>注意</strong>：需要连字符处理。</p>
+</section>
+<section id="flesch-kincaid">
+<h4>Flesch-Kincaid 年级水平<a class="headerlink" href="#flesch-kincaid" title="Link to this heading">#</a></h4>
+<p><strong>来源</strong>：<a class="reference external" href="https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests#Flesch%E2%80%93Kincaid_grade_level"><code class="docutils literal notranslate"><span class="pre">Flesch-Kincaid</span> <span class="pre">grade</span></code></a></p>
+<p><strong>说明</strong>：
+该指标估计理解文本所需的年级水平，主要基于句子长度和单词的音节数。</p>
+<ul class="simple">
+<li><p><strong>公式</strong>：Flesch-Kincaid 年级 = 0.39 × ASL + 11.8 × ASW - 15.59</p></li>
+<li><p><strong>含义解读</strong>：
+分数表示需要达到相应年级的读者才能较好地理解文本。分数越高，说明文本更复杂；分数较低，则表示文本较为简单易懂。</p></li>
+</ul>
+<p><strong>注意</strong>：需要连字符处理。</p>
+</section>
+<section id="ari">
+<h4>自动可读性指数（ARI）<a class="headerlink" href="#ari" title="Link to this heading">#</a></h4>
+<p><strong>来源</strong>：<a class="reference external" href="https://en.wikipedia.org/wiki/Automated_readability_index"><code class="docutils literal notranslate"><span class="pre">Automated</span> <span class="pre">readability</span> <span class="pre">index</span></code></a></p>
+<p><strong>说明</strong>：
+ARI 是一种自动化可读性测试，基于每个单词的平均字符数和平均句子长度，估计理解文本所需的美国年级水平。</p>
+<ul class="simple">
+<li><p><strong>公式</strong>：ARI = 4.71 × (字符数 / 词数) + 0.5 × (词数 / 句子数) - 21.43</p></li>
+<li><p><strong>含义解读</strong>：
+分数表示理解文本所需的最低美国学年。分数越高，表示文本结构更复杂，要求读者具备更高的阅读能力；分数较低则说明文本更简单易懂。</p></li>
+</ul>
+</section>
+<section id="coleman-liau">
+<h4>Coleman-Liau 指数<a class="headerlink" href="#coleman-liau" title="Link to this heading">#</a></h4>
+<p><strong>来源</strong>：<a class="reference external" href="https://en.wikipedia.org/wiki/Coleman%E2%80%93Liau_index"><code class="docutils literal notranslate"><span class="pre">Coleman-Liau</span> <span class="pre">index</span></code></a></p>
+<p><strong>说明</strong>：
+该指数用于估计理解文本所需的美国年级水平，其依据是每 100 个词中的平均字母数和句子数。</p>
+<ul class="simple">
+<li><p>原始公式：CLI = 0.0588 × L - 0.296 × S - 15.8</p>
+<ul>
+<li><p><strong>L</strong>：每 100 个词的平均字符数</p></li>
+<li><p><strong>S</strong>：每 100 个词的平均句子数
+在实际实现中，我们对整个文本进行平均，而不仅局限于 100 个词。</p></li>
+<li><p><strong>含义解读</strong>：
+分数越高，表明理解该文本所需的年级越高，文本阅读难度也越大；分数较低则表示文本较容易理解。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="lix">
+<h4>Lix 指数<a class="headerlink" href="#lix" title="Link to this heading">#</a></h4>
+<p><strong>来源</strong>：<a class="reference external" href="https://en.wikipedia.org/wiki/Lix_(readability_test)"><code class="docutils literal notranslate"><span class="pre">Lix</span></code></a>（Lesbarhetsindex）</p>
+<p><strong>说明</strong>：
+Lix 指数根据平均句子长度和长词（超过六个字符）的比例来评估文本的可读性。</p>
+<ul class="simple">
+<li><p><strong>公式</strong>：
+Lix = (词数 / 句子数) + (长词数 × 100 / 词数)</p></li>
+<li><p><strong>含义解读</strong>：
+分数越高，表示文本包含更多长句和长词，难度较大；分数较低则说明文本较为简洁、易于阅读。</p></li>
+</ul>
+</section>
+<section id="rix">
+<h4>Rix 指数<a class="headerlink" href="#rix" title="Link to this heading">#</a></h4>
+<p><strong>来源</strong>：<a class="reference external" href="https://www.jstor.org/stable/40031755"><code class="docutils literal notranslate"><span class="pre">Rix</span></code></a></p>
+<p><strong>说明</strong>：
+Rix 指数通过计算文本中长词（超过六个字符）在句子中的比例来估计文本的难度。</p>
+<ul class="simple">
+<li><p><strong>公式</strong>：Rix = 长词数 / 句子数</p></li>
+<li><p><strong>含义解读</strong>：
+分数越高，说明文本中长词比例较大，理解起来较为困难；分数较低则表明文本更为通俗易懂。</p></li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../3-Practice/clusttering.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">文档聚类</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="llm-metrics.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">常见大模型评价指标</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">演示1：衡量文本的连贯程度。</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">素材</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">工具</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><strong>主要功能</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">计算连贯</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">连贯性的语言学解释</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">为什么连贯性重要？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vs">连贯性 vs. 衔接性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">连贯性的认知机制</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">如何实现连贯性</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#theme-rheme-structure">主题-述题结构（Theme-Rheme Structure）</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">逻辑关系与连贯性</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">语境与连贯性</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">连贯性的层级</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">局部连贯与整体连贯</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">连贯性的实际应用</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">在写作中的应用</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">在口语交流中的应用</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">结论</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">衔接的语言学概念</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">语篇衔接的主要类型</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">指代（Reference）</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#substitution">替代（Substitution）</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ellipsis">省略（Ellipsis）</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conjunction">连接（Conjunction）</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lexical-cohesion">词汇衔接（Lexical Cohesion）</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">衔接与连贯的区别</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">语篇衔接的作用</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">小结</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">演示2：衡量文本的可读性。</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">素材</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">计算可读性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">指标解读</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gunning-fog">Gunning-Fog 指数</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#smog">SMOG 指数</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#flesch">Flesch 阅读易度</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#flesch-kincaid">Flesch-Kincaid 年级水平</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ari">自动可读性指数（ARI）</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#coleman-liau">Coleman-Liau 指数</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lix">Lix 指数</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rix">Rix 指数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Zhijun Gao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 高志军.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

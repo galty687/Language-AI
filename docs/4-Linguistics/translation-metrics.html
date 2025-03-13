@@ -1,0 +1,1163 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45957014-6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-45957014-6');
+    </script>
+    
+    <title>译文质量评价方法 &#8212; 人工智能实践 0.4 文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=64ceb196"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '4-Linguistics/translation-metrics';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="语言学简介" href="linguistics-intro.html" />
+    <link rel="prev" title="常见大模型评价指标" href="llm-metrics.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">人工智能实践 0.4 文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程简介</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/intro.html">课程大纲</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/terms.html">术语</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/setup.html">环境准备</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/llm-basics.html">LLM 基础</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">基于Transformer的自然语言处理</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/nlp-tasks.html">NLP 任务</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/transformer-nlp.html">基于HF Transformer的NLP实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/classification.html">文本分类</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/clusttering.html">文档聚类</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">语言学基础</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="linguistics-llm.html">大语言模型与语言学</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llm-metrics.html">常见大模型评价指标</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">译文质量评价方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linguistics-intro.html">语言学简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applied-linguistics.html">应用语言学</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">课程实践项目</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../projects/projects.html">课程实践项目候选</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">微调Phi-4</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../answers/transformer-practice-answers.html">基于HF Transformer的NLP实践的练习答案</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/4-Linguistics/translation-metrics.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>译文质量评价方法</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">自动质量评估指标概述</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bleu-bilingual-evaluation-understudy">BLEU（Bilingual Evaluation Understudy）</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">定义</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">来源</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">计算公式</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">评估原理</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">适用场景</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">示例（英译中）</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#meteor">METEOR</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">定义</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">来源</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">计算公式</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">评估原理</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">适用场景</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">示例（英译中）</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ter-translation-edit-rate">TER（Translation Edit Rate）</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">定义</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">计算公式</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">适用场景</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">示例（英译中）</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bertscore">BERTScore</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">定义</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">来源</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">计算公式</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">评估原理</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">适用场景</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">示例（英译中）</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comet">COMET</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">定义</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">来源</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">计算公式（概念）</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">评估原理</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">适用场景</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">示例（英译中）</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id31">总结对比</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id32">人工译文质量评价方法</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lisa-qa">LISA QA 质量评估模型</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id33">背景</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id34">核心原则</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id35">误差分类</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id36">严重性等级</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id37">评分体系</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id38">优势与局限性</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mqm">MQM（多维质量度量）</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id39">背景</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id40">核心原则</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id41">层次化误差分类</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id42">误差严重性等级</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id43">评分方法</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id44">优势与局限性</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dqf">DQF（动态质量框架）</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id45">背景</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id46">核心原则</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id47">质量评估的多维视角</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id48">可扩展误差分类</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id49">生产力评估</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id50">数据分析与可视化</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id51">小结</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id52">使用大模型翻译</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gemba-mqm">Gemba-MQM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id53">方法介绍</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id54">性能</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id55">总结</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>译文质量评价方法<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<section id="id2">
+<h2>自动质量评估指标概述<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>翻译质量评估是确保译文准确传达原文信息，同时保持目标语言流畅性和自然性的关键步骤。在机器翻译（MT）、软件本地化和人工翻译等场景中，合理运用评估指标可以帮助发现翻译过程中的优势与不足。研究者和实践者已经开发出多种自动化和人工评估方法，用于衡量译文的质量。</p>
+<p>自动化指标（如BLEU、METEOR、TER等）主要通过统计方法评估机器翻译结果与人工参考译文之间的相似性，主要衡量词语重叠、语序一致性等特征。而较新的指标（如BERTScore、COMET）则利用神经网络技术，通过深度语义分析评估翻译质量。尽管自动化指标能够快速、可重复地进行评估，但人工评估仍然是翻译质量的最终标准，因为人工评分能够识别文化适应性、风格、语境适配等微妙的翻译问题。</p>
+<p>随着翻译技术的发展，研究者致力于开发更加先进的评估方法，以结合自动化评估的效率和人工评估的深度。合理运用多种评估指标，有助于深入分析问题、优化翻译质量，并提升多语言内容的整体可读性。</p>
+<section id="bleu-bilingual-evaluation-understudy">
+<h3>BLEU（Bilingual Evaluation Understudy）<a class="headerlink" href="#bleu-bilingual-evaluation-understudy" title="Link to this heading">#</a></h3>
+<section id="id3">
+<h4>定义<a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
+<p>BLEU（双语评估替身法）是一种基于<strong>n-gram</strong>匹配的自动化评估指标，主要衡量候选译文中与参考译文匹配的n-gram比例，并结合<strong>短译惩罚</strong>（Brevity Penalty, BP）防止系统倾向于输出过短的译文。</p>
+</section>
+<section id="id4">
+<h4>来源<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>由 <strong>Kishore Papineni, Salim Roukos, Todd Ward, Wei-Jing Zhu</strong> 于2002年提出：<strong>Papineni et al. (2002). “BLEU: a Method for Automatic Evaluation of Machine Translation.” ACL.</strong></p></li>
+</ul>
+</section>
+<section id="id5">
+<h4>计算公式<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+<p>BLEU的计算方式如下：</p>
+<p><img alt="image-20250313100519251" src="../_images/blue-metric.png" /></p>
+<p>其中：</p>
+<ul>
+<li><p>( p_n )：<strong>n-gram精确率</strong>，计算候选译文与参考译文之间的n-gram匹配率；</p></li>
+<li><p>( \text{BP} )：<strong>短译惩罚因子</strong>，定义如下：</p>
+<p><img alt="image-20250313101200518" src="../_images/BP.png" /></p>
+<p>其中，( c ) 为候选译文的长度，( r ) 为参考译文的长度。</p>
+</li>
+</ul>
+</section>
+<section id="id6">
+<h4>评估原理<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>n-gram匹配</strong>：衡量候选译文与参考译文之间的1-gram、2-gram、3-gram、4-gram的重叠程度；</p></li>
+<li><p><strong>短译惩罚</strong>：防止模型通过输出极短译文提高精确率；</p></li>
+<li><p><strong>适用于多参考译文</strong>：可支持多个参考译文，提高评估的鲁棒性。</p></li>
+</ul>
+</section>
+<section id="id7">
+<h4>适用场景<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>机器翻译系统评估</strong>：广泛用于评测神经机器翻译（NMT）和统计机器翻译（SMT）系统；</p></li>
+<li><p><strong>快速质量检测</strong>：用于开发过程中快速检测模型改进的效果；</p></li>
+<li><p><strong>研究论文中常用指标</strong>：BLEU是机器翻译研究中最常见的指标之一。</p></li>
+</ul>
+</section>
+<section id="id8">
+<h4>示例（英译中）<a class="headerlink" href="#id8" title="Link to this heading">#</a></h4>
+<p><strong>原文</strong>：”The cat sat on the mat.”<br />
+<strong>参考译文</strong>：”猫坐在垫子上。”<br />
+<strong>候选译文</strong>：”猫坐在地毯上。”</p>
+<p>候选译文与参考译文的<strong>1-gram匹配</strong>情况：</p>
+<ul class="simple">
+<li><p>参考词：{猫, 坐在, 垫子, 上}</p></li>
+<li><p>候选词：{猫, 坐在, 地毯, 上}</p></li>
+<li><p>匹配项：猫, 坐在, 上（3个匹配，1个不匹配）</p></li>
+</ul>
+<p>2-gram匹配：</p>
+<ul class="simple">
+<li><p>参考：{猫-坐在, 坐在-垫子, 垫子-上}</p></li>
+<li><p>候选：{猫-坐在, 坐在-地毯, 地毯-上}</p></li>
+<li><p>匹配项：猫-坐在（1个匹配，2个不匹配）</p></li>
+</ul>
+<p>BLEU会根据这些匹配情况计算n-gram精确率，并应用短译惩罚，最终得出得分。</p>
+</section>
+</section>
+<section id="meteor">
+<h3>METEOR<a class="headerlink" href="#meteor" title="Link to this heading">#</a></h3>
+<section id="id9">
+<h4>定义<a class="headerlink" href="#id9" title="Link to this heading">#</a></h4>
+<p>METEOR （Metric for Evaluation of Translation with Explicit ORdering）是一种改进BLEU的自动化评估指标，旨在综合考虑<strong>精确率（Precision）、召回率（Recall）和词序匹配</strong>，同时引入<strong>同义词、词形变化</strong>的匹配能力，提高评估的语义合理性。</p>
+</section>
+<section id="id10">
+<h4>来源<a class="headerlink" href="#id10" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>由 <strong>Satanjeev Banerjee 和 Alon Lavie</strong> 于2005年提出：
+<strong>Banerjee &amp; Lavie (2005). “METEOR: An Automatic Metric for MT Evaluation with Improved Correlation with Human Judgments.” ACL.</strong></p></li>
+</ul>
+</section>
+<section id="id11">
+<h4>计算公式<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
+<p><img alt="image-20250313100616235" src="../_images/meteor.png" /></p>
+<p><strong>罚分（P）</strong>：计算译文与参考译文之间的<strong>词序碎片度</strong>，即若匹配词语分布较分散，则会增加惩罚。</p>
+</section>
+<section id="id12">
+<h4>评估原理<a class="headerlink" href="#id12" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>强调召回率</strong>：鼓励尽可能多的匹配参考译文的内容；</p></li>
+<li><p><strong>词序匹配</strong>：惩罚翻译中出现大量碎片匹配的情况；</p></li>
+<li><p><strong>考虑同义词</strong>：可对“house”与“home”这类同义表达给予一定匹配分数。</p></li>
+</ul>
+</section>
+<section id="id13">
+<h4>适用场景<a class="headerlink" href="#id13" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>文本匹配灵活性较高</strong>的翻译评估场景；</p></li>
+<li><p><strong>可用于翻译后编辑</strong>，帮助分析译文中的词序问题。</p></li>
+</ul>
+</section>
+<section id="id14">
+<h4>示例（英译中）<a class="headerlink" href="#id14" title="Link to this heading">#</a></h4>
+<p><strong>原文</strong>：”The cat sat on the mat.”<br />
+<strong>参考译文</strong>：”猫坐在垫子上。”<br />
+<strong>候选译文</strong>：”猫蹲在垫子上。”</p>
+<p>由于**”蹲”<strong>和</strong>”坐”**在某些语境下可互换，METEOR可能会给予一定程度的匹配分，而BLEU无法检测出这种相似性。此外，如果候选译文的词序严重不同，METEOR会给予更高的惩罚，导致得分下降。</p>
+</section>
+</section>
+<section id="ter-translation-edit-rate">
+<h3>TER（Translation Edit Rate）<a class="headerlink" href="#ter-translation-edit-rate" title="Link to this heading">#</a></h3>
+<section id="id15">
+<h4>定义<a class="headerlink" href="#id15" title="Link to this heading">#</a></h4>
+<p>TER（翻译编辑率）衡量将候选译文转换为参考译文所需的最少编辑次数，包括<strong>插入、删除、替换、移动</strong>等操作，得分越低表示质量越高。</p>
+</section>
+<section id="id16">
+<h4>计算公式<a class="headerlink" href="#id16" title="Link to this heading">#</a></h4>
+<p><img alt="image-20250313100655035" src="../_images/TER.png" /></p>
+</section>
+<section id="id17">
+<h4>适用场景<a class="headerlink" href="#id17" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>翻译后编辑成本评估</strong>：可用于计算人工编辑机器翻译的难度；</p></li>
+<li><p><strong>细粒度误差分析</strong>。</p></li>
+</ul>
+</section>
+<section id="id18">
+<h4>示例（英译中）<a class="headerlink" href="#id18" title="Link to this heading">#</a></h4>
+<p><strong>原文</strong>：”The cat sat on the mat.”<br />
+<strong>参考译文</strong>：”猫坐在垫子上。”<br />
+<strong>候选译文</strong>：”坐在垫子上的猫。”</p>
+<p>可能的编辑：</p>
+<ol class="arabic simple">
+<li><p><strong>移动</strong>”猫”至句首（1次移动）</p></li>
+<li><p><strong>删除</strong>”的”（1次删除）</p></li>
+</ol>
+<p>总编辑次数为2，TER = 2 / 4 = 0.5。</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="bertscore">
+<h3>BERTScore<a class="headerlink" href="#bertscore" title="Link to this heading">#</a></h3>
+<section id="id19">
+<h4>定义<a class="headerlink" href="#id19" title="Link to this heading">#</a></h4>
+<p>BERTScore （Bidirectional Encoder Representations from Transformers Score）是一种基于<strong>深度学习</strong>的翻译质量评估指标，利用 <strong>BERT</strong> 或类似的<strong>预训练语言模型</strong>计算候选译文和参考译文的<strong>语义相似性</strong>，而不仅仅是表面词汇匹配。相比传统的 BLEU、METEOR 等基于 n-gram 统计的方法，BERTScore 能够更有效地捕捉<strong>语境、同义词替换和句法结构变化</strong>。</p>
+</section>
+<section id="id20">
+<h4>来源<a class="headerlink" href="#id20" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>由 <strong>Tianyi Zhang, Varsha Kishore, Felix Wu, Kilian Q. Weinberger, Yoav Artzi</strong> 于2019年提出：
+<strong>Zhang et al. (2019). “BERTScore: Evaluating Text Generation with BERT.” ICLR.</strong></p></li>
+</ul>
+</section>
+<section id="id21">
+<h4>计算公式<a class="headerlink" href="#id21" title="Link to this heading">#</a></h4>
+<p>BERTScore 主要基于 <strong>余弦相似度（Cosine Similarity）</strong> 计算候选译文和参考译文的<strong>词向量匹配</strong>，并计算<strong>精确率（Precision）、召回率（Recall）和 F1 分数</strong>：</p>
+<p><img alt="image-20250313101000334" src="../_images/BertScore.png" /></p>
+<p>其中：</p>
+<ul class="simple">
+<li><p>( C ) 是候选译文的<strong>词向量集合</strong>，( R ) 是参考译文的<strong>词向量集合</strong>；</p></li>
+<li><p><strong>计算每个候选词与参考词的最高余弦相似度</strong>，然后求均值；</p></li>
+<li><p><strong>最终得分</strong>为精确率和召回率的 F1 分数。</p></li>
+</ul>
+</section>
+<section id="id22">
+<h4>评估原理<a class="headerlink" href="#id22" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>基于深度神经网络</strong>，使用<strong>BERT</strong>、<strong>RoBERTa</strong>、<strong>XLM-R</strong>等语言模型计算<strong>上下文敏感的词向量</strong>；</p></li>
+<li><p><strong>克服 BLEU 的缺陷</strong>，能识别<strong>同义词</strong>（如“房子” vs. “住宅”）；</p></li>
+<li><p><strong>适用于自由翻译</strong>，不会因为词序变化而严重降低分数。</p></li>
+</ul>
+</section>
+<section id="id23">
+<h4>适用场景<a class="headerlink" href="#id23" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>语义匹配要求较高的翻译评估</strong>，如<strong>自由翻译</strong>或<strong>风格调整</strong>后的译文；</p></li>
+<li><p><strong>用于神经机器翻译（NMT）优化</strong>，评估模型生成的句子是否与参考译文保持语义一致。</p></li>
+</ul>
+</section>
+<section id="id24">
+<h4>示例（英译中）<a class="headerlink" href="#id24" title="Link to this heading">#</a></h4>
+<p><strong>原文</strong>：”The cat sat on the mat.”<br />
+<strong>参考译文</strong>：”猫坐在垫子上。”<br />
+<strong>候选译文</strong>：”这只猫蹲在垫子上。”</p>
+<ul class="simple">
+<li><p>传统 BLEU 可能会因为“蹲”与“坐”不匹配而降低分数；</p></li>
+<li><p>BERTScore 会计算“蹲”和“坐”在上下文中的语义相似度，并给予较高的匹配分；</p></li>
+<li><p>由于“这只”额外增加了<strong>信息</strong>，可能会在精确率和召回率之间产生差异，但整体得分不会过低。</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="comet">
+<h3>COMET<a class="headerlink" href="#comet" title="Link to this heading">#</a></h3>
+</section>
+<section id="id25">
+<h3>定义<a class="headerlink" href="#id25" title="Link to this heading">#</a></h3>
+<p>COMET （Crosslingual Optimized Metric for Evaluation of Translation）是一种<strong>深度学习驱动的翻译评估指标</strong>，利用<strong>跨语言预训练模型</strong>（如 XLM-R）进行<strong>质量预测</strong>，可以同时考虑：</p>
+<ol class="arabic simple">
+<li><p><strong>原文（Source）</strong></p></li>
+<li><p><strong>候选译文（Candidate）</strong></p></li>
+<li><p><strong>参考译文（Reference）</strong></p></li>
+</ol>
+<p>与 BERTScore 不同，COMET 通过<strong>训练模型学习翻译质量评分</strong>，并优化以接近人工评估的结果。</p>
+<section id="id26">
+<h4>来源<a class="headerlink" href="#id26" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>由 <strong>Antonio Farinhas, Mikel Artetxe</strong> 等人于 2020 年在 Facebook AI Research 提出：
+<strong>Rei et al. (2020). “COMET: A Neural Framework for MT Evaluation.” EMNLP.</strong></p></li>
+</ul>
+</section>
+<section id="id27">
+<h4>计算公式（概念）<a class="headerlink" href="#id27" title="Link to this heading">#</a></h4>
+<p>COMET 使用 <strong>多语言 Transformer 语言模型</strong>（如 XLM-R）对<strong>原文、候选译文、参考译文</strong>进行编码，并训练一个<strong>回归模型</strong>预测翻译质量：</p>
+<ol class="arabic simple">
+<li><p><strong>将 Source、Candidate 和 Reference 编码为上下文向量</strong></p></li>
+<li><p><strong>计算 Source-Candidate 及 Candidate-Reference 的相似度</strong></p></li>
+<li><p><strong>使用回归模型预测最终翻译质量分数</strong></p></li>
+</ol>
+<p><img alt="image-20250313101031514" src="../_images/COMET.png" /></p>
+<p>其中：</p>
+<ul class="simple">
+<li><p>( f(\cdot) ) 是训练好的回归函数；</p></li>
+<li><p>语言模型 ( \text{XLM-R} ) 负责获取多语言语义表示。</p></li>
+</ul>
+</section>
+<section id="id28">
+<h4>评估原理<a class="headerlink" href="#id28" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>端到端优化</strong>，直接学习<strong>与人工评估相关的评分</strong>；</p></li>
+<li><p><strong>考虑 Source、Candidate 和 Reference</strong>，评估更加全面；</p></li>
+<li><p><strong>能识别语义错误、风格偏差、信息缺失等问题</strong>。</p></li>
+</ul>
+</section>
+<section id="id29">
+<h4>适用场景<a class="headerlink" href="#id29" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>需要高质量人工对齐的翻译评估</strong>，如<strong>法律、医学等领域</strong>；</p></li>
+<li><p><strong>翻译质量控制</strong>，评估翻译是否忠实于原文；</p></li>
+<li><p><strong>可用于机器翻译质量优化</strong>，如 NMT 模型的自动调优。</p></li>
+</ul>
+</section>
+<section id="id30">
+<h4>示例（英译中）<a class="headerlink" href="#id30" title="Link to this heading">#</a></h4>
+<p><strong>原文</strong>：”This device must be handled with care due to fragile components.”<br />
+<strong>参考译文</strong>：”由于内部部件易碎，必须小心处理这台设备。”<br />
+<strong>候选译文</strong>：”这台设备需要谨慎操作，因为它很容易损坏。”</p>
+<ul class="simple">
+<li><p>BLEU 可能会因为“易碎” vs. “容易损坏” 不匹配而降低分数；</p></li>
+<li><p>BERTScore 可能会给出较高的分数，因为**”易碎” 和 “容易损坏” 语义相近**；</p></li>
+<li><p>COMET 由于考虑了<strong>原文</strong>，可以检测到候选译文的某些细微信息缺失或风格偏差，并<strong>给出一个综合得分</strong>。</p></li>
+</ul>
+</section>
+</section>
+<section id="id31">
+<h3>总结对比<a class="headerlink" href="#id31" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>指标</p></th>
+<th class="head"><p>主要方法</p></th>
+<th class="head"><p>主要特点</p></th>
+<th class="head"><p>适用场景</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>BLEU</strong></p></td>
+<td><p>n-gram 统计匹配</p></td>
+<td><p>计算词语匹配率，适合短语结构固定的翻译</p></td>
+<td><p>机器翻译系统对比，正式评估</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>METEOR</strong></p></td>
+<td><p>精确率+召回率+词序匹配</p></td>
+<td><p>支持同义词、词形变化，更关注流畅性</p></td>
+<td><p>需要兼顾词义匹配和流畅性的场景</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>TER</strong></p></td>
+<td><p>编辑距离</p></td>
+<td><p>计算编辑成本，适合人工翻译后编辑评估</p></td>
+<td><p>翻译后编辑（PEMT）成本分析</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>BERTScore</strong></p></td>
+<td><p>深度学习 + 语义相似度</p></td>
+<td><p>可识别同义词、语法变化，适用于自然语言</p></td>
+<td><p>语义相似性要求高的自由翻译</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>COMET</strong></p></td>
+<td><p>端到端神经网络</p></td>
+<td><p>跨语言优化，能直接预测翻译质量</p></td>
+<td><p>专业翻译评估，机器翻译质量优化</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p>阅读材料 <a class="reference external" href="https://arxiv.org/pdf/2405.18348">Can Automatic Metrics Assess High-Quality Translations?</a></p>
+<p>本论文探讨了现有自动评估指标在检测高质量翻译中的有效性，主要研究问题包括：</p>
+<ol class="arabic simple">
+<li><p><strong>自动评估指标是否能够准确区分高质量翻译？</strong></p></li>
+<li><p><strong>当前指标在检测翻译错误方面的表现如何？</strong></p></li>
+<li><p><strong>是否存在改进评估方法的空间？</strong></p></li>
+</ol>
+</div></blockquote>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id32">
+<h2>人工译文质量评价方法<a class="headerlink" href="#id32" title="Link to this heading">#</a></h2>
+<section id="lisa-qa">
+<h3>LISA QA 质量评估模型<a class="headerlink" href="#lisa-qa" title="Link to this heading">#</a></h3>
+<section id="id33">
+<h4>背景<a class="headerlink" href="#id33" title="Link to this heading">#</a></h4>
+<p>LISA QA（Localization Industry Standards Association Quality Assurance）是最早的行业标准之一，用于评估翻译质量。虽然LISA组织已于2011年解散，但其质量评估模型仍然被许多企业和机构广泛采用，尤其是在本地化和技术文档翻译领域。</p>
+</section>
+<section id="id34">
+<h4>核心原则<a class="headerlink" href="#id34" title="Link to this heading">#</a></h4>
+<section id="id35">
+<h5>误差分类<a class="headerlink" href="#id35" title="Link to this heading">#</a></h5>
+<p>LISA QA 模型将错误分为多个类别，如<strong>术语错误、准确性/误译、遗漏/添加、风格、语法、标点</strong>等。不同的错误类别针对翻译文本中的特定问题，确保评估具有针对性。</p>
+</section>
+<section id="id36">
+<h5>严重性等级<a class="headerlink" href="#id36" title="Link to this heading">#</a></h5>
+<p>LISA QA 采用**次要（Minor）、主要（Major）、严重（Critical）**三个级别来衡量错误的影响：</p>
+<ul class="simple">
+<li><p><strong>次要错误</strong>：影响较小，如拼写错误，不影响理解。</p></li>
+<li><p><strong>主要错误</strong>：影响信息传达，如术语使用错误或关键句意表达不准确。</p></li>
+<li><p><strong>严重错误</strong>：可能导致误导性或不可接受的翻译，如安全说明误译。</p></li>
+</ul>
+</section>
+<section id="id37">
+<h5>评分体系<a class="headerlink" href="#id37" title="Link to this heading">#</a></h5>
+<p>LISA QA 采用<strong>扣分制</strong>，根据错误类别和严重程度计算总分。例如，一个“主要术语错误”可能比“次要标点错误”扣更多分。当翻译的总扣分超过一定阈值（如每千词的允许扣分上限），该翻译即不合格。</p>
+</section>
+</section>
+<section id="id38">
+<h4>优势与局限性<a class="headerlink" href="#id38" title="Link to this heading">#</a></h4>
+<p><strong>优势</strong>：</p>
+<ul class="simple">
+<li><p><strong>结构清晰，量化评估</strong>：基于分数计算，质量评估具有可比性。</p></li>
+<li><p><strong>可设定通过/不通过标准</strong>：翻译是否合格可以通过分数直观衡量。</p></li>
+<li><p><strong>行业广泛使用</strong>：许多翻译和本地化团队对LISA QA方法熟悉，易于实施。</p></li>
+</ul>
+<p><strong>局限性</strong>：</p>
+<ul class="simple">
+<li><p><strong>灵活性较低</strong>：LISA QA 固定的错误类别可能无法覆盖所有类型的翻译问题。</p></li>
+<li><p><strong>主观性</strong>：评估人员对“主要”与“次要”错误的判断可能存在分歧，影响一致性。</p></li>
+</ul>
+<p>LISA QA 作为经典的质量评估方法，适用于<strong>需要快速评分、明确合格标准</strong>的场景，但在面对更复杂的语言质量需求时，可能需要更灵活的框架，如 MQM 或 DQF。</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="mqm">
+<h3>MQM（多维质量度量）<a class="headerlink" href="#mqm" title="Link to this heading">#</a></h3>
+<section id="id39">
+<h4>背景<a class="headerlink" href="#id39" title="Link to this heading">#</a></h4>
+<p>MQM（Multidimensional Quality Metrics，多维质量度量）是欧洲委员会支持的 <strong>QTLaunchPad 项目</strong> 在2012-2013年提出的翻译质量评估框架，旨在提供<strong>灵活、全面的翻译质量评估方法</strong>。它结合了人工智能、语言学和本地化行业的最佳实践，为企业提供更<strong>细粒度</strong>的质量控制体系。</p>
+</section>
+<section id="id40">
+<h4>核心原则<a class="headerlink" href="#id40" title="Link to this heading">#</a></h4>
+<section id="id41">
+<h5>层次化误差分类<a class="headerlink" href="#id41" title="Link to this heading">#</a></h5>
+<p>MQM 采用<strong>层次化的误差类别体系</strong>，可适应不同翻译项目的需求。常见的顶级类别包括：</p>
+<ul class="simple">
+<li><p><strong>准确性（Accuracy）</strong>：包括误译、遗漏、添加等错误。</p></li>
+<li><p><strong>流畅性（Fluency）</strong>：涉及语法、拼写、标点、句法错误等。</p></li>
+<li><p><strong>术语（Terminology）</strong>：检查术语使用是否符合要求。</p></li>
+<li><p><strong>风格（Style）</strong>：涉及语域（Register）、正式程度、品牌一致性等。</p></li>
+<li><p><strong>本地化/规范（Locale/Convention）</strong>：确保符合目标语言文化和行业标准。</p></li>
+</ul>
+<p>这些类别可以进一步细分，例如，“准确性”可以包含<strong>误译、过度翻译、信息缺失</strong>等具体错误类型。</p>
+</section>
+<section id="id42">
+<h5>误差严重性等级<a class="headerlink" href="#id42" title="Link to this heading">#</a></h5>
+<p>MQM 允许自定义错误的严重程度，如：</p>
+<ul class="simple">
+<li><p><strong>次要（Minor）</strong>：不影响核心信息，但影响可读性。</p></li>
+<li><p><strong>主要（Major）</strong>：影响信息传达，可能导致误解。</p></li>
+<li><p><strong>关键（Critical）</strong>：严重误导或影响用户体验，例如法律、医疗、技术领域的关键术语误译。</p></li>
+</ul>
+</section>
+<section id="id43">
+<h5>评分方法<a class="headerlink" href="#id43" title="Link to this heading">#</a></h5>
+<p>MQM 不强制采用固定的评分方法，而是提供不同的加权方式：</p>
+<ul class="simple">
+<li><p><strong>错误计数法</strong>：计算各类别错误数量，进行统计分析。</p></li>
+<li><p><strong>加权评分</strong>：给不同严重性级别的错误赋予不同权重。</p></li>
+<li><p><strong>质量门槛</strong>：设定可接受的错误范围，如每千词允许的错误数量。</p></li>
+</ul>
+</section>
+</section>
+<section id="id44">
+<h4>优势与局限性<a class="headerlink" href="#id44" title="Link to this heading">#</a></h4>
+<p><strong>优势</strong>：</p>
+<ul class="simple">
+<li><p><strong>高度灵活</strong>：可以根据具体项目定制误差分类和评分方法。</p></li>
+<li><p><strong>提供深入诊断</strong>：能够针对不同内容类型和行业需求调整评估指标。</p></li>
+<li><p><strong>广泛应用</strong>：被多个行业标准组织采用，可与 DQF 等框架兼容。</p></li>
+</ul>
+<p><strong>局限性</strong>：</p>
+<ul class="simple">
+<li><p><strong>学习成本较高</strong>：需要培训评估人员，确保一致性。</p></li>
+<li><p><strong>可能较复杂</strong>：如果自定义过多，可能导致评估流程冗长。</p></li>
+</ul>
+<p>MQM 适用于<strong>需要详细误差分析、跨领域适用</strong>的翻译质量评估场景，特别适合<strong>技术翻译、法律文本、医学翻译</strong>等需要高准确度的内容。</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="dqf">
+<h3>DQF（动态质量框架）<a class="headerlink" href="#dqf" title="Link to this heading">#</a></h3>
+<section id="id45">
+<h4>背景<a class="headerlink" href="#id45" title="Link to this heading">#</a></h4>
+<p>DQF（Dynamic Quality Framework，动态质量框架）由<strong>TAUS（Translation Automation User Society）<strong>开发，旨在提供</strong>一个动态、可量化的翻译质量评估体系</strong>，综合<strong>错误分析、翻译生产力、成本控制</strong>等因素，使评估更贴近翻译行业的实际需求。</p>
+</section>
+<section id="id46">
+<h4>核心原则<a class="headerlink" href="#id46" title="Link to this heading">#</a></h4>
+<section id="id47">
+<h5>质量评估的多维视角<a class="headerlink" href="#id47" title="Link to this heading">#</a></h5>
+<p>DQF 结合多种翻译质量评估方法，包括：</p>
+<ul class="simple">
+<li><p><strong>错误标注（Error Annotation）</strong>：与 MQM 兼容，采用类似的误差分类体系。</p></li>
+<li><p><strong>生产力度量（Productivity Metrics）</strong>：通过编辑距离、翻译时间、按键记录等方式量化翻译工作量。</p></li>
+<li><p><strong>成本效益分析（Cost-effectiveness）</strong>：结合翻译质量与生产力数据，评估翻译项目的投入产出比。</p></li>
+</ul>
+</section>
+<section id="id48">
+<h5>可扩展误差分类<a class="headerlink" href="#id48" title="Link to this heading">#</a></h5>
+<p>DQF 采用类似 MQM 的模块化误差分类，涵盖<strong>准确性、流畅性、术语、风格、规范性</strong>等标准类别，同时提供灵活的子类别扩展。</p>
+</section>
+<section id="id49">
+<h5>生产力评估<a class="headerlink" href="#id49" title="Link to this heading">#</a></h5>
+<p>DQF 关注<strong>译后编辑（Post-editing Effort）</strong>：</p>
+<ul class="simple">
+<li><p><strong>编辑距离（Edit Distance）</strong>：测量翻译与最终编辑版本的差异。</p></li>
+<li><p><strong>时间统计（Time-based Metrics）</strong>：记录译员在某段文本上花费的时间。</p></li>
+<li><p><strong>按键输入（Keystroke Logging）</strong>：分析键盘输入以评估译员的工作量。</p></li>
+</ul>
+</section>
+<section id="id50">
+<h5>数据分析与可视化<a class="headerlink" href="#id50" title="Link to this heading">#</a></h5>
+<p>TAUS 提供<strong>在线工具</strong>和 API，支持：</p>
+<ul class="simple">
+<li><p><strong>实时数据收集</strong>：跟踪翻译人员的工作效率。</p></li>
+<li><p><strong>翻译质量趋势分析</strong>：评估不同语言对或项目的质量表现。</p></li>
+<li><p><strong>行业基准</strong>：与其他公司数据进行对比分析，优化翻译流程。</p></li>
+</ul>
+</section>
+</section>
+<section id="id51">
+<h4>小结<a class="headerlink" href="#id51" title="Link to this heading">#</a></h4>
+<p>LISA QA、MQM 和 DQF 各有侧重点，适用于不同的翻译质量评估需求。企业可以根据<strong>内容类型、行业需求、评估精度</strong>选择合适的框架，或结合多个框架进行综合评估，从而实现高效、高质量的翻译管理。</p>
+</section>
+</section>
+</section>
+<section id="id52">
+<h2>使用大模型翻译<a class="headerlink" href="#id52" title="Link to this heading">#</a></h2>
+<section id="gemba-mqm">
+<h3>Gemba-MQM<a class="headerlink" href="#gemba-mqm" title="Link to this heading">#</a></h3>
+<p>这是一种基于 GPT-4 的翻译质量评估指标，专门用于在 <strong>无参考翻译质量评估（Quality Estimation, QE）</strong> 场景下检测翻译错误，无需人工参考译文。GEMBA-MQM 采用<strong>三次示例（three-shot prompting）</strong> 技术，通过调用 GPT-4 来标记翻译中的错误区域。相较于以往的方法，该方法的提示词（prompts）具有<strong>语言无关性（language-agnostic）</strong>，避免了为不同语言手动设计提示词的需求。</p>
+<p>实验结果表明，GEMBA-MQM 在<strong>系统排名（system ranking）</strong> 方面达到了<strong>当前最先进的准确性（state-of-the-art accuracy）</strong>。但论文作者也提醒，在学术研究中使用该方法时需要谨慎，因为其依赖于<strong>专有的黑箱 GPT-4 模型</strong>，可能影响研究的可复现性。</p>
+<blockquote>
+<div><p>论文地址：<a class="reference external" href="https://arxiv.org/abs/2310.13988">GEMBA-MQM: Detecting Translation Quality Error Spans with GPT-4</a></p>
+</div></blockquote>
+</section>
+<section id="id53">
+<h3>方法介绍<a class="headerlink" href="#id53" title="Link to this heading">#</a></h3>
+<p>GEMBA-MQM 采用 <strong>GPT-4</strong> 进行 <strong>少样本学习（few-shot learning）</strong>，其核心方法如下：</p>
+<ol class="arabic">
+<li><p>输入源文本和翻译文本：</p>
+<ul class="simple">
+<li><p>评估时，GPT-4 接收<strong>源文本</strong>和<strong>机器翻译输出</strong>。</p></li>
+</ul>
+</li>
+<li><p>基于 MQM 评估框架检测错误：</p>
+<ul>
+<li><p>错误类别包括：</p>
+<ul class="simple">
+<li><p><strong>准确性错误（accuracy errors）</strong>：增译、误译、漏译、未翻译文本</p></li>
+<li><p><strong>流畅性错误（fluency errors）</strong>：语法错误、拼写错误、不一致表达等</p></li>
+<li><p><strong>本地化错误（locale errors）</strong>：货币、日期格式、名称翻译等</p></li>
+<li><p><strong>风格与术语错误（style &amp; terminology errors）</strong>：不适当的用词、术语不一致等</p></li>
+</ul>
+</li>
+<li><p>每个错误根据</p>
+<p>严重性（Severity）</p>
+<p>分类：</p>
+<ul class="simple">
+<li><p><strong>Critical（严重错误）</strong>：导致文本无法理解</p></li>
+<li><p><strong>Major（主要错误）</strong>：影响阅读流畅性但仍可理解</p></li>
+<li><p><strong>Minor（次要错误）</strong>：技术性错误，但不影响理解</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>计算 MQM 评分：</p>
+<ul class="simple">
+<li><p>根据错误类别和严重程度，GEMBA-MQM 计算 MQM 评分，并对翻译质量进行排名。</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="id54">
+<h3>性能<a class="headerlink" href="#id54" title="Link to this heading">#</a></h3>
+<p>论文使用 <strong>WMT22 机器翻译评测数据</strong> 进行实验，并将 Gemba-MQM 与其他主流评估方法进行比较，包括：</p>
+<ul class="simple">
+<li><p>基于参考的评估方法：</p>
+<ul>
+<li><p><strong>XCOMET-Ensemble</strong> (95.2%)</p></li>
+<li><p><strong>COMET-22</strong> (93.5%)</p></li>
+<li><p><strong>BLEURT-20</strong> (93.0%)</p></li>
+<li><p><strong>BLEU</strong> (85.9%)</p></li>
+</ul>
+</li>
+<li><p>无参考评估方法：</p>
+<ul>
+<li><p><strong>GEMBA-MQM</strong> (96.5%) <strong>→ 最佳表现</strong></p></li>
+<li><p><strong>XCOMET-QE-Ensemble</strong> (93.5%)</p></li>
+<li><p><strong>BERTScore</strong> (90.2%)</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id55">
+<h2>总结<a class="headerlink" href="#id55" title="Link to this heading">#</a></h2>
+<p>尽管自动评估方法不断进步，仍然存在以下挑战：</p>
+<ul class="simple">
+<li><p>对细微错误的敏感度不足：许多指标无法准确捕捉翻译质量的细微变化</p></li>
+<li><p>低资源语言的评估困难：大多数评估指标适用于高资源语言，但在处理形态丰富或低资源语言时效果较差</p></li>
+<li><p>领域特定翻译评估：医学、法律等专业领域的翻译评估仍面临巨大挑战</p></li>
+</ul>
+<p>未来发展方向</p>
+<p>为解决上述问题，未来的研究方向包括：</p>
+<ul class="simple">
+<li><p>混合模型：结合语言学特征、机器学习和深度学习，以提高评估精度。</p></li>
+<li><p>人机协同评估：结合人工评估和自动评估，提高翻译质量评估的可靠性。</p></li>
+<li><p>跨语言评估指标：开发适用于多种语言和翻译范式的统一评估模型。</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="llm-metrics.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">常见大模型评价指标</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="linguistics-intro.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">语言学简介</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">自动质量评估指标概述</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bleu-bilingual-evaluation-understudy">BLEU（Bilingual Evaluation Understudy）</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">定义</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">来源</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">计算公式</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">评估原理</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">适用场景</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">示例（英译中）</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#meteor">METEOR</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">定义</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">来源</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">计算公式</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">评估原理</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">适用场景</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">示例（英译中）</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ter-translation-edit-rate">TER（Translation Edit Rate）</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">定义</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">计算公式</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">适用场景</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">示例（英译中）</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bertscore">BERTScore</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">定义</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">来源</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">计算公式</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">评估原理</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">适用场景</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">示例（英译中）</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comet">COMET</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">定义</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">来源</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">计算公式（概念）</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">评估原理</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">适用场景</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">示例（英译中）</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id31">总结对比</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id32">人工译文质量评价方法</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lisa-qa">LISA QA 质量评估模型</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id33">背景</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id34">核心原则</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id35">误差分类</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id36">严重性等级</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id37">评分体系</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id38">优势与局限性</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mqm">MQM（多维质量度量）</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id39">背景</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id40">核心原则</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id41">层次化误差分类</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id42">误差严重性等级</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id43">评分方法</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id44">优势与局限性</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dqf">DQF（动态质量框架）</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id45">背景</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id46">核心原则</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id47">质量评估的多维视角</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id48">可扩展误差分类</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id49">生产力评估</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id50">数据分析与可视化</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id51">小结</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id52">使用大模型翻译</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gemba-mqm">Gemba-MQM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id53">方法介绍</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id54">性能</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id55">总结</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Zhijun Gao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 高志军.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

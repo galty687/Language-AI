@@ -99,7 +99,7 @@ Predicted label: 5 stars
 
    - **with torch.no_grad()**：在推理过程中禁用梯度计算，这样可以节省内存并提高推理速度，因为这里不需要反向传播计算梯度。
 
-   - **outputs = model (**inputs)**：将编码后的输入数据传入模型，得到模型的输出。
+   - **outputs = model (inputs)**：将编码后的输入数据传入模型，得到模型的输出。
 
    - **logits = outputs.logits**：从输出中提取 logits，logits 是模型在各个类别上的原始预测分数（未归一化）。
 

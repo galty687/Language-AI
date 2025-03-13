@@ -35,7 +35,18 @@
    3-Practice/transformer-nlp.md
    3-Practice/classification.md
    3-Practice/clusttering.md
-   
+
+.. toctree::
+   :maxdepth: 1
+   :caption: 语言学基础
+
+   4-Linguistics/linguistics-llm.md
+   4-Linguistics/llm-metrics.md
+   4-Linguistics/translation-metrics.md
+   4-Linguistics/linguistics-intro.md
+   4-Linguistics/applied-linguistics.md
+
+
 .. toctree::
    :maxdepth: 1
    :caption: 课程实践项目

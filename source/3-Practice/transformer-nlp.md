@@ -40,7 +40,7 @@
 1. 安装transformers
 
    ```bash
-   ！pip install transformers
+   !pip install transformers
    ```
 
 2. 安装 datasets

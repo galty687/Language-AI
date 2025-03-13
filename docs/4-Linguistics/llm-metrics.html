@@ -1,0 +1,655 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45957014-6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-45957014-6');
+    </script>
+    
+    <title>常见大模型评价指标 &#8212; 人工智能实践 0.4 文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=64ceb196"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '4-Linguistics/llm-metrics';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="译文质量评价方法" href="translation-metrics.html" />
+    <link rel="prev" title="大语言模型与语言学" href="linguistics-llm.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">人工智能实践 0.4 文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程简介</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/intro.html">课程大纲</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/terms.html">术语</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/setup.html">环境准备</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/llm-basics.html">LLM 基础</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">基于Transformer的自然语言处理</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/nlp-tasks.html">NLP 任务</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/transformer-nlp.html">基于HF Transformer的NLP实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/classification.html">文本分类</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/clusttering.html">文档聚类</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">语言学基础</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="linguistics-llm.html">大语言模型与语言学</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">常见大模型评价指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation-metrics.html">译文质量评价方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linguistics-intro.html">语言学简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applied-linguistics.html">应用语言学</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">课程实践项目</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../projects/projects.html">课程实践项目候选</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">微调Phi-4</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../answers/transformer-practice-answers.html">基于HF Transformer的NLP实践的练习答案</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/4-Linguistics/llm-metrics.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>常见大模型评价指标</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">语言建模指标</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perplexity-ppl">困惑度（Perplexity, PPL）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><strong>参考文本对比类指标</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bleu-bilingual-evaluation-understudy"><strong>BLEU（Bilingual Evaluation Understudy）</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rouge-recall-oriented-understudy-for-gisting-evaluation"><strong>ROUGE（Recall-Oriented Understudy for Gisting Evaluation）</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><strong>任务特定评价指标</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#precision-recall-f1"><strong>精确率（Precision）、召回率（Recall）和 F1 值</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pass-k"><strong>代码生成指标（Pass@k）</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><strong>人工评价方式</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#likert-scale">评分量表（Likert Scale）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pairwise-comparison"><strong>排序对比（Pairwise Comparison）</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><strong>事实性与伦理评估</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><strong>总结</strong></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>常见大模型评价指标<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>随着大型语言模型（LLM）在自然语言处理（NLP）任务中的广泛应用，对其进行科学、全面的评估成为一项核心挑战。不同任务（如文本生成、翻译、问答、代码生成等）对模型的评价需求各异，因此，研究者们提出了多种评价指标。本节将介绍主要的LLM评价方法，并结合具体示例说明其适用场景、优缺点及应用实践。</p>
+<section id="id2">
+<h2>语言建模指标<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<section id="perplexity-ppl">
+<h3>困惑度（Perplexity, PPL）<a class="headerlink" href="#perplexity-ppl" title="Link to this heading">#</a></h3>
+<p><strong>定义</strong><br />
+困惑度（Perplexity）衡量模型对文本的预测能力，其计算公式如下：</p>
+<p><img alt="image-20250312235245456" src="../_images/perplexity.png" /></p>
+<p><strong>解释</strong></p>
+<ul class="simple">
+<li><p>数值越低，表示模型越擅长预测给定文本。</p></li>
+<li><p>一般用于衡量自回归（Autoregressive）语言模型，如GPT系列的基础语言建模能力。</p></li>
+</ul>
+<p><strong>示例</strong><br />
+假设有两个语言模型：</p>
+<ul class="simple">
+<li><p>模型A对句子”The cat sat on the mat.” 预测的概率为 0.04</p></li>
+<li><p>模型B预测相同句子的概率为 0.02</p></li>
+</ul>
+<p>由于模型A的困惑度较低（数值越低表示预测越稳定），说明它比模型B更适合处理该文本。</p>
+<p><strong>优缺点</strong></p>
+<ul class="simple">
+<li><p>适用于评估语言模型的基本预测能力。</p></li>
+<li><p>计算简单，适用于不同规模的训练数据集。</p></li>
+<li><p>不能衡量文本的真实度或逻辑一致性，仅适用于评估语言流畅性。</p></li>
+<li><p>在生成式任务（如开放域对话）中，低困惑度并不意味着输出高质量。</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id3">
+<h2><strong>参考文本对比类指标</strong><a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>这类指标主要用于评估机器翻译、摘要生成、文本改写等任务，通过对比模型生成的文本与参考文本之间的相似度进行评分。</p>
+<section id="bleu-bilingual-evaluation-understudy">
+<h3><strong>BLEU（Bilingual Evaluation Understudy）</strong><a class="headerlink" href="#bleu-bilingual-evaluation-understudy" title="Link to this heading">#</a></h3>
+<p><strong>定义</strong><br />
+BLEU 衡量候选文本和参考文本的n-gram匹配度，公式如下：</p>
+<p><img alt="image-20250312235347702" src="4-Linguistics/blue.png" /></p>
+<p>其中：</p>
+<ul class="simple">
+<li><p>( BP ) 是长度惩罚因子，避免模型生成过短文本得高分。</p></li>
+<li><p>( p_n ) 是 n-gram 精确匹配率。</p></li>
+</ul>
+<p><strong>示例</strong>
+假设参考文本为：</p>
+<blockquote>
+<div><p>“The quick brown fox jumps over the lazy dog.”</p>
+</div></blockquote>
+<p>模型A生成：</p>
+<blockquote>
+<div><p>“A fast brown fox leaps over a sleepy dog.”</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>BLEU-1（1-gram匹配）：75%（单词匹配较好）</p></li>
+<li><p>BLEU-2（2-gram匹配）：40%（短语匹配较差）</p></li>
+</ul>
+<p><strong>优缺点</strong></p>
+<ul class="simple">
+<li><p>在机器翻译、文本改写等任务中有广泛应用。</p></li>
+<li><p>计算高效，可用于模型对比。</p></li>
+<li><p>不能衡量语义相似性，仅计算表面文本匹配。</p></li>
+<li><p>对于自由度较高的生成任务（如开放式问答）效果较差。</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="rouge-recall-oriented-understudy-for-gisting-evaluation">
+<h3><strong>ROUGE（Recall-Oriented Understudy for Gisting Evaluation）</strong><a class="headerlink" href="#rouge-recall-oriented-understudy-for-gisting-evaluation" title="Link to this heading">#</a></h3>
+<p><strong>定义</strong><br />
+ROUGE 主要用于摘要任务，衡量生成文本与参考文本之间的n-gram、最长公共子序列（LCS）等匹配情况。</p>
+<p><strong>常见变体</strong></p>
+<ul class="simple">
+<li><p>ROUGE-N（n-gram匹配）：如 ROUGE-1, ROUGE-2。</p></li>
+<li><p>ROUGE-L（最长公共子序列匹配）。</p></li>
+<li><p>ROUGE-S（跳跃n-gram匹配）。</p></li>
+</ul>
+<p><strong>示例</strong>
+假设参考摘要：</p>
+<blockquote>
+<div><p>“AI models are becoming more powerful every year.”</p>
+</div></blockquote>
+<p>模型生成：</p>
+<blockquote>
+<div><p>“Each year, AI models grow stronger.”</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>ROUGE-1（单词匹配）：80%</p></li>
+<li><p>ROUGE-2（2-gram匹配）：50%</p></li>
+<li><p>ROUGE-L（LCS匹配）：60%</p></li>
+</ul>
+<p><strong>优缺点</strong></p>
+<ul class="simple">
+<li><p>广泛应用于文本摘要任务。</p></li>
+<li><p>适用于评估抽取式摘要质量。</p></li>
+<li><p>不适用于自由度较高的生成任务，如创意写作。</p></li>
+<li><p>对句法变化和同义词替换不敏感。</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id4">
+<h2><strong>任务特定评价指标</strong><a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<section id="precision-recall-f1">
+<h3><strong>精确率（Precision）、召回率（Recall）和 F1 值</strong><a class="headerlink" href="#precision-recall-f1" title="Link to this heading">#</a></h3>
+<p>用于分类任务（如情感分析、意图检测等）。</p>
+<p><strong>示例</strong>
+假设进行垃圾邮件分类：</p>
+<ul class="simple">
+<li><p>100 封邮件，其中 30 封是垃圾邮件。</p></li>
+<li><p>模型预测了 35 封垃圾邮件，其中 25 封预测正确。</p></li>
+</ul>
+<p><img alt="image-20250312235452616" src="../_images/spam.png" /></p>
+</section>
+<section id="pass-k">
+<h3><strong>代码生成指标（Pass&#64;k）</strong><a class="headerlink" href="#pass-k" title="Link to this heading">#</a></h3>
+<p><strong>定义</strong><br />
+在代码生成任务中，Pass&#64;k 衡量生成的前 k 个代码是否有至少一个能通过测试。</p>
+<p><strong>示例</strong>
+假设模型生成 5 个候选代码：</p>
+<ul class="simple">
+<li><p>代码 1 ❌（编译错误）</p></li>
+<li><p>代码 2 ✅（通过测试）</p></li>
+<li><p>代码 3 ❌（逻辑错误）</p></li>
+<li><p>代码 4 ✅（通过测试）</p></li>
+<li><p>代码 5 ❌（部分正确）</p></li>
+</ul>
+<p>则：</p>
+<p><img alt="image-20250312235545323" src="../_images/p.png" /></p>
+<p><strong>优缺点</strong></p>
+<ul class="simple">
+<li><p>直接衡量代码可用性，真实反映开发环境。</p></li>
+<li><p>依赖测试用例，覆盖不足可能导致低估/高估模型能力。</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id5">
+<h2><strong>人工评价方式</strong><a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="likert-scale">
+<h3>评分量表（Likert Scale）<a class="headerlink" href="#likert-scale" title="Link to this heading">#</a></h3>
+<p>人工评分（如1-5级量表）用于评估文本流畅性、事实性、逻辑性。</p>
+</section>
+<section id="pairwise-comparison">
+<h3><strong>排序对比（Pairwise Comparison）</strong><a class="headerlink" href="#pairwise-comparison" title="Link to this heading">#</a></h3>
+<p>让评审员比较两个模型的输出，选择更优者。如：</p>
+<ul class="simple">
+<li><p>GPT-4 vs. GPT-3.5 生成摘要，评审员选择更好的版本。</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id6">
+<h2><strong>事实性与伦理评估</strong><a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>LLM 可能产生幻觉（Hallucination）或偏见（Bias），需额外评估：</p>
+<ul class="simple">
+<li><p>FactCC、QAGS：检测文本是否符合已知事实。</p></li>
+<li><p>Perspective API：检测文本是否包含仇恨或有害内容。</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="id7">
+<h2><strong>总结</strong><a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>不同任务需不同评估指标，如PPL适用于语言建模，ROUGE适用于摘要，Pass&#64;k适用于代码生成。</p></li>
+<li><p>人工评估仍是“金标准”，但成本较高。</p></li>
+<li><p>未来趋势：综合性评估，如HELM、MMLU等，以更全面衡量LLM能力。</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="linguistics-llm.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">大语言模型与语言学</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="translation-metrics.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">译文质量评价方法</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">语言建模指标</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perplexity-ppl">困惑度（Perplexity, PPL）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><strong>参考文本对比类指标</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bleu-bilingual-evaluation-understudy"><strong>BLEU（Bilingual Evaluation Understudy）</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rouge-recall-oriented-understudy-for-gisting-evaluation"><strong>ROUGE（Recall-Oriented Understudy for Gisting Evaluation）</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><strong>任务特定评价指标</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#precision-recall-f1"><strong>精确率（Precision）、召回率（Recall）和 F1 值</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pass-k"><strong>代码生成指标（Pass@k）</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><strong>人工评价方式</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#likert-scale">评分量表（Likert Scale）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pairwise-comparison"><strong>排序对比（Pairwise Comparison）</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><strong>事实性与伦理评估</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><strong>总结</strong></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Zhijun Gao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 高志军.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -33,6 +33,13 @@
 
 
 
+### 推理/思考模型
+
+- [qwq-32B](https://qwenlm.github.io/blog/qwq-32b/)
+- [deepseek-ai/DeepSeek-R1](https://huggingface.co/deepseek-ai/DeepSeek-R1)
+
+
+
 ### 翻译大模型
 
 - [Qwen-MT](https://help.aliyun.com/zh/model-studio/user-guide/machine-translation)
@@ -43,9 +50,19 @@
 
 - [通义万象](https://tongyi.aliyun.com/wanxiang/videoCreation) | [官方提示词](https://alidocs.dingtalk.com/i/nodes/jb9Y4gmKWrx9eo4dCql9LlbYJGXn6lpz?spm=5176.29623064.0.0.41ed1ecerZpS4I&utm_scene=person_space)
 
+### 语音模型
+
+- [Spark TTS](https://sparkaudio.github.io/spark-tts/)  | [Demo](https://sparktts.org)
+
+
+
 ### difussion LLM
 
 - [Mercury-Coder](https://www.inceptionlabs.ai)
+
+
+
+
 
 ## 本地推理框架
 
@@ -72,6 +89,9 @@
 
 - [Chatbot Arena](https://lmarena.ai/)
 - [Humanity's Last Exam](https://agi.safe.ai)
+- [Creative Writing](https://eqbench.com/creative_writing.html)
+- [EQ](https://eqbench.com/index.html)
+- [Live Bench](https://livebench.ai/#/)
 
 
 
@@ -92,6 +112,10 @@
 
 
 
+## 提示词
+
+- [提示词优化器](https://prompt.always200.com) | [源码](https://github.com/linshenkx/prompt-optimizer?tab=readme-ov-file)
+
 ## 工作流
 
 - [Dify](http://dify.ai)
@@ -106,12 +130,16 @@
 - [ima](https://ima.qq.com) (腾讯)
 - [MaxKB](https://maxkb.cn)
 - [FastGPT](https://fastgpt.cn)
+- [RLAMA](https://rlama.dev)
 
 
 
 ## 智能体
 
 - [Open Operator](https://operator.browserbase.com)
+- Nanobroser 
+- [Devin](https://devin.ai)
+- [AutoAgent](https://github.com/HKUDS/AutoAgent)
 
 
 
@@ -123,7 +151,22 @@
 
 - [LLM Sampling Visualization](https://artefact2.github.io/llm-sampling/index.xhtml)
 
+- [Hugging Face Agent Course](https://huggingface.co/learn/agents-course/en/unit0/introduction)
+
+- [Hugging Face NLP Course](https://huggingface.co/learn/nlp-course/chapter0/1)
+
+- [spreadsheets-are-all-you-need](https://github.com/ianand/spreadsheets-are-all-you-need)
+
+
+
+
 ## 大模型催生的新协议
 
 - [Model Context Protocol (MCP)](https://supabase.com/docs/guides/getting-started/mcp)
 - [llms.txt](https://llmstxt.org)
+
+
+
+## 工具
+
+- [代码以图片输出](https://ray.so)

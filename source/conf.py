@@ -22,7 +22,7 @@ copyright = '高志军'
 author = 'Zhijun Gao'
 
 # The full version, including alpha/beta/rc tags
-release = '0.2'
+release = '0.4'
 
 
 # -- General configuration ---------------------------------------------------
@@ -36,7 +36,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx_comments',
     'sphinx_copybutton',
-    'myst_parser'
+    'myst_parser',
 ]
 
 source_suffix = {
