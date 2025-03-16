@@ -9,12 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45957014-6"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GESLLLJC6M"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'UA-45957014-6');
+        gtag('config', 'G-GESLLLJC6M');
     </script>
     
     <title>常见大模型评价指标 &#8212; 人工智能实践 0.4 文档</title>
@@ -179,7 +179,8 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程实践项目</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../projects/projects.html">课程实践项目候选</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5-Projects/evaluating-llms.html">评估模型能力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5-Projects/projects.html">课程实践项目候选</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="nav bd-sidenav">
@@ -328,27 +329,32 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">语言建模指标</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">评估维度</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">通用评估方法</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question">Question:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">语言建模指标</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perplexity-ppl">困惑度（Perplexity, PPL）</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><strong>参考文本对比类指标</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><strong>参考文本对比类指标</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bleu-bilingual-evaluation-understudy"><strong>BLEU（Bilingual Evaluation Understudy）</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rouge-recall-oriented-understudy-for-gisting-evaluation"><strong>ROUGE（Recall-Oriented Understudy for Gisting Evaluation）</strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><strong>任务特定评价指标</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><strong>任务特定评价指标</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#precision-recall-f1"><strong>精确率（Precision）、召回率（Recall）和 F1 值</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pass-k"><strong>代码生成指标（Pass@k）</strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><strong>人工评价方式</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><strong>人工评价方式</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#likert-scale">评分量表（Likert Scale）</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pairwise-comparison"><strong>排序对比（Pairwise Comparison）</strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><strong>事实性与伦理评估</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><strong>总结</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8"><strong>事实性与伦理评估</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9"><strong>总结</strong></a></li>
 </ul>
             </nav>
         </div>
@@ -364,7 +370,43 @@
 <h1>常见大模型评价指标<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>随着大型语言模型（LLM）在自然语言处理（NLP）任务中的广泛应用，对其进行科学、全面的评估成为一项核心挑战。不同任务（如文本生成、翻译、问答、代码生成等）对模型的评价需求各异，因此，研究者们提出了多种评价指标。本节将介绍主要的LLM评价方法，并结合具体示例说明其适用场景、优缺点及应用实践。</p>
 <section id="id2">
-<h2>语言建模指标<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2>评估维度<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>模型评估一般从以下几个维度展开：</p>
+<ul class="simple">
+<li><p><strong>领域特定能力（Domain-Specific Capability）</strong>：衡量模型在特定任务上的表现，如代码生成、医疗文本分析等。</p></li>
+<li><p><strong>生成能力（Generation Capability）</strong>：评估文本生成的连贯性、准确性、信息完整性等。</p></li>
+<li><p><strong>指令遵循能力（Instruction-Following Capability）</strong>：测试模型能否遵循用户指令，包括格式要求、内容约束等。</p></li>
+<li><p><strong>成本与延迟（Cost and Latency）</strong>：计算API调用成本、推理速度，以优化部署策略。</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>通用评估方法<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>对于非代码类的领域能力，通常使用封闭式任务（Close-ended Tasks）来评估，例如使用多选题（Multiple-Choice Questions, MCQs），封闭式输出更容易验证。</p>
+<p>例如 MMLU benchmark中的一道题：</p>
+<section id="question">
+<h3>Question:<a class="headerlink" href="#question" title="Link to this heading">#</a></h3>
+<p>One of the reasons that the government discourages and regulates monopolies is that</p>
+<ul class="simple">
+<li><p>(A) Producer surplus is lost and consumer surplus is gained.</p></li>
+<li><p>(B) Monopoly prices ensure productive efficiency but cost society allocative efficiency.</p></li>
+<li><p>(C) Monopoly firms do not engage in significant research and development.</p></li>
+<li><p>(D) Consumer surplus is lost with higher prices and lower levels of output.</p></li>
+</ul>
+<p><strong>Label:</strong> (D)</p>
+<p>译文如下：</p>
+<blockquote>
+<div><p><strong>问题</strong>：</p>
+<p>政府反对并监管垄断的一个原因是：</p>
+<p>(A) 生产者剩余减少，而消费者剩余增加。
+(B) 垄断定价确保生产效率，但损害社会的配置效率。
+(C) 垄断企业不会进行重要的研发。
+(D) <strong>消费者剩余因价格上涨和产量下降而减少。</strong></p>
+<p><strong>正确答案</strong>：D</p>
+</div></blockquote>
+</section>
+</section>
+<section id="id4">
+<h2>语言建模指标<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <section id="perplexity-ppl">
 <h3>困惑度（Perplexity, PPL）<a class="headerlink" href="#perplexity-ppl" title="Link to this heading">#</a></h3>
 <p><strong>定义</strong><br />
@@ -392,8 +434,8 @@
 </section>
 </section>
 <hr class="docutils" />
-<section id="id3">
-<h2><strong>参考文本对比类指标</strong><a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<section id="id5">
+<h2><strong>参考文本对比类指标</strong><a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
 <p>这类指标主要用于评估机器翻译、摘要生成、文本改写等任务，通过对比模型生成的文本与参考文本之间的相似度进行评分。</p>
 <section id="bleu-bilingual-evaluation-understudy">
 <h3><strong>BLEU（Bilingual Evaluation Understudy）</strong><a class="headerlink" href="#bleu-bilingual-evaluation-understudy" title="Link to this heading">#</a></h3>
@@ -461,8 +503,8 @@ ROUGE 主要用于摘要任务，衡量生成文本与参考文本之间的n-gra
 </section>
 </section>
 <hr class="docutils" />
-<section id="id4">
-<h2><strong>任务特定评价指标</strong><a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<section id="id6">
+<h2><strong>任务特定评价指标</strong><a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
 <section id="precision-recall-f1">
 <h3><strong>精确率（Precision）、召回率（Recall）和 F1 值</strong><a class="headerlink" href="#precision-recall-f1" title="Link to this heading">#</a></h3>
 <p>用于分类任务（如情感分析、意图检测等）。</p>
@@ -497,8 +539,8 @@ ROUGE 主要用于摘要任务，衡量生成文本与参考文本之间的n-gra
 </section>
 </section>
 <hr class="docutils" />
-<section id="id5">
-<h2><strong>人工评价方式</strong><a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="id7">
+<h2><strong>人工评价方式</strong><a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
 <section id="likert-scale">
 <h3>评分量表（Likert Scale）<a class="headerlink" href="#likert-scale" title="Link to this heading">#</a></h3>
 <p>人工评分（如1-5级量表）用于评估文本流畅性、事实性、逻辑性。</p>
@@ -512,8 +554,8 @@ ROUGE 主要用于摘要任务，衡量生成文本与参考文本之间的n-gra
 </section>
 </section>
 <hr class="docutils" />
-<section id="id6">
-<h2><strong>事实性与伦理评估</strong><a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<section id="id8">
+<h2><strong>事实性与伦理评估</strong><a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
 <p>LLM 可能产生幻觉（Hallucination）或偏见（Bias），需额外评估：</p>
 <ul class="simple">
 <li><p>FactCC、QAGS：检测文本是否符合已知事实。</p></li>
@@ -521,8 +563,8 @@ ROUGE 主要用于摘要任务，衡量生成文本与参考文本之间的n-gra
 </ul>
 </section>
 <hr class="docutils" />
-<section id="id7">
-<h2><strong>总结</strong><a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<section id="id9">
+<h2><strong>总结</strong><a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>不同任务需不同评估指标，如PPL适用于语言建模，ROUGE适用于摘要，Pass&#64;k适用于代码生成。</p></li>
 <li><p>人工评估仍是“金标准”，但成本较高。</p></li>
@@ -577,27 +619,32 @@ ROUGE 主要用于摘要任务，衡量生成文本与参考文本之间的n-gra
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">语言建模指标</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">评估维度</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">通用评估方法</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question">Question:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">语言建模指标</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perplexity-ppl">困惑度（Perplexity, PPL）</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><strong>参考文本对比类指标</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><strong>参考文本对比类指标</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bleu-bilingual-evaluation-understudy"><strong>BLEU（Bilingual Evaluation Understudy）</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rouge-recall-oriented-understudy-for-gisting-evaluation"><strong>ROUGE（Recall-Oriented Understudy for Gisting Evaluation）</strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><strong>任务特定评价指标</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><strong>任务特定评价指标</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#precision-recall-f1"><strong>精确率（Precision）、召回率（Recall）和 F1 值</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pass-k"><strong>代码生成指标（Pass@k）</strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><strong>人工评价方式</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><strong>人工评价方式</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#likert-scale">评分量表（Likert Scale）</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pairwise-comparison"><strong>排序对比（Pairwise Comparison）</strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><strong>事实性与伦理评估</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><strong>总结</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8"><strong>事实性与伦理评估</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9"><strong>总结</strong></a></li>
 </ul>
   </nav></div>
 
@@ -612,7 +659,7 @@ ROUGE 主要用于摘要任务，衡量生成文本与参考文本之间的n-gra
   <div class="footer-item">
     
 <p class="component-author">
-作者： Zhijun Gao
+作者： 高志军
 </p>
 
   </div>
@@ -622,7 +669,7 @@ ROUGE 主要用于摘要任务，衡量生成文本与参考文本之间的n-gra
 
   <p class="copyright">
     
-      © Copyright 高志军.
+      © Copyright Zhijun Gao.
       <br/>
     
   </p>

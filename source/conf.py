@@ -18,8 +18,8 @@
 # -- Project information -----------------------------------------------------
 
 project = '人工智能实践'
-copyright = '高志军'
-author = 'Zhijun Gao'
+copyright = 'Zhijun Gao'
+author = '高志军'
 
 # The full version, including alpha/beta/rc tags
 release = '0.4'
@@ -89,7 +89,7 @@ html_css_files = [
 
 #Google Analytics
 
-googleanalytics_id = 'UA-45957014-6'
+googleanalytics_id = 'G-GESLLLJC6M'
 
 
 

@@ -1,7 +1,52 @@
 # 常见大模型评价指标
 
-
 随着大型语言模型（LLM）在自然语言处理（NLP）任务中的广泛应用，对其进行科学、全面的评估成为一项核心挑战。不同任务（如文本生成、翻译、问答、代码生成等）对模型的评价需求各异，因此，研究者们提出了多种评价指标。本节将介绍主要的LLM评价方法，并结合具体示例说明其适用场景、优缺点及应用实践。
+
+
+
+## 评估维度
+
+模型评估一般从以下几个维度展开：
+
+- **领域特定能力（Domain-Specific Capability）**：衡量模型在特定任务上的表现，如代码生成、医疗文本分析等。
+- **生成能力（Generation Capability）**：评估文本生成的连贯性、准确性、信息完整性等。
+- **指令遵循能力（Instruction-Following Capability）**：测试模型能否遵循用户指令，包括格式要求、内容约束等。
+- **成本与延迟（Cost and Latency）**：计算API调用成本、推理速度，以优化部署策略。
+
+
+
+## 通用评估方法
+
+对于非代码类的领域能力，通常使用封闭式任务（Close-ended Tasks）来评估，例如使用多选题（Multiple-Choice Questions, MCQs），封闭式输出更容易验证。
+
+例如 MMLU benchmark中的一道题：
+
+### Question:
+One of the reasons that the government discourages and regulates monopolies is that  
+
+- (A) Producer surplus is lost and consumer surplus is gained.  
+- (B) Monopoly prices ensure productive efficiency but cost society allocative efficiency.  
+- (C) Monopoly firms do not engage in significant research and development.  
+- (D) Consumer surplus is lost with higher prices and lower levels of output.  
+
+**Label:** (D)
+
+译文如下：
+
+>**问题**：
+>
+>政府反对并监管垄断的一个原因是：
+>
+>(A) 生产者剩余减少，而消费者剩余增加。
+> (B) 垄断定价确保生产效率，但损害社会的配置效率。
+> (C) 垄断企业不会进行重要的研发。
+> (D) **消费者剩余因价格上涨和产量下降而减少。**
+>
+> **正确答案**：D
+
+
+
+
 
 
 

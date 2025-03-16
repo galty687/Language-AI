@@ -53,6 +53,7 @@
 ### 语音模型
 
 - [Spark TTS](https://sparkaudio.github.io/spark-tts/)  | [Demo](https://sparktts.org)
+- [sesame/csm-1b](sesame/csm-1b) | [Demo](https://www.sesame.com/research/crossing_the_uncanny_valley_of_voice#demo)
 
 
 
@@ -71,6 +72,12 @@
 - [GPT4ALL](https://www.nomic.ai/gpt4all)
 - [vLLM](https://docs.vllm.ai/en/latest/)
 - [LocalAI](https://localai.io)
+
+
+
+## 数据标记
+
+- [doccano](https://doccano.github.io/doccano/)
 
 
 
@@ -170,3 +177,10 @@
 ## 工具
 
 - [代码以图片输出](https://ray.so)
+
+
+
+## 其他资料集合
+
+- [Awesome Chinese LLM](https://github.com/HqWu-HITCS/Awesome-Chinese-LLM)
+- [llm-engineer-toolkit](https://github.com/KalyanKS-NLP/llm-engineer-toolkit)
