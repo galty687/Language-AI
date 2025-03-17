@@ -449,6 +449,8 @@ def calculate_co2_emissions(total_evaluation_time_seconds: float | None) -> floa
 
 ## 使用lm-evaluation-harness评价模型翻译能力
 
+**EleutherAI 的 lm-evaluation-harness**：其评估基准的示例数量中位数为 1,000，平均数为 2,159。组织者建议评估集的最小规模为 300 个示例，但更倾向于至少包含 1,000 个示例，特别是当这些示例是合成时。
+
 1. 安装
 
    ```bash

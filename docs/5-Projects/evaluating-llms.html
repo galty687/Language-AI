@@ -17,7 +17,7 @@
         gtag('config', 'G-GESLLLJC6M');
     </script>
     
-    <title>大模型的评估与选择 &#8212; 人工智能实践 0.4 文档</title>
+    <title>大模型的评估与选择 &#8212; 人工智能实践 0.5 文档</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=64ceb196"></script>
+    <script src="../_static/documentation_options.js?v=cd8ec5f0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -139,7 +139,7 @@
   
   
   
-    <p class="title logo__title">人工智能实践 0.4 文档</p>
+    <p class="title logo__title">人工智能实践 0.5 文档</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -181,6 +181,11 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">大模型的评估与选择</a></li>
 <li class="toctree-l1"><a class="reference internal" href="projects.html">课程实践项目候选</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">提示词</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../6-Prompts/prompts-intro.html">提示词导论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6-Prompts/jail-break.html">提示词越狱</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="nav bd-sidenav">
@@ -761,6 +766,7 @@ OpenAI 在分析 GPT-3 训练数据中的基准污染时发现，<strong>有 13 
 </section>
 <section id="lm-evaluation-harness">
 <h2>使用lm-evaluation-harness评价模型翻译能力<a class="headerlink" href="#lm-evaluation-harness" title="Link to this heading">#</a></h2>
+<p><strong>EleutherAI 的 lm-evaluation-harness</strong>：其评估基准的示例数量中位数为 1,000，平均数为 2,159。组织者建议评估集的最小规模为 300 个示例，但更倾向于至少包含 1,000 个示例，特别是当这些示例是合成时。</p>
 <ol class="arabic">
 <li><p>安装</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/EleutherAI/lm-evaluation-harness

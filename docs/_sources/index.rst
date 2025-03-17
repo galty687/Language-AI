@@ -53,7 +53,13 @@
    
    5-Projects/evaluating-llms.md
    5-Projects/projects.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: 提示词
    
+   6-Prompts/prompts-intro.md
+   6-Prompts/jail-break.md   
 
 .. toctree::
    :maxdepth: 1
