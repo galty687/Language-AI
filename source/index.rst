@@ -65,7 +65,10 @@
    :maxdepth: 1
    :caption: 微调
 
+   fine-tunning/ft-basics.md
    fine-tunning/ft-phi4.md
+   fine-tunning/ft-ph4-self.md
+   fine-tunning/ft-rl.md
 
 
 .. toctree::
