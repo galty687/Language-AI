@@ -180,7 +180,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程实践项目</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../5-Projects/evaluating-llms.html">大模型的评估与选择</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../5-Projects/projects.html">课程实践项目候选</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5-Projects/projects.html">课程实践项目要求</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">提示词</span></p>
 <ul class="nav bd-sidenav">
@@ -189,7 +189,10 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-basics.html">微调基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">微调Phi-4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">使用自监督学习微调Phi4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
 <ul class="nav bd-sidenav">
@@ -339,7 +342,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1. 语言智能导论</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2. 自然语言处理</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3. 常见自然语言任务实践</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">4. 语言学与语言类产品</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">4. 语言学与大模型</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">5. 学生课程项目选题报告</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">6. 基于星河社区的大模型开发实践（百度飞桨，2025年4月3日）</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">7. 大模型产品开发常见工具</a></li>
@@ -419,20 +422,20 @@
 <li><p>实战任务2：情感分析（基于电影评论或社交媒体数据）</p></li>
 <li><p>实战任务3：语法分析</p></li>
 <li><p>实战任务4：文本分类</p></li>
-<li><p>每个任务后进行讨论和反馈，鼓励学生提出改进方案</p></li>
 </ul>
 </li>
 </ul>
+<p>每个任务后进行讨论和反馈，鼓励学生提出改进方案</p>
 </section>
 <section id="id7">
-<h3>4. 语言学与语言类产品<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<h3>4. 语言学与大模型<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>目标</strong>：介绍语言学理论，帮助学生设计符合语言学理论的智能语言产品。</p></li>
 <li><p><strong>内容</strong>：</p>
 <ul>
 <li><p>语言学基础：词汇学、句法学、语用学、文体学</p></li>
 <li><p>语言学理论在NLP中的应用</p></li>
-<li><p>如何根据不同的任务需求调整语言模型</p></li>
+<li><p>根据语言学知识确定语言模型的具体任务指标</p></li>
 <li><p>案例分析：语言学知识助力大模型的翻译能力的提升</p></li>
 </ul>
 </li>
@@ -445,9 +448,9 @@
 <li><p><strong>内容</strong>：</p>
 <ul>
 <li><p>项目选题与需求分析：学生自选感兴趣的项目（如同声传译、简历自动生成、儿童绘本等）</p></li>
-<li><p>项目设计：目标定义、方法选择、技术架构</p></li>
-<li><p>小组报告：展示项目进度、技术难点、改进方案</p></li>
-<li><p>教师与同学反馈，学生根据反馈调整设计</p></li>
+<li><p>项目设计：目标定义、路径、技术架构</p></li>
+<li><p>小组报告：展示项目选题、技术难点、开发方案
+教师与同学反馈，学生根据反馈调整设计</p></li>
 </ul>
 </li>
 </ul>
@@ -488,8 +491,8 @@
 <li><p><strong>内容</strong>：</p>
 <ul>
 <li><p>提示词的定义与应用场景</p></li>
-<li><p>提示词优化策略：如何通过调整提示词提高模型性能</p></li>
-<li><p>Prompty:</p></li>
+<li><p>提示词写作与优化策略</p></li>
+<li><p>常见提示词开发工具</p></li>
 <li><p>实践任务：根据任务需求设计不同类型的提示词</p></li>
 </ul>
 </li>
@@ -501,8 +504,8 @@
 <li><p><strong>目标</strong>：理解微调原理及其应用，能够根据不同任务需求进行大模型的微调。</p></li>
 <li><p><strong>内容</strong>：</p>
 <ul>
-<li><p>微调原理与基本方法：Fine-Tuning、Transfer Learning、Reward Learning 和 LFHF等</p></li>
-<li><p>微调示例：准备数据、微调大模型的文本生成风格</p></li>
+<li><p>微调原理与基本方法：自监督学习、监督学习和强化学习</p></li>
+<li><p>微调示例：多策略微调Phi4</p></li>
 </ul>
 </li>
 </ul>
@@ -610,7 +613,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1. 语言智能导论</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2. 自然语言处理</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3. 常见自然语言任务实践</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">4. 语言学与语言类产品</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">4. 语言学与大模型</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">5. 学生课程项目选题报告</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">6. 基于星河社区的大模型开发实践（百度飞桨，2025年4月3日）</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">7. 大模型产品开发常见工具</a></li>
