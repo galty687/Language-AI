@@ -59,6 +59,8 @@
    :caption: 提示词
    
    6-Prompts/prompts-intro.md
+   6-Prompts/prompts-examples.md
+   6-Prompts/langchain.md
    6-Prompts/jail-break.md   
 
 .. toctree::
