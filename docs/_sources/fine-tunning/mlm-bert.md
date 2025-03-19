@@ -4,7 +4,7 @@
 
 
 
-Google Colab Notebook 地址： [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/你的用户名/你的仓库名/blob/分支名/路径/到/你的Notebook.ipynb)
+Google Colab Notebook 地址： [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HAnmGSR-tCeLtfRrFaCFzpD65ABWJY2n?usp=sharing)
 
 ------
 
