@@ -61,6 +61,7 @@
    6-Prompts/prompts-intro.md
    6-Prompts/prompts-examples.md
    6-Prompts/langchain.md
+   6-Prompts/good-examples.md
    6-Prompts/jail-break.md   
 
 .. toctree::
@@ -68,6 +69,7 @@
    :caption: 微调
 
    fine-tunning/ft-basics.md
+   fine-tunning/mlm-bert.md
    fine-tunning/ft-phi4.md
    fine-tunning/ft-ph4-self.md
    fine-tunning/ft-rl.md
