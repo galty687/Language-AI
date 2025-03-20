@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '5-Projects/evaluating-llms';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="课程实践项目候选" href="projects.html" />
+    <link rel="next" title="使用lm-evaluation-harness评价模型翻译能力" href="evaluate-case.html" />
     <link rel="prev" title="应用语言学" href="../4-Linguistics/applied-linguistics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
@@ -180,16 +180,24 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程实践项目</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">大模型的评估与选择</a></li>
-<li class="toctree-l1"><a class="reference internal" href="projects.html">课程实践项目候选</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluate-case.html">使用lm-evaluation-harness评价模型翻译能力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">课程实践项目要求</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">提示词</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../6-Prompts/prompts-intro.html">提示词导论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6-Prompts/prompts-examples.html">提示词案例分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6-Prompts/langchain.html">基于Langchain的提示词开发实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6-Prompts/good-examples.html">提示词案例分析</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../6-Prompts/jail-break.html">提示词越狱</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">微调Phi-4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-basics.html">微调基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/mlm-bert.html">使用MLM微调Bert模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">使用自监督学习微调Phi4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
 <ul class="nav bd-sidenav">
@@ -362,15 +370,6 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">成本与速度</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lm-evaluation-harness">使用lm-evaluation-harness评价模型翻译能力</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">其他任务</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">结果解读</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">数据集</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chatgpt-o1">使用Chatgpt o1 实验：</a></li>
-</ul>
-</li>
 </ul>
             </nav>
         </div>
@@ -534,8 +533,9 @@ GSM8K 是一个包含 8,500 道高质量、小学数学推理问题的数据集�
 <p><strong>简介</strong>：<br />
 IFEval（Instruction-Following Evaluation）用于测试大语言模型（LLMs）在遵循自然语言指令方面的能力。它通过一系列任务评估模型的指令理解、任务执行以及合理性，如回答问题、生成文本或执行复杂操作。</p>
 <p>来源：<a class="reference external" href="https://arxiv.org/abs/2311.07911">Instruction-Following Evaluation for Large Language Models</a></p>
+<p><img alt="if-questions" src="../_images/if-questions.png" /></p>
 <p><strong>示例问题</strong>：</p>
-<p><em>请写一封正式的商务电子邮件，邀请客户参加产品发布会。</em></p>
+<p>Write a resume for a fresh high school graduate who is seeking their first job. Make sure to include at least 12 placeholder represented by square brackets, such as [address], [name]. （为一位刚毕业于高中的学生撰写一份简历，他们正在寻找第一份工作。确保包含至少12个由方括号表示的占位符，例如 [address]、[name]。）</p>
 </section>
 <hr class="docutils" />
 <section id="bbh-big-bench-hard">
@@ -596,6 +596,7 @@ MuSR（Multistep Soft Reasoning）主要测试模型在复杂推理问题中的�
 <p><strong>简介</strong>：<br />
 MMLU-Pro（Massive Multitask Language Understanding - Professional）是 MMLU 数据集的改进版本，涵盖多个高难度学科领域。与原版 MMLU 不同，MMLU-Pro 通过增加选项数量、调整问题难度，并减少数据噪声，使得测试更具挑战性。</p>
 <p><strong>来源</strong>：  <a class="reference external" href="https://arxiv.org/abs/2406.01574">MMLU-Pro: A More Robust and Challenging Multi-Task Language Understanding Benchmark</a></p>
+<p><a class="reference external" href="https://huggingface.co/spaces/TIGER-Lab/MMLU-Pro">MMLU-Pro Leaderboard</a></p>
 <p><strong>示例问题</strong>：</p>
 <p><em>在19世纪，哪位作家的作品最能反映现实主义文学风格？</em></p>
 <p>A. 托尔斯泰<br />
@@ -643,7 +644,7 @@ CO₂ Cost 衡量模型在推理计算过程中产生的碳排放量，以 <stro
 </section>
 <section id="rolellm">
 <h3>RoleLLM 评价指标<a class="headerlink" href="#rolellm" title="Link to this heading">#</a></h3>
-<p>在评估大型语言模型（LLMs）的角色扮演能力时，RoleLLM 框架引入了三个基于 Rouge-L 的指标：RAW、CUS 和 SPE。这些指标分别用于评估模型在模仿说话风格、回答准确性以及捕获特定角色知识方面的表现。​:contentReference[oaicite:0]{index=0}</p>
+<p>在评估大型语言模型（LLMs）的角色扮演能力时，RoleLLM 框架引入了三个基于 Rouge-L 的指标：RAW、CUS 和 SPE。这些指标分别用于评估模型在模仿说话风格、回答准确性以及捕获特定角色知识方面的表现。</p>
 <p><strong>评价指标</strong>：</p>
 <ol class="arabic simple">
 <li><p><strong>RAW（Role-specific Answering with Writing style）</strong><br />
@@ -701,7 +702,7 @@ OpenAI 在分析 GPT-3 训练数据中的基准污染时发现，<strong>有 13 
 <h2>成本与速度<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
 <p>在评估大型语言模型（LLM）时，平衡模型质量、延迟和成本至关重要。虽然高质量的输出是目标，但如果模型运行缓慢且成本高昂，其实用性将大打折扣。因此，许多公司可能选择质量稍低但在成本和延迟方面更具优势的模型。</p>
 <p><strong>成本</strong>：对于使用模型API的用户，费用通常按生成的标记数量计算，输入和输出的标记越多，成本越高。因此，许多应用尝试减少输入和输出标记的数量以控制成本。对于自行托管模型的用户，主要成本在于计算资源。为了充分利用现有硬件资源，通常选择能在硬件上运行的最大模型。例如，GPU通常具有16 GB、24 GB、48 GB和80 GB的内存，因此许多流行的模型参数数量设计为适应这些内存配置。</p>
-<p><strong>延迟</strong>：延迟不仅取决于底层模型，还与每个提示和采样变量有关。自回归语言模型通常逐个生成标记，生成的标记越多，总延迟越高。可以通过精心设计提示词（例如，指示模型简洁作答）或设置生成的停止条件来控制用户感知的总延迟。</p>
+<p><strong>延迟</strong>：延迟不仅取决于底层模型，还与每个提示和采样变量有关。自回归语言模型通常逐个生成Token，生成的Token越多，总延迟越高。可以通过精心设计提示词（例如，指示模型简洁作答）或设置生成的停止条件来控制用户感知的总延迟。</p>
 <p><strong>平衡</strong>：在优化多个目标时，明确哪些目标可以妥协，哪些不可以至关重要。例如，如果延迟是不可妥协的因素，应首先根据延迟期望筛选模型，排除不符合延迟要求的模型，然后在剩余模型中选择最佳者。这种方法类似于项目管理中的“铁三角”原则，即范围、时间和成本三者之间的权衡。</p>
 <p>一个示例的要求如下：</p>
 <div class="pst-scrollable-table-container"><table class="table">
@@ -760,330 +761,9 @@ OpenAI 在分析 GPT-3 训练数据中的基准污染时发现，<strong>有 13 
 </table>
 </div>
 <ul class="simple">
-<li><p><strong>Elo 评分系统</strong>是一种用于衡量选手或团队相对技能水平的评价方法，最初由匈牙利裔美国物理学家阿尔帕德·埃洛（Arpad Elo）为国际象棋比赛设计。如今，该系统被广泛应用于各种竞技领域，包括围棋、足球、篮球以及电子竞技等。</p></li>
+<li><p><strong>Elo 评分系统</strong>是一种用于衡量选手或团队相对技能水平的评价方法，最初由匈牙利裔美国物理学家阿尔帕德·埃洛（Arpad Elo）为国际象棋比赛设计。如今，该系统被广泛应用于各种竞技领域，包括围棋、足球、篮球以及电子竞技等。Elo评分系统通过比较双方当前评分计算预期胜率，并根据实际比赛结果调整评分，从而逐步反映出选手的真实实力。</p></li>
 <li><p><strong>Pass&#64;1</strong> 是一种用于评估代码生成模型性能的指标，衡量模型在第一次尝试时生成正确代码的概率。</p></li>
 </ul>
-</section>
-<section id="lm-evaluation-harness">
-<h2>使用lm-evaluation-harness评价模型翻译能力<a class="headerlink" href="#lm-evaluation-harness" title="Link to this heading">#</a></h2>
-<p><strong>EleutherAI 的 lm-evaluation-harness</strong>：其评估基准的示例数量中位数为 1,000，平均数为 2,159。组织者建议评估集的最小规模为 300 个示例，但更倾向于至少包含 1,000 个示例，特别是当这些示例是合成时。</p>
-<ol class="arabic">
-<li><p>安装</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/EleutherAI/lm-evaluation-harness
-</pre></div>
-</div>
-</li>
-<li><p>查看支持的测评任务</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!lm-eval --tasks list
-</pre></div>
-</div>
-<p>输出：</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="p">|</span>bigbench_salient_translation_error_detection_generate_until<span class="w">   </span>
-</pre></div>
-</div>
-<blockquote>
-<div><p><strong><a class="reference external" href="https://github.com/google/BIG-bench/tree/main/bigbench/benchmark_tasks/salient_translation_error_detection">Salient Translation Error Detection</a></strong> 是 BIG-bench 基准测试套件中的一个任务，旨在评估语言模型检测翻译中显著错误的能力。该任务的目标是确定模型是否能够识别翻译文本中的关键错误，确保译文的准确性和一致性。目前这个测试集只支持德文和英文的翻译能力测评。</p>
-<p><strong>任务特点：</strong></p>
-<ul class="simple">
-<li><p><strong>错误类型</strong>：模型需要检测翻译中的各种错误类型，包括但不限于：数值错误、命名实体错误、否定或反义词使用错误、修饰语或形容词使用错误、内容遗漏以及事实性错误。</p></li>
-<li><p><strong>评估指标</strong>：主要使用准确率（accuracy）等指标来衡量模型在检测翻译错误方面的性能。</p></li>
-</ul>
-</div></blockquote>
-</li>
-<li><p>评估meta的mbart的德英翻译能力</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!lm-eval<span class="w"> </span>--model<span class="w"> </span>hf<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--model_args<span class="w"> </span><span class="nv">pretrained</span><span class="o">=</span>facebook/mbart-large-50,trust_remote_code<span class="o">=</span>True<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--tasks<span class="w"> </span>bigbench_salient_translation_error_detection_generate_until<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--device<span class="w"> </span>cuda:0<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--batch_size<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--output_path<span class="w"> </span>/content/lm_eval_results3
-</pre></div>
-</div>
-<p>输出：</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Tasks</p></th>
-<th class="head text-right"><p>Version</p></th>
-<th class="head"><p>Filter</p></th>
-<th class="head text-right"><p>n-shot</p></th>
-<th class="head"><p>Metric</p></th>
-<th class="head"><p></p></th>
-<th class="head text-right"><p>Value</p></th>
-<th class="head"><p></p></th>
-<th class="head text-right"><p>Stderr</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>bigbench_salient_translation_error_detection_generate_until</p></td>
-<td class="text-right"><p>1.0</p></td>
-<td><p>none</p></td>
-<td class="text-right"><p>0</p></td>
-<td><p>exact_match</p></td>
-<td><p>↑</p></td>
-<td class="text-right"><p>0.0000</p></td>
-<td><p>±</p></td>
-<td class="text-right"><p>0.0000</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</li>
-<li><p>对照GPT-4o的德英翻译能力</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!pip install tiktoken
-
-import os
-os.environ[&#39;OPENAI_API_KEY&#39;] = &#39;your-api-key&#39;
-
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!lm_eval --model openai-chatcompletions \
-        --model_args model=gpt-4o \
-        --tasks bigbench_salient_translation_error_detection_generate_until \
-        --device cuda:0 \
-        --batch_size 8 \
-        --output_path /content/lm_eval_results4
-
-</pre></div>
-</div>
-<p>输出结果：
-openai-chat-completions (model=gpt-4o), gen_kwargs: (None), limit: None, num_fewshot: None, batch_size: 1</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Tasks</p></th>
-<th class="head text-right"><p>Version</p></th>
-<th class="head"><p>Filter</p></th>
-<th class="head text-right"><p>n-shot</p></th>
-<th class="head"><p>Metric</p></th>
-<th class="head"><p></p></th>
-<th class="head text-right"><p>Value</p></th>
-<th class="head"><p></p></th>
-<th class="head text-right"><p>Stderr</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>bigbench_salient_translation_error_detection_generate_until</p></td>
-<td class="text-right"><p>1</p></td>
-<td><p>none</p></td>
-<td class="text-right"><p>0</p></td>
-<td><p>exact_match</p></td>
-<td><p>↑</p></td>
-<td class="text-right"><p>0.0341</p></td>
-<td><p>±</p></td>
-<td class="text-right"><p>0.0057</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</li>
-</ol>
-<section id="id11">
-<h3>其他任务<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">lm-eval</span></code>预制了非常多的任务，具体可以通过下方指令查询</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!lm-eval<span class="w"> </span>--tasks<span class="w"> </span>list
-</pre></div>
-</div>
-<p>输出的部分结果如下，</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Task</p></th>
-<th class="head"><p>Path</p></th>
-<th class="head"><p>Type</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>bigbench_mathematical_induction_multiple_choice</p></td>
-<td><p>lm_eval/tasks/bigbench/multiple_choice/mathematical_induction.yaml</p></td>
-<td><p>multiple_choice</p></td>
-</tr>
-<tr class="row-odd"><td><p>bigbench_matrixshapes_generate_until</p></td>
-<td><p>lm_eval/tasks/bigbench/generate_until/matrixshapes.yaml</p></td>
-<td><p>generate_until</p></td>
-</tr>
-<tr class="row-even"><td><p>bigbench_metaphor_boolean_generate_until</p></td>
-<td><p>lm_eval/tasks/bigbench/generate_until/metaphor_boolean.yaml</p></td>
-<td><p>generate_until</p></td>
-</tr>
-<tr class="row-odd"><td><p>bigbench_metaphor_boolean_multiple_choice</p></td>
-<td><p>lm_eval/tasks/bigbench/multiple_choice/metaphor_boolean.yaml</p></td>
-<td><p>multiple_choice</p></td>
-</tr>
-<tr class="row-even"><td><p>bigbench_metaphor_understanding_generate_until</p></td>
-<td><p>lm_eval/tasks/bigbench/generate_until/metaphor_understanding.yaml</p></td>
-<td><p>generate_until</p></td>
-</tr>
-<tr class="row-odd"><td><p>bigbench_metaphor_understanding_multiple_choice</p></td>
-<td><p>lm_eval/tasks/bigbench/multiple_choice/metaphor_understanding.yaml</p></td>
-<td><p>multiple_choice</p></td>
-</tr>
-<tr class="row-even"><td><p>bigbench_minute_mysteries_qa_generate_until</p></td>
-<td><p>lm_eval/tasks/bigbench/generate_until/minute_mysteries_qa.yaml</p></td>
-<td><p>generate_until</p></td>
-</tr>
-<tr class="row-odd"><td><p>bigbench_misconceptions_generate_until</p></td>
-<td><p>lm_eval/tasks/bigbench/generate_until/misconceptions.yaml</p></td>
-<td><p>generate_until</p></td>
-</tr>
-<tr class="row-even"><td><p>bigbench_misconceptions_multiple_choice</p></td>
-<td><p>lm_eval/tasks/bigbench/multiple_choice/misconceptions.yaml</p></td>
-<td><p>multiple_choice</p></td>
-</tr>
-<tr class="row-odd"><td><p>bigbench_misconceptions_russian_generate_until</p></td>
-<td><p>lm_eval/tasks/bigbench/generate_until/misconceptions_russian.yaml</p></td>
-<td><p>generate_until</p></td>
-</tr>
-<tr class="row-even"><td><p>bigbench_misconceptions_russian_multiple_choice</p></td>
-<td><p>lm_eval/tasks/bigbench/multiple_choice/misconceptions_russian.yaml</p></td>
-<td><p>multiple_choice</p></td>
-</tr>
-<tr class="row-odd"><td><p>bigbench_mnist_ascii_generate_until</p></td>
-<td><p>lm_eval/tasks/bigbench/generate_until/mnist_ascii.yaml</p></td>
-<td><p>generate_until</p></td>
-</tr>
-<tr class="row-even"><td><p>bigbench_mnist_ascii_multiple_choice</p></td>
-<td><p>lm_eval/tasks/bigbench/multiple_choice/mnist_ascii.yaml</p></td>
-<td><p>multiple_choice</p></td>
-</tr>
-<tr class="row-odd"><td><p>bigbench_modified_arithmetic_generate_until</p></td>
-<td><p>lm_eval/tasks/bigbench/generate_until/modified_arithmetic.yaml</p></td>
-<td><p>generate_until</p></td>
-</tr>
-<tr class="row-even"><td><p>bigbench_moral_permissibility_generate_until</p></td>
-<td><p>lm_eval/tasks/bigbench/generate_until/moral_permissibility.yaml</p></td>
-<td><p>generate_until</p></td>
-</tr>
-<tr class="row-odd"><td><p>bigbench_moral_permissibility_multiple_choice</p></td>
-<td><p>lm_eval/tasks/bigbench/multiple_choice/moral_permissibility.yaml</p></td>
-<td><p>multiple_choice</p></td>
-</tr>
-<tr class="row-even"><td><p>bigbench_movie_dialog_same_or_different_generate_until</p></td>
-<td><p>lm_eval/tasks/bigbench/generate_until/movie_dialog_same_or_different.yaml</p></td>
-<td><p>generate_until</p></td>
-</tr>
-<tr class="row-odd"><td><p>bigbench_movie_dialog_same_or_different_multiple_choice</p></td>
-<td><p>lm_eval/tasks/bigbench/multiple_choice/movie_dialog_same_or_different.yaml</p></td>
-<td><p>multiple_choice</p></td>
-</tr>
-<tr class="row-even"><td><p>bigbench_movie_recommendation_generate_until</p></td>
-<td><p>lm_eval/tasks/bigbench/generate_until/movie_recommendation.yaml</p></td>
-<td><p>generate_until</p></td>
-</tr>
-<tr class="row-odd"><td><p>bigbench_movie_recommendation_multiple_choice</p></td>
-<td><p>lm_eval/tasks/bigbench/multiple_choice/movie_recommendation.yaml</p></td>
-<td><p>multiple_choice</p></td>
-</tr>
-<tr class="row-even"><td><p>bigbench_mult_data_wrangling_generate_until</p></td>
-<td><p>lm_eval/tasks/bigbench/generate_until/mult_data_wrangling.yaml</p></td>
-<td><p>generate_until</p></td>
-</tr>
-<tr class="row-odd"><td><p>bigbench_multiemo_generate_until</p></td>
-<td><p>lm_eval/tasks/bigbench/generate_until/multiemo.yaml</p></td>
-<td><p>generate_until</p></td>
-</tr>
-<tr class="row-even"><td><p>bigbench_multiemo_multiple_choice</p></td>
-<td><p>lm_eval/tasks/bigbench/multiple_choice/multiemo.yaml</p></td>
-<td><p>multiple_choice</p></td>
-</tr>
-<tr class="row-odd"><td><p>bigbench_natural_instructions_generate_until</p></td>
-<td><p>lm_eval/tasks/bigbench/generate_until/natural_instructions.yaml</p></td>
-<td><p>generate_until</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>其他任务的部分介绍如下：具体的任务介绍可见：<a class="reference external" href="https://github.com/EleutherAI/lm-evaluation-harness/blob/main/lm_eval/tasks/README.md">Tasks</a></p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>任务系列</p></th>
-<th class="head"><p>描述</p></th>
-<th class="head"><p>语言</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>aclue</p></td>
-<td><p>专注于古代汉语理解及文化方面的任务。</p></td>
-<td><p>古汉语</p></td>
-</tr>
-<tr class="row-odd"><td><p>aexams</p></td>
-<td><p>与各种学科考试相关的阿拉伯语任务。</p></td>
-<td><p>阿拉伯语</p></td>
-</tr>
-<tr class="row-even"><td><p>agieval</p></td>
-<td><p>涉及历史数据或与历史及历史文本相关问题的任务。</p></td>
-<td><p>英语，中文</p></td>
-</tr>
-<tr class="row-odd"><td><p>anli</p></td>
-<td><p>对抗性自然语言推理任务，用以测试模型鲁棒性。</p></td>
-<td><p>英语</p></td>
-</tr>
-<tr class="row-even"><td><p>arabic_leaderboard_complete</p></td>
-<td><p>开放阿拉伯语大语言模型排行榜中任务的完整版，侧重于评估反映阿拉伯语理解、领会、文化和遗产特点的模型。注意，其中一些任务是机器翻译的。</p></td>
-<td><p>阿拉伯语（部分机器翻译）</p></td>
-</tr>
-<tr class="row-odd"><td><p>arabic_leaderboard_light</p></td>
-<td><p>开放阿拉伯语大语言模型排行榜中任务的简化版（即原基准测试集的10%样本），侧重于评估反映阿拉伯语理解、领会、文化和遗产特点的模型。注意，其中一些任务是机器翻译的。</p></td>
-<td><p>阿拉伯语（部分机器翻译）</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-</section>
-<section id="id12">
-<h2>结果解读<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
-<p>一开始我以为只是meta的模型能力一般，然后就尝试了使用gpt-4o，其正确率依然低得吓人，于是我仔细看了一下分析结果。</p>
-<section id="id13">
-<h3>数据集<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
-<p>德文句子的来源如下：一组描述（段落）从 <a class="reference external" href="https://github.com/google-research-datasets/wit">WIT</a> 数据集中抽样获得。利用句子分割器（Stanza）提取了描述的第一句。随后，利用商业翻译服务将句子翻译成英文。随后，将这些句子对（原文、译文）提供给人工评审，并附上如下指示：在翻译中引入六类错误中的一种，同时尽量不影响翻译的流畅性。</p>
-<p>示例数据：</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Source: Das Einköpfige Ferkelkraut ist eine Pflanzenart aus der Gattung der Ferkelkräuter innerhalb der Familie der Korbblütler.\nTranslation: The two-headed piglet herb is a species of herb in the family.\nThe translation contains an error pertaining to &quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;target_scores&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">         </span><span class="nt">&quot;Modifiers or Adjectives&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">         </span><span class="nt">&quot;Numerical Values&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">         </span><span class="nt">&quot;Negation or Antonyms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">         </span><span class="nt">&quot;Named Entities&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">         </span><span class="nt">&quot;Dropped Content&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">         </span><span class="nt">&quot;Facts&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">        </span><span class="p">}</span>
-</pre></div>
-</div>
-</section>
-<section id="chatgpt-o1">
-<h3>使用Chatgpt o1 实验：<a class="headerlink" href="#chatgpt-o1" title="Link to this heading">#</a></h3>
-<p>测试集标注的是：”Numerical Values”: 1,</p>
-<p>提示词：</p>
-<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>&quot;input&quot;: &quot;Source: Der Müggenburger Zollhafen ist ein Hafenbecken in Hamburg-Veddel.\nTranslation: The Müggenburg Harbour is a dock in Hamburg-Veddel, Germany.\nThe translation contains an error pertaining to &quot;,
-        &quot;target_scores&quot;: {
-         &quot;Modifiers or Adjectives&quot;: 0,
-         &quot;Numerical Values&quot;: 0,
-         &quot;Negation or Antonyms&quot;: 0,
-         &quot;Named Entities&quot;: 0,
-         &quot;Dropped Content&quot;: 0,
-         &quot;Facts&quot;: 0
-
-Please try to find the error in the input and increase the counter in its corresponding error category.
-</pre></div>
-</div>
-<p>输出：</p>
-<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>Analysis of the source and translation:
-
-    Source (German):
-    Der Müggenburger Zollhafen ist ein Hafenbecken in Hamburg-Veddel.
-    Literally: “The Müggenburger Zollhafen is a harbor basin in Hamburg-Veddel.”
-
-    Translation (English):
-    The Müggenburg Harbour is a dock in Hamburg-Veddel, Germany.
-
-The term “Müggenburger Zollhafen” is a specific named entity. In the translation, it was changed to “Müggenburg Harbour,” and the word “Zoll” (“customs”) was dropped entirely. Because “Müggenburger Zollhafen” is the proper name for that port facility, losing “Zoll” is effectively an error in translating or preserving the named entity.
-
-Relevant error category: “Named Entities”
-
-Since the specific name (Müggenburger Zollhafen) was altered and partially dropped (“Zollhafen” → “Harbour”), this counts as a mistake in handling a named entity. Therefore, you would increment the counter for Named Entities by 1.
-</pre></div>
-</div>
-<p>使用ChatGPT 多次查证后发现：原译文将“Hafenbecken”错误地译为“dock”，而“Hafenbecken”指的是“港口水域”或“港口盆地”，而不是“码头”。因此，o3-mini认为这一错误属于事实错误，o1认为是一个实体识别的错误。但是答案认为是一个数值错误。</p>
-<p>总之，人工标记者的逻辑和模型的逻辑不是很匹配，该数据集作者也未曾通过其他方式证实他们所提供数据集的可靠性。这也是这类数据集的通用问题，人工构建的数据集随意性大，后续在使用数据集时要注意选择权威可靠的来源。</p>
-</section>
 </section>
 </section>
 
@@ -1108,11 +788,11 @@ Since the specific name (Müggenburger Zollhafen) was altered and partially drop
       </div>
     </a>
     <a class="right-next"
-       href="projects.html"
+       href="evaluate-case.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title">课程实践项目候选</p>
+        <p class="prev-next-title">使用lm-evaluation-harness评价模型翻译能力</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1161,15 +841,6 @@ Since the specific name (Müggenburger Zollhafen) was altered and partially drop
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">成本与速度</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lm-evaluation-harness">使用lm-evaluation-harness评价模型翻译能力</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">其他任务</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">结果解读</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">数据集</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chatgpt-o1">使用Chatgpt o1 实验：</a></li>
-</ul>
-</li>
 </ul>
   </nav></div>
 

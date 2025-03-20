@@ -51,8 +51,10 @@
    :maxdepth: 1
    :caption: 课程实践项目
    
-   5-Projects/evaluating-llms.md
    5-Projects/projects.md
+   5-Projects/evaluating-llms.md
+   5-Projects/evaluate-case.md
+   
 
 .. toctree::
    :maxdepth: 1

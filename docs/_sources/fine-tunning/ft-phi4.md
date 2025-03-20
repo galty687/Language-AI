@@ -1,4 +1,4 @@
-# 微调Phi-4
+# SFT 微调 Phi-4
 
 使用监督学习的方式，主要素材来自 *Microsoft Manual of Style。*
 

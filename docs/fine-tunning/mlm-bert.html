@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'fine-tunning/mlm-bert';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="微调Phi-4" href="ft-phi4.html" />
+    <link rel="next" title="SFT 微调 Phi-4" href="ft-phi4.html" />
     <link rel="prev" title="微调基础" href="ft-basics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
@@ -179,8 +179,9 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程实践项目</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../5-Projects/evaluating-llms.html">大模型的评估与选择</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../5-Projects/projects.html">课程实践项目要求</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5-Projects/evaluating-llms.html">大模型的评估与选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5-Projects/evaluate-case.html">评价模型翻译能力</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">提示词</span></p>
 <ul class="nav bd-sidenav">
@@ -194,8 +195,8 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="ft-basics.html">微调基础</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">使用MLM微调Bert模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ft-phi4.html">微调Phi-4</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ft-ph4-self.html">使用自监督学习微调Phi4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ft-phi4.html">SFT 微调 Phi-4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ft-ph4-self.html">练习：使用自监督学习微调Phi4-mini</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
@@ -341,18 +342,27 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-1">Cell 1: 安装依赖</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-2-microsoftdocs-azure-docs">Cell 2: 克隆 MicrosoftDocs/azure-docs 仓库</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-3-markdown">Cell 3: 处理 Markdown 文件</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-4-hugging-face">Cell 4: 从处理后的数据创建 Hugging Face 数据集</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-5-bert">Cell 5: 加载 bert 模型和分词器，并对数据集进行分词</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-6-mlm">Cell 6: 准备用于 MLM 的数据收集器</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-7-trainer">Cell 7: 设置训练参数并初始化 Trainer</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-8-mlm">Cell 8: 使用 MLM 目标对模型进行微调</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-9">Cell 9: 保存微调后的模型和分词器</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">准备数据</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jsongoogle-drive">将数据转为json存入Google Drive</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json-docs-texts">从目标路径中的 JSON 文件中加载 docs_texts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#masked-language-model-mlm">掩码语言模型（Masked Language Model，MLM）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">示例数据</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">示例代码</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bert-mlm">使用微软文档文本微调Bert (MLM)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-1">Cell 1: 安装依赖</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-2-microsoftdocs-azure-docs">Cell 2: 克隆 MicrosoftDocs/azure-docs 仓库</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-3-markdown">Cell 3: 处理 Markdown 文件</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-4-hugging-face">Cell 4: 从处理后的数据创建 Hugging Face 数据集</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-5-bert">Cell 5: 加载 bert 模型和分词器，并对数据集进行分词</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-6-mlm">Cell 6: 准备用于 MLM 的数据收集器</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-7-trainer">Cell 7: 设置训练参数并初始化 Trainer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-8-mlm">Cell 8: 使用 MLM 目标对模型进行微调</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-9">Cell 9: 保存微调后的模型和分词器</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">准备数据</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jsongoogle-drive">将数据转为json存入Google Drive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#json-docs-texts">从目标路径中的 JSON 文件中加载 docs_texts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nsp">下一句预测（NSP）</a></li>
 </ul>
             </nav>
         </div>
@@ -368,16 +378,87 @@
 <h1>使用MLM微调Bert模型<a class="headerlink" href="#mlmbert" title="Link to this heading">#</a></h1>
 <p>下方代码展示了如何使用 Hugging Face Transformers 库对 Bert 模型进行 MLM 微调，并且演示了如何克隆并处理 MicrosoftDocs/azure-docs 仓库中的文档数据作为训练数据。</p>
 <p>Google Colab Notebook 地址： <a class="reference external" href="https://colab.research.google.com/drive/1HAnmGSR-tCeLtfRrFaCFzpD65ABWJY2n?usp=sharing"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<section id="masked-language-model-mlm">
+<h2>掩码语言模型（Masked Language Model，MLM）<a class="headerlink" href="#masked-language-model-mlm" title="Link to this heading">#</a></h2>
+<p>微调过程中，输入文本中的 <code class="docutils literal notranslate"><span class="pre">[MASK]</span></code> 标记通常由微调程序自动生成。具体而言，微调程序会按照预设的策略，对输入文本进行处理，随机选择部分词汇进行掩码操作，以训练模型预测被掩码的词汇。</p>
+<p><strong>掩码策略</strong></p>
+<ol class="arabic simple">
+<li><p><strong>掩码比例</strong>：通常选择输入序列中约15%的词汇进行掩码。</p></li>
+<li><p><strong>掩码方式</strong>：</p>
+<ul class="simple">
+<li><p><strong>80%</strong> 的情况下，将选定的词替换为 <code class="docutils literal notranslate"><span class="pre">[MASK]</span></code> 标记。</p></li>
+<li><p><strong>10%</strong> 的情况下，保持选定的词不变。</p></li>
+<li><p><strong>10%</strong> 的情况下，将选定的词替换为词汇表中的随机词。</p></li>
+</ul>
+</li>
+</ol>
+<p>这种策略的目的是使模型不仅能够学习到 <code class="docutils literal notranslate"><span class="pre">[MASK]</span></code> 标记的上下文，还能在面对未被掩码的词或随机替换的词时，增强模型的鲁棒性。在微调过程中，这些掩码操作由程序自动执行，无需人工干预。开发者只需提供原始文本数据，微调程序会根据上述策略自动生成包含 <code class="docutils literal notranslate"><span class="pre">[MASK]</span></code> 标记的训练数据，以训练模型预测被掩码的词汇。</p>
+<section id="id1">
+<h3>示例数据<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;doc1&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Introduction&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Java is one of the most used programming languages, according to Stack Overflow and GitHub. Java Virtual Machine (JVM) offers a mature way to run Java applications efficiently. Azure offers various ways to deploy your Java applications. No matter what types of Java applications you&#39;re running, Azure has a solution. You can choose from batch processes, nanoservices, and microservices, all the way up to Java Enterprise Edition (EE) and Jakarta EE applications. In this module, we look at Java&#39;s powerful features and give an overview of Azure deployment offers. This module is for Java developers and system administrators who have experience with running Java applications. There&#39;s no coding involved in this conceptual module. Learning objectives By the end of this module, you&#39;ll be able to: Differentiate between types of Java applications. Explain the opportunities for Java developers on Azure. Prerequisites Basic development experience in Java or system operating knowledge for Java-based architectures.&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;doc2&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Java at Microsoft&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Developers from around the world learn programming with Java, and it remains one of the most used languages among enterprises. It can help you solve business requirements at all levels. With millions of Java developers worldwide, Java&#39;s success speaks for itself. Java is a strategic language of choice on Azure. We support Java developers on multiple levels to deploy their Java applications. No matter what your architecture looks like, Azure has a solution for you; from monolithic applications to microservices or even serverless applications. Microsoft has a high interest in supporting Java and Java on Azure. Did you know that Microsoft is an official contributor to OpenJDK? Microsoft uses Java in many of its products, like LinkedIn, Yammer, Minecraft, and Surface Duo.&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>示例代码<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>在使用 Hugging Face 的 Transformers 库进行 MLM 训练时，关键在于数据的预处理。这通常<code class="docutils literal notranslate"><span class="pre">DataCollatorForLanguageModeling</span></code> 来实现，该类负责在训练时对输入数据进行随机掩码操作。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">DataCollatorForLanguageModeling</span>
+
+<span class="n">data_collator</span> <span class="o">=</span> <span class="n">DataCollatorForLanguageModeling</span><span class="p">(</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span>
+    <span class="n">mlm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># 启用掩码语言模型</span>
+    <span class="n">mlm_probability</span><span class="o">=</span><span class="mf">0.15</span>  <span class="c1"># 设置掩码的概率</span>
+<span class="p">)</span>
+
+</pre></div>
+</div>
+<p>在上述代码中，<code class="docutils literal notranslate"><span class="pre">mlm=True</span></code> 表示启用掩码语言模型，<code class="docutils literal notranslate"><span class="pre">mlm_probability=0.15</span></code> 指定了掩码的概率，即随机选择 15% 的词汇进行掩码处理。然后，将此 <code class="docutils literal notranslate"><span class="pre">data_collator</span></code> 传递给 <code class="docutils literal notranslate"><span class="pre">Trainer</span></code>，如下所示：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">Trainer</span><span class="p">,</span> <span class="n">TrainingArguments</span>
+
+<span class="n">training_args</span> <span class="o">=</span> <span class="n">TrainingArguments</span><span class="p">(</span>
+    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;./phi-finetuned&quot;</span><span class="p">,</span>
+    <span class="n">per_device_train_batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">num_train_epochs</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">save_steps</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">save_total_limit</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="n">training_args</span><span class="p">,</span>
+    <span class="n">data_collator</span><span class="o">=</span><span class="n">data_collator</span><span class="p">,</span>  <span class="c1"># 传入数据整理器</span>
+    <span class="n">train_dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+
+</pre></div>
+</div>
+<p>这样，<code class="docutils literal notranslate"><span class="pre">Trainer</span></code> 在训练过程中会自动应用掩码策略。</p>
+<p>MLM通过在输入文本中随机掩盖部分词汇，并要求模型根据上下文预测这些被掩盖的词汇来进行训练。在微调阶段，使用特定领域的数据进行训练，模型会学习到该领域的语言特征和用词习惯。这使得模型在处理该领域的文本时，能够更准确地预测词汇，提高生成文本的质量和相关性。因此，MLM微调通过让模型适应特定领域的语言模式，增强了模型在该领域的表现能力。</p>
+</section>
+</section>
 <hr class="docutils" />
+<section id="bert-mlm">
+<h2>使用微软文档文本微调Bert (MLM)<a class="headerlink" href="#bert-mlm" title="Link to this heading">#</a></h2>
 <section id="cell-1">
-<h2>Cell 1: 安装依赖<a class="headerlink" href="#cell-1" title="Link to this heading">#</a></h2>
+<h3>Cell 1: 安装依赖<a class="headerlink" href="#cell-1" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">transformers</span> <span class="n">datasets</span>
 </pre></div>
 </div>
-<hr class="docutils" />
 </section>
+<hr class="docutils" />
 <section id="cell-2-microsoftdocs-azure-docs">
-<h2>Cell 2: 克隆 MicrosoftDocs/azure-docs 仓库<a class="headerlink" href="#cell-2-microsoftdocs-azure-docs" title="Link to this heading">#</a></h2>
+<h3>Cell 2: 克隆 MicrosoftDocs/azure-docs 仓库<a class="headerlink" href="#cell-2-microsoftdocs-azure-docs" title="Link to this heading">#</a></h3>
 <p>这一步耗时非常长，本次我的耗时约30分钟。为了后续演示方便，随机删去了很多内容，最后只保留了部分文件。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 克隆仓库</span>
 <span class="err">!</span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">MicrosoftDocs</span><span class="o">/</span><span class="n">azure</span><span class="o">-</span><span class="n">docs</span><span class="o">.</span><span class="n">git</span>
@@ -400,10 +481,10 @@
 <span class="n">Found</span> <span class="mi">17449</span> <span class="n">markdown</span> <span class="n">files</span><span class="o">.</span>
 </pre></div>
 </div>
-<hr class="docutils" />
 </section>
+<hr class="docutils" />
 <section id="cell-3-markdown">
-<h2>Cell 3: 处理 Markdown 文件<a class="headerlink" href="#cell-3-markdown" title="Link to this heading">#</a></h2>
+<h3>Cell 3: 处理 Markdown 文件<a class="headerlink" href="#cell-3-markdown" title="Link to this heading">#</a></h3>
 <p>将所有markdown文件拼接列表数据。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 读取所有 Markdown 文件，并收集文本（可以根据需要添加清洗步骤）</span>
 <span class="n">docs_texts</span> <span class="o">=</span> <span class="p">[]</span>
@@ -423,10 +504,10 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>从仓库中共收集到 1621 个文档。
 </pre></div>
 </div>
-<hr class="docutils" />
 </section>
+<hr class="docutils" />
 <section id="cell-4-hugging-face">
-<h2>Cell 4: 从处理后的数据创建 Hugging Face 数据集<a class="headerlink" href="#cell-4-hugging-face" title="Link to this heading">#</a></h2>
+<h3>Cell 4: 从处理后的数据创建 Hugging Face 数据集<a class="headerlink" href="#cell-4-hugging-face" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">Dataset</span>
 
 <span class="c1"># 创建一个包含单个字段 &quot;text&quot; 的数据集</span>
@@ -441,10 +522,10 @@
 <span class="p">})</span>
 </pre></div>
 </div>
-<hr class="docutils" />
 </section>
+<hr class="docutils" />
 <section id="cell-5-bert">
-<h2>Cell 5: 加载 bert 模型和分词器，并对数据集进行分词<a class="headerlink" href="#cell-5-bert" title="Link to this heading">#</a></h2>
+<h3>Cell 5: 加载 bert 模型和分词器，并对数据集进行分词<a class="headerlink" href="#cell-5-bert" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">BertForMaskedLM</span>
 
 <span class="c1"># Define the checkpoint string</span>
@@ -492,20 +573,20 @@ Map: 100%
  1621/1621 [00:02&lt;00:00, 587.88 examples/s]
 </pre></div>
 </div>
-<hr class="docutils" />
 </section>
+<hr class="docutils" />
 <section id="cell-6-mlm">
-<h2>Cell 6: 准备用于 MLM 的数据收集器<a class="headerlink" href="#cell-6-mlm" title="Link to this heading">#</a></h2>
+<h3>Cell 6: 准备用于 MLM 的数据收集器<a class="headerlink" href="#cell-6-mlm" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">DataCollatorForLanguageModeling</span>
 
 <span class="c1"># 创建 MLM 数据收集器，设置 15% 的 mask 概率</span>
 <span class="n">data_collator</span> <span class="o">=</span> <span class="n">DataCollatorForLanguageModeling</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span> <span class="n">mlm_probability</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
 </pre></div>
 </div>
-<hr class="docutils" />
 </section>
+<hr class="docutils" />
 <section id="cell-7-trainer">
-<h2>Cell 7: 设置训练参数并初始化 Trainer<a class="headerlink" href="#cell-7-trainer" title="Link to this heading">#</a></h2>
+<h3>Cell 7: 设置训练参数并初始化 Trainer<a class="headerlink" href="#cell-7-trainer" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">Trainer</span><span class="p">,</span> <span class="n">TrainingArguments</span>
 
 <span class="n">training_args</span> <span class="o">=</span> <span class="n">TrainingArguments</span><span class="p">(</span>
@@ -526,10 +607,10 @@ Map: 100%
 <span class="p">)</span>
 </pre></div>
 </div>
-<hr class="docutils" />
 </section>
+<hr class="docutils" />
 <section id="cell-8-mlm">
-<h2>Cell 8: 使用 MLM 目标对模型进行微调<a class="headerlink" href="#cell-8-mlm" title="Link to this heading">#</a></h2>
+<h3>Cell 8: 使用 MLM 目标对模型进行微调<a class="headerlink" href="#cell-8-mlm" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 对处理后的 Azure 文档数据进行 MLM 微调</span>
 <span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
 </pre></div>
@@ -559,10 +640,10 @@ Step	Training Loss
 TrainOutput(global_step=306, training_loss=1.0518618315653083, metrics={&#39;train_runtime&#39;: 61.0276, &#39;train_samples_per_second&#39;: 79.685, &#39;train_steps_per_second&#39;: 5.014, &#39;total_flos&#39;: 319991251161600.0, &#39;train_loss&#39;: 1.0518618315653083, &#39;epoch&#39;: 3.0})
 </pre></div>
 </div>
-<hr class="docutils" />
 </section>
+<hr class="docutils" />
 <section id="cell-9">
-<h2>Cell 9: 保存微调后的模型和分词器<a class="headerlink" href="#cell-9" title="Link to this heading">#</a></h2>
+<h3>Cell 9: 保存微调后的模型和分词器<a class="headerlink" href="#cell-9" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
@@ -591,8 +672,8 @@ TrainOutput(global_step=306, training_loss=1.0518618315653083, metrics={&#39;tra
 <hr class="docutils" />
 <p>实验过程中，有时候因为各种原因会重启session，可以讲微调数据存入Google Drive，节约重复下载的时间。</p>
 </section>
-<section id="id1">
-<h2>准备数据<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>准备数据<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>将所有markdown文件读取后，拼接为一个单独的 <code class="docutils literal notranslate"><span class="pre">docs_texts</span></code>列表。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
 <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">glob</span>
@@ -622,7 +703,7 @@ TrainOutput(global_step=306, training_loss=1.0518618315653083, metrics={&#39;tra
 </div>
 </section>
 <section id="jsongoogle-drive">
-<h2>将数据转为json存入Google Drive<a class="headerlink" href="#jsongoogle-drive" title="Link to this heading">#</a></h2>
+<h3>将数据转为json存入Google Drive<a class="headerlink" href="#jsongoogle-drive" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">json</span>
 
@@ -642,7 +723,7 @@ TrainOutput(global_step=306, training_loss=1.0518618315653083, metrics={&#39;tra
 </div>
 </section>
 <section id="json-docs-texts">
-<h2>从目标路径中的 JSON 文件中加载 docs_texts<a class="headerlink" href="#json-docs-texts" title="Link to this heading">#</a></h2>
+<h3>从目标路径中的 JSON 文件中加载 docs_texts<a class="headerlink" href="#json-docs-texts" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">json</span>
@@ -663,6 +744,33 @@ TrainOutput(global_step=306, training_loss=1.0518618315653083, metrics={&#39;tra
 
 </pre></div>
 </div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="nsp">
+<h2>下一句预测（NSP）<a class="headerlink" href="#nsp" title="Link to this heading">#</a></h2>
+<p>对于 NSP 任务，需要在数据预处理阶段构造句子对，并为每对句子指定标签（即第二个句子是否为第一个句子的后续句）。这通常需要自定义数据集，并在模型定义时选择支持 NSP 任务的模型架构，例如 <code class="docutils literal notranslate"><span class="pre">BertForPreTraining</span></code>。以下是一个简要的示例：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">BertForPreTraining</span><span class="p">,</span> <span class="n">Trainer</span><span class="p">,</span> <span class="n">TrainingArguments</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">BertForPreTraining</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;bert-base-uncased&quot;</span><span class="p">)</span>
+
+<span class="n">training_args</span> <span class="o">=</span> <span class="n">TrainingArguments</span><span class="p">(</span>
+    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;./bert-finetuned&quot;</span><span class="p">,</span>
+    <span class="n">per_device_train_batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">num_train_epochs</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">save_steps</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">save_total_limit</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="n">training_args</span><span class="p">,</span>
+    <span class="n">train_dataset</span><span class="o">=</span><span class="n">custom_nsp_dataset</span><span class="p">,</span>  <span class="c1"># 自定义的 NSP 数据集</span>
+<span class="p">)</span>
+
+</pre></div>
+</div>
+<p>在此示例中，<code class="docutils literal notranslate"><span class="pre">custom_nsp_dataset</span></code> 是一个包含句子对和对应标签的数据集，<code class="docutils literal notranslate"><span class="pre">BertForPreTraining</span></code> 模型同时支持 MLM 和 NSP 任务。</p>
 </section>
 </section>
 
@@ -691,7 +799,7 @@ TrainOutput(global_step=306, training_loss=1.0518618315653083, metrics={&#39;tra
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title">微调Phi-4</p>
+        <p class="prev-next-title">SFT 微调 Phi-4</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -712,18 +820,27 @@ TrainOutput(global_step=306, training_loss=1.0518618315653083, metrics={&#39;tra
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-1">Cell 1: 安装依赖</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-2-microsoftdocs-azure-docs">Cell 2: 克隆 MicrosoftDocs/azure-docs 仓库</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-3-markdown">Cell 3: 处理 Markdown 文件</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-4-hugging-face">Cell 4: 从处理后的数据创建 Hugging Face 数据集</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-5-bert">Cell 5: 加载 bert 模型和分词器，并对数据集进行分词</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-6-mlm">Cell 6: 准备用于 MLM 的数据收集器</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-7-trainer">Cell 7: 设置训练参数并初始化 Trainer</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-8-mlm">Cell 8: 使用 MLM 目标对模型进行微调</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-9">Cell 9: 保存微调后的模型和分词器</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">准备数据</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jsongoogle-drive">将数据转为json存入Google Drive</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json-docs-texts">从目标路径中的 JSON 文件中加载 docs_texts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#masked-language-model-mlm">掩码语言模型（Masked Language Model，MLM）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">示例数据</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">示例代码</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bert-mlm">使用微软文档文本微调Bert (MLM)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-1">Cell 1: 安装依赖</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-2-microsoftdocs-azure-docs">Cell 2: 克隆 MicrosoftDocs/azure-docs 仓库</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-3-markdown">Cell 3: 处理 Markdown 文件</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-4-hugging-face">Cell 4: 从处理后的数据创建 Hugging Face 数据集</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-5-bert">Cell 5: 加载 bert 模型和分词器，并对数据集进行分词</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-6-mlm">Cell 6: 准备用于 MLM 的数据收集器</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-7-trainer">Cell 7: 设置训练参数并初始化 Trainer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-8-mlm">Cell 8: 使用 MLM 目标对模型进行微调</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-9">Cell 9: 保存微调后的模型和分词器</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">准备数据</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jsongoogle-drive">将数据转为json存入Google Drive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#json-docs-texts">从目标路径中的 JSON 文件中加载 docs_texts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nsp">下一句预测（NSP）</a></li>
 </ul>
   </nav></div>
 

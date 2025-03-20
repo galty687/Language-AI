@@ -88,7 +88,7 @@ One of the reasons that the government discourages and regulates monopolies is t
 BLEU 衡量候选文本和参考文本的n-gram匹配度，公式如下：
 
 
-![image-20250312235347702](blue.png)
+![blue-metric](images/blue.png)
 
 其中：
 

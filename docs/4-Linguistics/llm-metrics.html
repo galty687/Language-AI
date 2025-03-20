@@ -179,8 +179,9 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程实践项目</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../5-Projects/evaluating-llms.html">大模型的评估与选择</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../5-Projects/projects.html">课程实践项目要求</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5-Projects/evaluating-llms.html">大模型的评估与选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5-Projects/evaluate-case.html">评价模型翻译能力</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">提示词</span></p>
 <ul class="nav bd-sidenav">
@@ -194,7 +195,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-basics.html">微调基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/mlm-bert.html">使用MLM微调Bert模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">微调Phi-4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">使用自监督学习微调Phi4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
 </ul>
@@ -453,7 +454,7 @@
 <h3><strong>BLEU（Bilingual Evaluation Understudy）</strong><a class="headerlink" href="#bleu-bilingual-evaluation-understudy" title="Link to this heading">#</a></h3>
 <p><strong>定义</strong><br />
 BLEU 衡量候选文本和参考文本的n-gram匹配度，公式如下：</p>
-<p><img alt="image-20250312235347702" src="4-Linguistics/blue.png" /></p>
+<p><img alt="blue-metric" src="../_images/blue.png" /></p>
 <p>其中：</p>
 <ul class="simple">
 <li><p>( BP ) 是长度惩罚因子，避免模型生成过短文本得高分。</p></li>
