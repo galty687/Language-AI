@@ -460,3 +460,9 @@ trainer = Trainer(
 ```
 
 在此示例中，`custom_nsp_dataset` 是一个包含句子对和对应标签的数据集，`BertForPreTraining` 模型同时支持 MLM 和 NSP 任务。
+
+
+
+## 参考资料
+
+-  [Fine-tuning a masked language model](https://huggingface.co/learn/nlp-course/en/chapter7/3)

@@ -78,6 +78,8 @@
 ## 数据标记
 
 - [doccano](https://doccano.github.io/doccano/)
+- Easy Dataset
+- [Amazon Mechanical Turk (MTurk)](https://www.mturk.com)  
 
 
 
@@ -147,6 +149,7 @@
 - Nanobroser 
 - [Devin](https://devin.ai)
 - [AutoAgent](https://github.com/HKUDS/AutoAgent)
+- [UI-TARS-desktop](https://github.com/bytedance/UI-TARS-desktop)
 
 
 
