@@ -715,14 +715,15 @@ functions = [
 
 
 
+```python
 from openai import OpenAI
 import json
 from os import getenv
 
-# 初始化 OpenAI 客户端
+#初始化 OpenAI 客户端
 client = OpenAI(api_key=getenv("OPENAI_API_KEY"))
 
-# 开始对话：
+#开始对话：
 messages = [
     {
         "role": "user",
@@ -731,7 +732,7 @@ with Alice and Bob.''',
     }
 ]
 
-# 将对话和函数模式发送给模型：
+#将对话和函数模式发送给模型：
 response = client.chat.completions.create(
     model="gpt-3.5-turbo-1106",
     messages=messages,
@@ -739,7 +740,7 @@ response = client.chat.completions.create(
 )
 response = response.choices[0].message
 
-# 检查模型是否想调用我们的函数：
+#检查模型是否想调用我们的函数：
 if response.tool_calls:
     # 获取第一个函数调用：
     first_tool_call = response.tool_calls[0]
@@ -748,7 +749,9 @@ if response.tool_calls:
     function_args = json.loads(first_tool_call.function.arguments)
     print("This is the function name: ", function_name)
     print("These are the function arguments: ", function_args)
-    
+```
+
+​    
 ```python
 # 根据函数名称找到对应的函数：
 function = OPENAI_FUNCTIONS.get(function_name)

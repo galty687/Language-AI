@@ -188,10 +188,6 @@
 <li class="toctree-l1"><a class="reference internal" href="prompts-intro.html">提示词导论</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prompts-examples.html">提示词案例分析</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">基于Langchain的提示词开发实践</a></li>
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="good-examples.html">提示词案例分析</a></li>
 <li class="toctree-l1"><a class="reference internal" href="jail-break.html">提示词越狱</a></li>
 </ul>
@@ -346,7 +342,6 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">基于Langchain的提示词开发实践</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">LangChain简介</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">安装与准备</a></li>
 </ul>
@@ -363,21 +358,12 @@
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langchain-evals">LangChain Evals</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openai">OpenAI 函数调用</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">初始化 OpenAI 客户端</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">开始对话：</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">将对话和函数模式发送给模型：</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">检查模型是否想调用我们的函数：</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-chaining">Prompt Chaining</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-chain">Sequential Chain</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#document-chains">Document Chains</a></li>
 </ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -1064,44 +1050,42 @@ Because light attracts bugs!
 使用 OpenAI 模型进行函数调用时，请务必定义详细的 JSON 模式（包括名称和描述）。  这相当于为函数提供了蓝图，引导模型理解何时以及如何正确调用该函数。</p>
 </div></blockquote>
 <p>在定义好函数之后，让我们发起一个 OpenAI API 请求。首先设置一个包含用户查询的消息列表。然后，使用 OpenAI 客户端对象将这条消息和函数模式发送给模型。LLM 分析对话后，会判断是否需要触发函数，并提供函数名称和参数。从 LLM 的响应中解析出 function 和 function_args。接着，执行该函数，并将其结果重新添加到对话中。最后，再次调用模型，以便生成整个过程的用户友好总结。</p>
-<p>from openai import OpenAI
-import json
-from os import getenv</p>
-</section>
-</section>
-<section id="id6">
-<h1>初始化 OpenAI 客户端<a class="headerlink" href="#id6" title="Link to this heading">#</a></h1>
-<p>client = OpenAI(api_key=getenv(“OPENAI_API_KEY”))</p>
-</section>
-<section id="id7">
-<h1>开始对话：<a class="headerlink" href="#id7" title="Link to this heading">#</a></h1>
-<p>messages = [
-{
-“role”: “user”,
-“content”: ‘’’Schedule a meeting on 2023-11-01 at 14:00
-with Alice and Bob.’’’,
-}
-]</p>
-</section>
-<section id="id8">
-<h1>将对话和函数模式发送给模型：<a class="headerlink" href="#id8" title="Link to this heading">#</a></h1>
-<p>response = client.chat.completions.create(
-model=”gpt-3.5-turbo-1106”,
-messages=messages,
-tools=functions,
-)
-response = response.choices[0].message</p>
-</section>
-<section id="id9">
-<h1>检查模型是否想调用我们的函数：<a class="headerlink" href="#id9" title="Link to this heading">#</a></h1>
-<p>if response.tool_calls:
-# 获取第一个函数调用：
-first_tool_call = response.tool_calls[0]
-# 获取要调用的函数名称和参数：
-function_name = first_tool_call.function.name
-function_args = json.loads(first_tool_call.function.arguments)
-print(“This is the function name: “, function_name)
-print(“These are the function arguments: “, function_args)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openai</span> <span class="kn">import</span> <span class="n">OpenAI</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
+
+<span class="c1">#初始化 OpenAI 客户端</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">))</span>
+
+<span class="c1">#开始对话：</span>
+<span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s1">&#39;&#39;&#39;Schedule a meeting on 2023-11-01 at 14:00</span>
+<span class="s1">with Alice and Bob.&#39;&#39;&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+
+<span class="c1">#将对话和函数模式发送给模型：</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo-1106&quot;</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+    <span class="n">tools</span><span class="o">=</span><span class="n">functions</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span>
+
+<span class="c1">#检查模型是否想调用我们的函数：</span>
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">:</span>
+    <span class="c1"># 获取第一个函数调用：</span>
+    <span class="n">first_tool_call</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># 获取要调用的函数名称和参数：</span>
+    <span class="n">function_name</span> <span class="o">=</span> <span class="n">first_tool_call</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">function_args</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">first_tool_call</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This is the function name: &quot;</span><span class="p">,</span> <span class="n">function_name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;These are the function arguments: &quot;</span><span class="p">,</span> <span class="n">function_args</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>​</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 根据函数名称找到对应的函数：</span>
 <span class="n">function</span> <span class="o">=</span> <span class="n">OPENAI_FUNCTIONS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">function_name</span><span class="p">)</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">function</span><span class="p">:</span>
@@ -1155,6 +1139,7 @@ OpenAI 可能会虚构函数参数，因此在系统消息中需要更明确地�
 </ul>
 </li>
 </ul>
+</section>
 <section id="prompt-chaining">
 <h2>Prompt Chaining<a class="headerlink" href="#prompt-chaining" title="Link to this heading">#</a></h2>
 <p>你会发现，在一个提示中完成单个任务往往是不可能的。<br />
@@ -1359,7 +1344,6 @@ OpenAI 可能会虚构函数参数，因此在系统消息中需要更明确地�
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">基于Langchain的提示词开发实践</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">LangChain简介</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">安装与准备</a></li>
 </ul>
@@ -1376,21 +1360,12 @@ OpenAI 可能会虚构函数参数，因此在系统消息中需要更明确地�
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langchain-evals">LangChain Evals</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openai">OpenAI 函数调用</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">初始化 OpenAI 客户端</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">开始对话：</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">将对话和函数模式发送给模型：</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">检查模型是否想调用我们的函数：</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-chaining">Prompt Chaining</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-chain">Sequential Chain</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#document-chains">Document Chains</a></li>
 </ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>
