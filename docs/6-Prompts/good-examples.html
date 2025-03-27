@@ -179,8 +179,9 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程实践项目</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../5-Projects/evaluating-llms.html">大模型的评估与选择</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../5-Projects/projects.html">课程实践项目要求</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5-Projects/evaluating-llms.html">大模型的评估与选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5-Projects/evaluate-case.html">评价模型翻译能力</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">提示词</span></p>
 <ul class="current nav bd-sidenav">
@@ -194,8 +195,8 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-basics.html">微调基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/mlm-bert.html">使用MLM微调Bert模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">微调Phi-4</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">使用自监督学习微调Phi4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">练习：使用自监督学习微调Phi4-mini</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
@@ -342,6 +343,11 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">李志刚</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">麻省理工提示词库</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">翻译提示词</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">译文审校提示词</a></li>
 </ul>
             </nav>
         </div>
@@ -415,6 +421,111 @@
 <p>输出：</p>
 <p><img alt="lizhigang-example" src="../_images/lizhigang-example.png" /></p>
 </section>
+<section id="id3">
+<h2>麻省理工提示词库<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://library.maastrichtuniversity.nl/apps-tools/ai-prompt-library/">麻省理工提示词库（MIT Prompt Library）</a>是一个由麻省理工学院相关团队创建的资源库，旨在收集和展示各种任务场景下的提示词示例。该库汇集了针对文本生成、翻译、摘要、代码编写等多种应用场景的高质量提示词模板，帮助用户更高效地与大型语言模型进行交互。通过学习这些实例，用户可以掌握提示工程的基本原则和设计技巧，从而优化提示设计，提升模型输出的准确性和质量。</p>
+<p><img alt="translation-prompts" src="../_images/translation-prompts.png" /></p>
+<section id="id4">
+<h3>翻译提示词<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>此提示词允许您将文本从一种语言翻译成另一种语言。它对学生、教育工作者和支持人员都有帮助。</p>
+<blockquote>
+<div><p>提示1：</p>
+<p>始终先添加待翻译的文本。当AI工具在知道需要翻译之前先阅读文本时，翻译效果会更好。如果你想使用ChatGPT4，请先上传文本，并附上以下提示：“阅读文档。完成后回复‘done’。不要进行其他操作。后续会提供指令。”</p>
+</div></blockquote>
+<blockquote>
+<div><p>提示2：</p>
+<p>AI聊天工具一次只能准确翻译少量文本。为了获得最佳效果，请将文本分割为每个片段不超过一页。如果需要翻译较长的文档，请使用DeepL。</p>
+</div></blockquote>
+<p>提示词全文：</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>Insert text for translation 
+
+Above, you see a text in add language. Please translate it to add language. Do not print the original text, just the translation. 
+Follow the following instructions: 
+Ensure the translation accurately reflects the original text’s meaning. 
+The translation should have correct grammar, including proper sentence structure, verb conjugation, punctuation, and the correct use of articles. 
+The translation should read naturally and fluently as if originally written in the target language. Avoid awkward phrasing or literal translations that sound unnatural. 
+Pay special attention to proper nouns and specific terms. Names of people, places, organizations, and other terms that should not be translated must be handled with care to maintain their original meaning and recognition. 
+Ensure that the translation maintains the original text’s tone and style.
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id5">
+<h2>译文审校提示词<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>原文</strong></p></th>
+<th class="head"><p><strong>译文</strong></p></th>
+<th class="head"><p><strong>润色后文本</strong></p></th>
+<th class="head"><p><strong>修改说明</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Prompt engineering has shown potential for improving translation quality in LLMs.</p></td>
+<td><p>提示工程已显示出提高法学硕士翻译质量的潜力。</p></td>
+<td><p>提示工程已显示出提高大型语言模型翻译质量的潜力。</p></td>
+<td><p>1. 将“法学硕士”改为“大型语言模型”，因为此处的 LLMs 指的是 “Large Language Models” 而非“法学硕士”。<br />2. 其余部分保持不变。</p></td>
+</tr>
+<tr class="row-odd"><td><p>However, the possibility of using trans- lation concepts in prompt design remains largely underexplored.</p></td>
+<td><p>然而，在提示设计中使用翻译概念的可能性仍未得到充分探索。</p></td>
+<td><p>然而，在提示设计中使用翻译概念的可能性仍未得到充分探索。</p></td>
+<td><p>无修改。</p></td>
+</tr>
+<tr class="row-even"><td><p>Against this backdrop, the current paper discusses the ef- fectiveness of incorporating the concep- tual tool of “translation brief” and the per- sonas of “translator” and “author” into prompt design for translation tasks in ChatGPT.</p></td>
+<td><p>在此背景下，本文讨论了将“翻译简介”的概念工具以及“翻译者”和“作者”的角色纳入 ChatGPT 翻译任务提示设计的有效性。</p></td>
+<td><p>在此背景下，本文讨论了在 ChatGPT 翻译任务的提示设计中引入“翻译简报”这一概念工具，以及“翻译者”和“作者”这两种角色的有效性。</p></td>
+<td><p>1. 将“翻译简介”调整为“翻译简报”，更符合“translation brief”的常见译法。<br />2. 调整语序，使行文更通顺。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Findings suggest that, although certain elements are constructive in facilitating human-to-human communication for translation tasks, their effectiveness is limited for improving translation quality in ChatGPT.</p></td>
+<td><p>研究结果表明，尽管某些元素在促进翻译任务的人与人之间的交流方面具有建设性，但它们对于提高 ChatGPT 翻译质量的有效性有限。</p></td>
+<td><p>研究结果表明，尽管某些元素有助于促进翻译任务中的人与人交流，但其在提升 ChatGPT 翻译质量方面的效果有限。</p></td>
+<td><p>1. 将“在促进翻译任务的人与人之间的交流方面具有建设性”改为“有助于促进翻译任务中的人与人交流”，使表达更简洁。<br />2. 将“有效性有限”改为“效果有限”，以贴合汉语习惯表达。</p></td>
+</tr>
+<tr class="row-even"><td><p>This accentuates the need for explorative research on how transla- tion theorists and practitioners can de- velop the current set of conceptual tools rooted in the human-to-human communi- cation paradigm for translation purposes in this emerging workflow involving human- machine interaction, and how translation concepts developed in translation studies can inform the training of GPT models for translation tasks.</p></td>
+<td><p>这凸显了进行探索性研究的必要性，即翻译理论家和实践者如何在这种涉及人机交互的新兴工作流程中为翻译目的开发当前一套植根于人与人之间交流范式的概念工具，以及翻译研究中发展的翻译概念如何为翻译任务的 GPT 模型训练提供指导。</p></td>
+<td><p>这凸显了开展探索性研究的必要性，以探讨翻译理论家和实践者如何在这种涉及人机交互的新兴工作流程中，为翻译目的开发当前这套植根于人与人交流范式的概念工具，以及翻译研究中发展出的翻译概念又如何能够为 GPT 模型的翻译任务训练提供指导。</p></td>
+<td><p>1. 将“进行探索性研究”改为“开展探索性研究”，使表述更为自然。<br />2. 调整部分语序，使句子逻辑更清晰连贯。<br />3. 将“人与人之间交流范式”简化为“人与人交流范式”，使表达更加简洁。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>提示词：</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>您现在是一位专业译者和润色专家。下面提供了若干句子的原文与对应的初步译文，需要你逐句进行仔细校对、润色并输出结果。请严格遵照以下要求：
+
+<span class="k">1.</span> 输出形式：  
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>使用 Markdown 表格形式展示结果，表头包含四列：原文、译文、润色后文本、修改说明。  
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>以句子为单位输出，如果有多句，请保证每句对应一行，不要合并或遗漏。
+
+<span class="k">2.</span> 内容要求：  
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>原文：直接引用对应句子的原始文本。  
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>译文：引用对应句子的初步译文。  
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>润色后文本：请在此列给出经过你调整、优化、润色后的文本。  
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>修改说明：在此列中，逐点指出具体的修改之处和修改理由（如词汇替换、语序调整、增补/删减等）。若译文本身没问题，也要注明“无修改”或“略微润色”等。  
+
+<span class="k">3.</span> 风格和准确度：  
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>确保润色后的文本在语法、用词、风格、连贯性等方面均更符合目标语言的表达习惯。  
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>如果原文与译文存在明显错漏或不一致之处，也请在修改说明中指出。  
+
+请对以下内容进行处理：
+
+原文列表：  
+<span class="sb">```</span>
+<span class="sb">{{原文列表}}</span>
+<span class="sb">```</span>
+
+译文列表：
+
+<span class="sb">```</span>
+<span class="sb">{{译文列表}}</span>
+<span class="sb">```</span>
+
+请开始逐句对照，执行润色并输出符合要求的 Markdown 表格。谢谢。
+</pre></div>
+</div>
+<blockquote>
+<div><p>如何让大模型在检查译文的时候，能调用”<a class="reference external" href="https://www.termonline.cn/termInterface">术语在线</a>”的术语库检查译文的术语是否翻译正确。</p>
+</div></blockquote>
+</section>
 </section>
 
 
@@ -464,6 +575,11 @@
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">李志刚</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">麻省理工提示词库</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">翻译提示词</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">译文审校提示词</a></li>
 </ul>
   </nav></div>
 
