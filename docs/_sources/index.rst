@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-人工智能实践
+人工智能实践(语言)
 ===============================================
 
 

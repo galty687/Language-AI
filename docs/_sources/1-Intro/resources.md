@@ -167,6 +167,8 @@
 
 - [spreadsheets-are-all-you-need](https://github.com/ianand/spreadsheets-are-all-you-need)
 
+- [OpenAI Academy](https://academy.openai.com)
+
 
 
 

@@ -1,5 +1,17 @@
 # 提示词案例分析
 
+## 雕像
+
+在ChatGPT 4o中，输入如下提示词，可将任何图片转为雕像。
+
+```
+create a photorealistic image of an ultra-detailed sculpture of the subject in image made of shining marble. The sculpture should display smooth and reflective marble surface, emphasizing its luster and artistic craftsmanship. The design is elegant, highlighting the beauty and depth of marble. The lighting in the image should enhance the sculpture's contours and textures, creating a visually stunning and mesmerizing effect
+```
+
+输出：
+
+![sculpture](images/sculpture.jpg)
+
 
 
 ## 李志刚
