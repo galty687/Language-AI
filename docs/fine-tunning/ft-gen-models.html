@@ -17,7 +17,7 @@
         gtag('config', 'G-GESLLLJC6M');
     </script>
     
-    <title>微调生成式大模型 &#8212; 人工智能实践 0.5 文档</title>
+    <title>微调生成式大模型 &#8212; 人工智能实践 0.6 文档</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=cd8ec5f0"></script>
+    <script src="../_static/documentation_options.js?v=ed3f5f1b"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'fine-tunning/ft-gen-models';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="使用MLM微调Bert模型" href="mlm-bert.html" />
+    <link rel="next" title="微调表示型大模型" href="ft-rep-models.html" />
     <link rel="prev" title="提示词越狱" href="../6-Prompts/jail-break.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
@@ -139,7 +139,7 @@
   
   
   
-    <p class="title logo__title">人工智能实践 0.5 文档</p>
+    <p class="title logo__title">人工智能实践 0.6 文档</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -194,6 +194,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">微调生成式大模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ft-rep-models.html">微调表示型大模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mlm-bert.html">使用MLM微调Bert模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ft-phi4.html">SFT 微调 Phi-4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ft-ph4-self.html">练习：使用自监督学习微调Phi4-mini</a></li>
@@ -385,7 +386,7 @@
 <h1>微调生成式大模型<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <section id="id2">
 <h2>大模型三部曲<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
-<p>大语言模型的开发训练通常分散步：预训练、有监督微调和偏好微调。</p>
+<p>大语言模型的开发训练通常分三步：预训练、有监督微调和偏好微调。</p>
 <section id="id3">
 <h3>预训练<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>创建高质量大型语言模型（LLM）的第一步是使用海量文本数据集进行预训练。在训练过程中，通常使用自监督方法，让模型尝试预测下一个词元（token），以准确学习文本中的语言和语义表示，这种过程也称为语言建模。训练后会生成一个基础模型（base model），也常被称为预训练模型或基础模型。基础模型是训练过程中产生的一个关键成果，但对终端用户来说，它们往往难以直接使用。这也正是微调模型较为重要的原因。本节我们将讲解如何微调生成式的模型基本方法。</p>
@@ -548,11 +549,11 @@
       </div>
     </a>
     <a class="right-next"
-       href="mlm-bert.html"
+       href="ft-rep-models.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title">使用MLM微调Bert模型</p>
+        <p class="prev-next-title">微调表示型大模型</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
