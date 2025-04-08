@@ -163,6 +163,6 @@ Ensure that the translation maintains the original text’s tone and style.
 请开始逐句对照，执行润色并输出符合要求的 Markdown 表格。谢谢。
 ~~~
 
+![translation-review](images/translation-review.png)
 
-
-> 如何让大模型在检查译文的时候，能调用"[术语在线](https://www.termonline.cn/termInterface)"的术语库检查译文的术语是否翻译正确。
+> 思考：如何让大模型在检查译文的时候，能调用"[术语在线](https://www.termonline.cn/termInterface)"的术语库检查译文的术语是否翻译正确。

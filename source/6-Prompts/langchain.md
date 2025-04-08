@@ -992,3 +992,10 @@ Aurora and Magnus agree to retrieve a hidden artifact, and they enter an ancient
 ```
 
 需要注意的是，尽管这里使用了 `map_reduce` 链，但 LangChain 中针对 Document 对象的处理实际上有四个核心链。`invoke` 方法会在之前准备好的文本块上执行摘要处理，并将结果存储到变量中。
+
+
+
+## 参考
+
+1. 提示词可视化 [PromptShow](https://show.langgpt.ai/)
+2. [LangGPT 结构化提示词](https://langgptai.feishu.cn/wiki/Ovu4wuiAIiENUskIucccTHd0nIc)
