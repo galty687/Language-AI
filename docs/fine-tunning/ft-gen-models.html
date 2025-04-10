@@ -343,30 +343,27 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">大模型三部曲</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">预训练</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sft">有监督微调（SFT）</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">偏好微调</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">预训练</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sft">有监督微调（SFT）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">偏好微调</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#peft">参数高效微调（PEFT）</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adapters">Adapters（适配器）</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lora">低秩适配（LoRA）</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">压缩模型以实现（更）高效的训练</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">压缩模型以实现（更）高效的训练</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rlhf">偏好调优 / 对齐 / 基于强化学习的人类反馈（RLHF）</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">使用奖励模型自动化偏好评估</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">奖励模型的输入与输出</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">训练奖励模型</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">奖励模型训练数据集</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">奖励模型训练步骤</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">训练不使用奖励模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">使用奖励模型自动化偏好评估</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">奖励模型的输入与输出</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">训练奖励模型</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">奖励模型训练数据集</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">奖励模型训练步骤</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">训练不使用奖励模型</a></li>
 </ul>
 </li>
 </ul>
@@ -384,41 +381,38 @@
                   
   <section id="id1">
 <h1>微调生成式大模型<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>大语言模型的开发训练通常分三步：预训练、有监督微调和偏好微调。这三个训练步骤如下图所示。</p>
+<p><img alt="three-steps" src="../_images/three-steps.png" /></p>
+<p><em>从一个未训练的模型架构开始，最终得到经偏好微调的语言模型的完整过程</em></p>
 <section id="id2">
-<h2>大模型三部曲<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
-<p>大语言模型的开发训练通常分三步：预训练、有监督微调和偏好微调。</p>
-<section id="id3">
-<h3>预训练<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<h2>预训练<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>创建高质量大型语言模型（LLM）的第一步是使用海量文本数据集进行预训练。在训练过程中，通常使用自监督方法，让模型尝试预测下一个词元（token），以准确学习文本中的语言和语义表示，这种过程也称为语言建模。训练后会生成一个基础模型（base model），也常被称为预训练模型或基础模型。基础模型是训练过程中产生的一个关键成果，但对终端用户来说，它们往往难以直接使用。这也正是微调模型较为重要的原因。本节我们将讲解如何微调生成式的模型基本方法。</p>
 </section>
 <section id="sft">
-<h3>有监督微调（SFT）<a class="headerlink" href="#sft" title="Link to this heading">#</a></h3>
+<h2>有监督微调（SFT）<a class="headerlink" href="#sft" title="Link to this heading">#</a></h2>
 <p>大语言模型需能很好地响应并遵循用户指令时，才会变得有用。例如，问 GPT-3基座模型模型：Tell me how to fine-tune a model. 模型的回答很可能是重复与问题类似的问题，如 How can I control the complexity of a model，而不是直接回答用户的问题。</p>
 <p><img alt="ft" src="../_images/ft.png" /></p>
 <p>通过<strong>有监督微调（SFT）</strong>，我们可以让基础模型学会遵循指令。在这个微调过程中，基础模型的参数会被更新，以更好地适应我们设定的目标任务，例如更准确地理解和执行指令。</p>
 <p>和预训练模型一样，有监督微调也使用“下一个词元预测”（next-token prediction）的方法进行训练。但不同的是，它不是单纯地预测下一个词元，而是基于用户的输入来进行预测。</p>
 </section>
-<section id="id4">
-<h3>偏好微调<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<section id="id3">
+<h2>偏好微调<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>最后是进一步提升模型的输出质量，使其更加符合 AI 安全要求或人类偏好的预期行为。这一步称为<strong>偏好微调（preference tuning）</strong>。偏好微调是一种微调方法，顾名思义，它通过我们提供的数据，将模型的输出调整得更加贴合我们的偏好。</p>
-<p>与有监督微调类似，偏好微调也可在基座模型上进行微调，其额外优势在于：它在训练过程中引入了对输出偏好的“提炼”过程。这三个训练步骤如下图所示。</p>
-<p><img alt="three-steps" src="../_images/three-steps.png" /></p>
-<p><em>从一个未训练的模型架构开始，最终得到经偏好微调的语言模型的完整过程</em></p>
-</section>
+<p>与有监督微调类似，偏好微调也可在基座模型上进行微调，其额外优势在于：它在训练过程中引入了对输出偏好的“提炼”过程。</p>
 </section>
 <section id="peft">
 <h2>参数高效微调（PEFT）<a class="headerlink" href="#peft" title="Link to this heading">#</a></h2>
-<p>更新模型的所有参数或可显著提升模型性能，但会有不少缺点，比如：训练成本高、训练速度慢、对存储空间需求大。为了应对这些问题，研究人员提出了**参数高效微调（PEFT）**的方法，这些方法可更高效地对预训练模型进行微调。</p>
+<p>更新模型的所有参数或可显著提升模型性能，但会有不少缺点，比如：训练成本高、训练速度慢、对存储空间需求大。为了应对这些问题，研究人员提出了参数高效微调（PEFT）的方法，这些方法可更高效地对预训练模型进行微调。</p>
 <section id="adapters">
 <h3>Adapters（适配器）<a class="headerlink" href="#adapters" title="Link to this heading">#</a></h3>
 <p><strong>适配器</strong>是许多 PEFT 技术的核心组成部分。这种方法的核心是在 Transformer 结构中加入一组额外的模块化组件，并只对这些组件进行微调，从而提升模型在特定任务上的表现，而无需更新模型的全部权重，这大大节省了时间和计算资源。</p>
 <p>适配器的概念最早出现在论文<a class="reference external" href="https://arxiv.org/abs/1902.00751">Parameter-efficient transfer learning for NLP</a>中，该研究发现：仅微调 BERT 模型 <strong>3.6% 的参数</strong>，就可获得与全参数微调接近的性能。在 GLUE 基准测试上，作者的结果与全参数微调的性能仅相差 <strong>0.4%</strong>。</p>
 <p>在单个 Transformer 模块中，该论文提出的架构将适配器分别放置在 <strong>注意力层</strong> 和 <strong>前馈神经网络层</strong> 之后，如下图所示：</p>
 <p><img alt="adapter" src="../_images/adapter.png" /></p>
-<p>然而，仅仅修改单个 Transformer 模块还远远不够。这些适配器组件会加入到模型的<strong>每一个模块中</strong>，如下图 所示：</p>
+<p>然而，仅仅修改单个 Transformer 模块还远远不够。这些适配器组件会加入到模型的<strong>每一个Transformer模块中</strong>，如下图 所示：</p>
 <p><img alt="adapters" src="../_images/adapters.png" /></p>
-<section id="id5">
-<h4><a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+<section id="id4">
+<h4><a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
 <p>我们也可以将整个模型中所有适配器组件都可视化出来，如下图所示。我们就能把每个适配器单独看作是一个模块的集合，分别分布在模型的所有层中。比如，<strong>适配器1</strong> 可以专门用于医疗文本分类，而 <strong>适配器2</strong> 则可以专注于命名实体识别（NER）等任务。</p>
 <p><img alt="adapters-in-all-blocks" src="../_images/adapters-in-all-blocks.png" /></p>
 <p>可以 <a class="reference external" href="https://adapterhub.ml">Adapter Hub</a> 网站下载各种专门用途的适配器模块。</p>
@@ -432,8 +426,8 @@
 </section>
 <section id="lora">
 <h2>低秩适配（LoRA）<a class="headerlink" href="#lora" title="Link to this heading">#</a></h2>
-<p>**低秩适配（LoRA）**是适配器的替代方案， 目前已成为参数高效微调（PEFT）中被广泛使用且效果显著的技术。与适配器方案类似，LoRA 只需更新一小部分参数。</p>
-<p>如图下图所示，LoRA 的做法不是向模型中添加新的层，而是<strong>在基础模型中创建一个小的子集用于微调</strong>，从而实现高效训练。</p>
+<p>低秩适配（LoRA）是适配器的替代方案， 目前已成为参数高效微调（PEFT）中被广泛使用且效果显著的技术。与适配器方案类似，LoRA 只需更新一小部分参数。</p>
+<p>如下图所示，LoRA 的做法不是向模型中添加新的层，而是<strong>在基础模型中创建一个小的子集用于微调</strong>，从而实现高效训练。</p>
 <p><img alt="lora" src="../_images/lora.png" /></p>
 <p>和适配器一样，LoRA 只需更新基础模型中的一小部分参数，因此可以实现更快速的微调。它的核心思想是：<strong>用较小的矩阵来近似原始大型语言模型中的大矩阵</strong>，从而构建出一个可用于微调的参数子集。</p>
 <p>我们可以将这些小矩阵替代原有的大矩阵，并仅对它们进行微调。例如，假设原始模型中有一个 10 × 10 的矩阵</p>
@@ -447,8 +441,8 @@
 <p><a class="reference external" href="https://arxiv.org/abs/2012.13255">Intrinsic dimensionality explains the effectiveness of language model fine-tuning</a> 这篇论文指出，语言模型具有<strong>非常低的内在维度（intrinsic dimensionality）</strong>。这意味着，即使是大型语言模型中的巨大矩阵，也可以通过较小秩（rank）的方式来近似表示。</p>
 <p>例如，拥有 1750 亿参数的模型（如 GPT-3），有96 个 Transformer 模块，每个模块都包含一个大小为 12,288 × 12,288 的权重矩阵。这意味着每个模块有多达 <strong>1.5 亿个参数</strong>，但如果我们能够将这个矩阵成功地降秩为 <strong>rank 8</strong>，只需使用两个大小为 12,288 × 2 的矩阵进行替代，这样每个模块只需<strong>约 19.7 万个参数</strong>。这在<strong>速度、存储和计算资源</strong>方面都是极大的节省，这一点在前面提到的 LoRA 论文中有详细解释。</p>
 <p>此外，这种较小的表示方式还非常灵活：你可以选择<strong>只微调基础模型的某些部分</strong>。例如，我们可以只微调每个 Transformer 层中的 <strong>Query（查询）和 Value（值）</strong> 权重矩阵。</p>
-<section id="id6">
-<h3>压缩模型以实现（更）高效的训练<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<section id="id5">
+<h3>压缩模型以实现（更）高效的训练<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <p>为了使训练更高效，我们可以在将原始权重投影到较小矩阵之前，<strong>先对模型的权重进行压缩</strong>，从而进一步降低内存需求。这种做法可以让 LoRA 的效率更进一步提升。</p>
 <p>大型语言模型的权重本质上是带有一定精度的数值，其精度通常以位数表示，例如 <code class="docutils literal notranslate"><span class="pre">float64</span></code>（64位浮点数）或 <code class="docutils literal notranslate"><span class="pre">float32</span></code>（32位浮点数）。如下图，<strong>如果我们减少用于表示一个数值的位数，结果的精度会降低</strong>，但与此同时，模型所需的内存也会显著减少。</p>
 <p><img alt="quant" src="../_images/quant.png" /></p>
@@ -475,28 +469,28 @@
 </ul>
 <p><img alt="preference" src="../_images/preference.png" /></p>
 <p>通常我们需要大量训练样本，那么我们能否自动化偏好评估呢？答案是可以的，我们可以通过训练另一种被称为奖励模型的模型来实现这一目标。</p>
-<section id="id7">
-<h3>使用奖励模型自动化偏好评估<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<section id="id6">
+<h3>使用奖励模型自动化偏好评估<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
 <p>为了实现偏好评估的自动化，在执行偏好调优步骤之前，我们需要先训练一个奖励模型.为了创建一个奖励模型，我们复制经过指令调优的模型，并对其进行微调，使其不再生成文本，而是输出一个单一的分数。</p>
 <p><img alt="reward-model" src="../_images/reward-model.png" /></p>
 </section>
-<section id="id8">
-<h3>奖励模型的输入与输出<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<section id="id7">
+<h3>奖励模型的输入与输出<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
 <p>奖励模型期望的工作方式是：给定一个提示和生成的文本，它会输出一个单一数字，该数字表示该生成在响应该提示时的偏好/质量。</p>
 <p><img alt="reward-model-score" src="../_images/reward-model-score.png" /></p>
 </section>
-<section id="id9">
-<h3>训练奖励模型<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<section id="id8">
+<h3>训练奖励模型<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
 <p>我们不能直接使用奖励模型，而是需要先对其进行训练，使其能够正确地为生成结果打分。因此，我们需要一个奖励模型可以学习的偏好数据集。</p>
-<section id="id10">
-<h4>奖励模型训练数据集<a class="headerlink" href="#id10" title="Link to this heading">#</a></h4>
+<section id="id9">
+<h4>奖励模型训练数据集<a class="headerlink" href="#id9" title="Link to this heading">#</a></h4>
 <p>偏好数据集的一种常见形式是：每个训练样本包含一个提示，以及一个被接受的生成结果和一个被拒绝的生成结果。（注意：这并不总是意味着一个生成结果绝对好，而另一个绝对差；有时两个生成结果都不错，只是其中一个相对更优。）下图展示了包含两个训练样例的偏好训练集。</p>
 <p><img alt="rl-examples" src="../_images/rl-examples.png" /></p>
 <p>生成偏好数据的一种方法是，向大语言模型（LLM）提供一个提示，并让它生成两个不同的回答，然后我们可以请求人工标注者选择他们更倾向于哪一个回答。</p>
 <p><img alt="score" src="../_images/score.png" /></p>
 </section>
-<section id="id11">
-<h4>奖励模型训练步骤<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
+<section id="id10">
+<h4>奖励模型训练步骤<a class="headerlink" href="#id10" title="Link to this heading">#</a></h4>
 <p>现在我们已经拥有了偏好训练数据集，可以开始训练奖励模型。一个简单的方法是使用奖励模型对生成结果进行评分：</p>
 <ol class="arabic simple">
 <li><p>对被接受的生成结果打分</p></li>
@@ -515,10 +509,10 @@
 <p><img alt="llama" src="../_images/llama.png" /></p>
 <p>一种常用的方法是<a class="reference external" href="https://arxiv.org/abs/1707.06347">使用近端策略优化（PPO）</a>来利用训练后的奖励模型对大语言模型进行微调。PPO 是一种流行的强化学习技术，它通过确保大语言模型的输出不会与预期奖励偏差过大，从而对经过指令调优的模型进行优化。事实上，它甚至被用于训练于2022年11月发布的原始版本 ChatGPT。</p>
 </section>
-<section id="id12">
-<h4>训练不使用奖励模型<a class="headerlink" href="#id12" title="Link to this heading">#</a></h4>
+<section id="id11">
+<h4>训练不使用奖励模型<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
 <p>PPO（近端策略优化）的一个缺点是，它是一种复杂的方法，至少需要训练两个模型：奖励模型和大语言模型，这可能比实际所需成本更高。</p>
-<p>直接偏好优化（DPO）是 PPO 的另一种替代方案，它摒弃了基于强化学习的训练过程。22 不再使用奖励模型来判断生成结果的质量，而是让大语言模型自身进行判断。如下图所示，我们使用一份大语言模型的拷贝作为参考模型，以比较参考模型与可训练模型在被接受生成结果和被拒绝生成结果质量之间的差距。</p>
+<p>直接偏好优化（DPO）是 PPO 的另一种替代方案，它摒弃了基于强化学习的训练过程，不再使用奖励模型来判断生成结果的质量，而是让大语言模型自身进行判断。如下图所示，我们使用一份大语言模型的拷贝作为参考模型，以比较参考模型与可训练模型在被接受生成结果和被拒绝生成结果质量之间的差距。</p>
 <p><img alt="no-rl" src="../_images/no-rl.png" /></p>
 <p>通过在训练过程中计算这种偏移，我们可以通过跟踪参考模型和可训练模型之间的差异，从而优化被接受生成结果相较于被拒绝生成结果的可能性。为计算这一偏移及其相关分数，我们分别从参考模型和可训练模型中提取被拒绝生成结果和被接受生成结果的对数概率。如下图所示，这一过程是在 token 级别上执行的，各个 token 的概率被合并起来，用于计算参考模型与可训练模型之间的偏移。</p>
 <p><img alt="shift-in-rejecting-scores" src="../_images/shift-in-rejecting-scores.png" /></p>
@@ -574,30 +568,27 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">大模型三部曲</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">预训练</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sft">有监督微调（SFT）</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">偏好微调</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">预训练</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sft">有监督微调（SFT）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">偏好微调</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#peft">参数高效微调（PEFT）</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adapters">Adapters（适配器）</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lora">低秩适配（LoRA）</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">压缩模型以实现（更）高效的训练</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">压缩模型以实现（更）高效的训练</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rlhf">偏好调优 / 对齐 / 基于强化学习的人类反馈（RLHF）</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">使用奖励模型自动化偏好评估</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">奖励模型的输入与输出</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">训练奖励模型</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">奖励模型训练数据集</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">奖励模型训练步骤</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">训练不使用奖励模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">使用奖励模型自动化偏好评估</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">奖励模型的输入与输出</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">训练奖励模型</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">奖励模型训练数据集</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">奖励模型训练步骤</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">训练不使用奖励模型</a></li>
 </ul>
 </li>
 </ul>

@@ -150,6 +150,7 @@
 - [Devin](https://devin.ai)
 - [AutoAgent](https://github.com/HKUDS/AutoAgent)
 - [UI-TARS-desktop](https://github.com/bytedance/UI-TARS-desktop)
+- [AI Agents for Beginners - A Course （微软官方）](https://github.com/microsoft/ai-agents-for-beginners?tab=readme-ov-file)
 
 
 
@@ -189,3 +190,4 @@
 
 - [Awesome Chinese LLM](https://github.com/HqWu-HITCS/Awesome-Chinese-LLM)
 - [llm-engineer-toolkit](https://github.com/KalyanKS-NLP/llm-engineer-toolkit)
+- [AI Graveyard](https://dang.ai/ai-graveyard) （消失的AI产品）
