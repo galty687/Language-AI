@@ -17,7 +17,7 @@
         gtag('config', 'G-GESLLLJC6M');
     </script>
     
-    <title>提示词导论 &#8212; 人工智能实践 0.6 文档</title>
+    <title>提示词导论 &#8212; 人工智能实践 0.7 文档</title>
   
   
   
@@ -39,7 +39,7 @@
   <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=ed3f5f1b"></script>
+    <script src="../_static/documentation_options.js?v=447f2b7d"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -139,7 +139,7 @@
   
   
   
-    <p class="title logo__title">人工智能实践 0.6 文档</p>
+    <p class="title logo__title">人工智能实践 0.7 文档</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -194,11 +194,17 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-gen-models.html">微调生成式大模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rep-models.html">微调表示型大模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/mlm-bert.html">使用MLM微调Bert模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">练习：使用自监督学习微调Phi4-mini</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">智能体</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Agents/agents.html">智能体概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/LangGraph.html">基于LangGraph的智能体开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/mcp.html">模型上下文协议 MCP</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
 <ul class="nav bd-sidenav">
@@ -671,9 +677,9 @@
 <h3>组织和版本化提示<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
 <p>将提示与代码分离是一种良好的实践——你很快就会明白其中的原因。例如，你可以将提示存放在一个名为 <code class="docutils literal notranslate"><span class="pre">prompts.py</span></code> 的文件中，然后在创建模型查询时引用这些提示。下面是一个示例：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># file: application.py</span>
-<span class="kn">from</span> <span class="nn">prompts</span> <span class="kn">import</span> <span class="n">GPT4o_ENTITY_EXTRACTION_PROMPT</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">GPT4o_ENTITY_EXTRACTION_PROMPT</span>
 
-<span class="k">def</span> <span class="nf">query_openai</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">user_prompt</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">query_openai</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">user_prompt</span><span class="p">):</span>
     <span class="n">completion</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
         <span class="n">model</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span>
         <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
@@ -693,10 +699,10 @@
 <li><p><strong>协作</strong>。这种方法允许领域专家在不受代码干扰的情况下进行协作，共同制定提示。</p></li>
 </ul>
 <p>如果你在多个应用中拥有大量提示，为每个提示添加元数据非常有用，这样你就可以知道每个提示对应的用途和用例。你还可以以便于按模型、应用等进行搜索的方式组织你的提示。例如，你可以将每个提示封装在一个 Python 对象中，如下所示：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 
-<span class="k">class</span> <span class="nc">Prompt</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Prompt</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">date_created</span><span class="p">:</span> <span class="n">datetime</span>
     <span class="n">prompt_text</span><span class="p">:</span> <span class="nb">str</span>

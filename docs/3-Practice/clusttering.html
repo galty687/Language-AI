@@ -17,7 +17,7 @@
         gtag('config', 'G-GESLLLJC6M');
     </script>
     
-    <title>文档聚类 &#8212; 人工智能实践 0.6 文档</title>
+    <title>文档聚类 &#8212; 人工智能实践 0.7 文档</title>
   
   
   
@@ -39,7 +39,7 @@
   <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=ed3f5f1b"></script>
+    <script src="../_static/documentation_options.js?v=447f2b7d"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -139,7 +139,7 @@
   
   
   
-    <p class="title logo__title">人工智能实践 0.6 文档</p>
+    <p class="title logo__title">人工智能实践 0.7 文档</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -194,11 +194,17 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-gen-models.html">微调生成式大模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rep-models.html">微调表示型大模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/mlm-bert.html">使用MLM微调Bert模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">练习：使用自监督学习微调Phi4-mini</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">智能体</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Agents/agents.html">智能体概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/LangGraph.html">基于LangGraph的智能体开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/mcp.html">模型上下文协议 MCP</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
 <ul class="nav bd-sidenav">
@@ -385,7 +391,7 @@
 </li>
 <li><p>从HF上加载数据所需数据</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load data from Hugging Face</span>
-<span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;maartengr/arxiv_nlp&quot;</span><span class="p">)[</span><span class="s2">&quot;train&quot;</span><span class="p">]</span>
 <span class="c1"># Extract metadata</span>
 <span class="n">abstracts</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;Abstracts&quot;</span><span class="p">]</span>
@@ -394,7 +400,7 @@
 </div>
 </li>
 <li><p>将摘要转为embeddings</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sentence_transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">SentenceTransformer</span>
 <span class="c1"># Create an embedding for each abstract</span>
 <span class="n">embedding_model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;thenlper/gte-small&quot;</span><span class="p">)</span>
 <span class="n">embeddings</span> <span class="o">=</span> <span class="n">embedding_model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">abstracts</span><span class="p">,</span> <span class="n">show_progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -411,7 +417,7 @@
 <p>表示有44949个摘要，每个摘要被转换成了384维的向量表示</p>
 </li>
 <li><p>使用降维工具</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">umap</span> <span class="kn">import</span> <span class="n">UMAP</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">umap</span><span class="w"> </span><span class="kn">import</span> <span class="n">UMAP</span>
 <span class="c1"># We reduce the input embeddings from 384 dimensions to 5 dimensions</span>
 <span class="n">umap_model</span> <span class="o">=</span> <span class="n">UMAP</span><span class="p">(</span>
 <span class="n">n_components</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">min_dist</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;cosine&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
@@ -424,7 +430,7 @@
 <p><code class="docutils literal notranslate"><span class="pre">random_state</span> </code>可以使结果在不同会话中可复现，但这会禁用并行计算，从而导致训练速度变慢。</p>
 </li>
 <li><p>将降维后的Embedding进行聚类</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">hdbscan</span> <span class="kn">import</span> <span class="n">HDBSCAN</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hdbscan</span><span class="w"> </span><span class="kn">import</span> <span class="n">HDBSCAN</span>
 <span class="c1"># We fit the model and extract the clusters</span>
 <span class="n">hdbscan_model</span> <span class="o">=</span> <span class="n">HDBSCAN</span><span class="p">(</span>
 <span class="n">min_cluster_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">,</span> <span class="n">cluster_selection_method</span><span class="o">=</span><span class="s2">&quot;eom&quot;</span>
@@ -440,7 +446,7 @@
 </div>
 </li>
 <li><p>查看聚类结果</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="c1"># Print first three documents in cluster 0</span>
 <span class="n">cluster</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">clusters</span><span class="o">==</span><span class="n">cluster</span><span class="p">)[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">3</span><span class="p">]:</span>
@@ -466,8 +472,8 @@ generate animation; therefore the interpretation lost the truth inf...
 </div>
 </li>
 <li><p>可视化聚类结果</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">umap</span> <span class="kn">import</span> <span class="n">UMAP</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">umap</span><span class="w"> </span><span class="kn">import</span> <span class="n">UMAP</span>
 
 <span class="c1"># 将384维的嵌入向量降维到二维，以便更容易可视化</span>
 <span class="n">reduced_embeddings</span> <span class="o">=</span> <span class="n">UMAP</span><span class="p">(</span>
@@ -487,7 +493,7 @@ generate animation; therefore the interpretation lost the truth inf...
 <span class="n">outliers</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">cluster</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">,</span> <span class="p">:]</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
     <span class="n">to_plot</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">to_plot</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>

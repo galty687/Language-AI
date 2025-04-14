@@ -17,7 +17,7 @@
         gtag('config', 'G-GESLLLJC6M');
     </script>
     
-    <title>文本分类 &#8212; 人工智能实践 0.6 文档</title>
+    <title>文本分类 &#8212; 人工智能实践 0.7 文档</title>
   
   
   
@@ -39,7 +39,7 @@
   <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=ed3f5f1b"></script>
+    <script src="../_static/documentation_options.js?v=447f2b7d"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -139,7 +139,7 @@
   
   
   
-    <p class="title logo__title">人工智能实践 0.6 文档</p>
+    <p class="title logo__title">人工智能实践 0.7 文档</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -194,11 +194,17 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-gen-models.html">微调生成式大模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rep-models.html">微调表示型大模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/mlm-bert.html">使用MLM微调Bert模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">练习：使用自监督学习微调Phi4-mini</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">智能体</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Agents/agents.html">智能体概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/LangGraph.html">基于LangGraph的智能体开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/mcp.html">模型上下文协议 MCP</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
 <ul class="nav bd-sidenav">
@@ -381,7 +387,7 @@
 <ol class="arabic simple" start="2">
 <li><p>加载数据集</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
 <span class="c1"># Load our data</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;rotten_tomatoes&quot;</span><span class="p">)</span>
 
@@ -436,7 +442,7 @@
 <p>该模型基于 RoBERTa-base 架构，专门针对 Twitter 数据中的情感分析任务进行了微调。该模型利用大量 Twitter 语料库训练，能够较好地捕捉推文中常见的非正式语言、缩写、表情符号和标签，从而对文本情感（如正面、负面或中性）进行准确分类。</p>
 <ol class="arabic">
 <li><p>加载模型</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">pipeline</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">pipeline</span>
 <span class="c1"># Path to our HF model</span>
 <span class="n">model_path</span> <span class="o">=</span> <span class="s2">&quot;cardiffnlp/twitter-roberta-base-sentiment-latest&quot;</span>
 <span class="c1"># Load model into pipeline</span>
@@ -450,10 +456,10 @@
 </div>
 </li>
 <li><p>执行分类任务</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">from</span> <span class="nn">transformers.pipelines.pt_utils</span> <span class="kn">import</span> <span class="n">KeyDataset</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers.pipelines.pt_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">KeyDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">classification_report</span>
 
 <span class="c1"># Run inference</span>
 <span class="n">y_pred</span> <span class="o">=</span> <span class="p">[]</span>
@@ -466,7 +472,7 @@
 </div>
 </li>
 <li><p>评估模型性能</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">evaluate_performance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">evaluate_performance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create and print the classification report&quot;&quot;&quot;</span>
     <span class="n">performance</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span>
         <span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span>
@@ -546,14 +552,14 @@ Positive Review       0.85      0.83      0.84       533
 <h2>使用生成式模型（2）<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
 <ol class="arabic">
 <li><p>创建openai client</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openai</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">openai</span>
 <span class="c1"># Create client</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">OpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;YOUR_KEY_HERE&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
 <li><p>创建生成函数</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">chatgpt_generation</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo-0125&quot;</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">chatgpt_generation</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo-0125&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate an output based on a prompt and an input document.&quot;&quot;&quot;</span>
     <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">{</span>

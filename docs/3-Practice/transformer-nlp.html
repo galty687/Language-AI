@@ -17,7 +17,7 @@
         gtag('config', 'G-GESLLLJC6M');
     </script>
     
-    <title>基于HF Transformer的NLP实践 &#8212; 人工智能实践 0.6 文档</title>
+    <title>基于HF Transformer的NLP实践 &#8212; 人工智能实践 0.7 文档</title>
   
   
   
@@ -39,7 +39,7 @@
   <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=ed3f5f1b"></script>
+    <script src="../_static/documentation_options.js?v=447f2b7d"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -139,7 +139,7 @@
   
   
   
-    <p class="title logo__title">人工智能实践 0.6 文档</p>
+    <p class="title logo__title">人工智能实践 0.7 文档</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -194,11 +194,17 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-gen-models.html">微调生成式大模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rep-models.html">微调表示型大模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/mlm-bert.html">使用MLM微调Bert模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">练习：使用自监督学习微调Phi4-mini</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">智能体</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Agents/agents.html">智能体概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/LangGraph.html">基于LangGraph的智能体开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/mcp.html">模型上下文协议 MCP</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
 <ul class="nav bd-sidenav">
@@ -431,7 +437,7 @@
 <section id="auto">
 <h4>使用 “Auto” 系列类自动加载模型<a class="headerlink" href="#auto" title="Link to this heading">#</a></h4>
 <p>Hugging Face 提供了多种便捷的 “Auto” 类，如 <code class="docutils literal notranslate"><span class="pre">AutoModel</span></code>, <code class="docutils literal notranslate"><span class="pre">AutoModelForSequenceClassification</span></code>, <code class="docutils literal notranslate"><span class="pre">AutoModelForTokenClassification</span></code>, <code class="docutils literal notranslate"><span class="pre">AutoModelForCausalLM</span></code> 等，它们可以根据你指定的模型名称（或本地目录）自动实例化对应的模型。常见用法如下：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModel</span><span class="p">,</span> <span class="n">AutoModelForSequenceClassification</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoModel</span><span class="p">,</span> <span class="n">AutoModelForSequenceClassification</span>
 
 <span class="c1"># 1) 通用AutoModel，不带特定任务头</span>
 <span class="n">model_name</span> <span class="o">=</span> <span class="s2">&quot;bert-base-uncased&quot;</span>
@@ -534,7 +540,7 @@
 </section>
 <section id="ner">
 <h3>NER识别实例<a class="headerlink" href="#ner" title="Link to this heading">#</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">pipeline</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">pipeline</span>
 
 <span class="c1"># create pipeline for NER</span>
 <span class="n">ner</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s1">&#39;ner&#39;</span><span class="p">,</span> <span class="n">aggregation_strategy</span> <span class="o">=</span> <span class="s1">&#39;simple&#39;</span><span class="p">)</span>
@@ -568,7 +574,7 @@
 <p><strong>Tokenizer</strong> 的作用是把原始文本拆分为 tokens，再将每个 token 转换成模型可理解的 ID（通常是数字索引）。不同模型使用了不尽相同的分词算法和词汇表，因此通常需要加载 <strong>与模型对应的 tokenizer</strong>。</p>
 <p><strong>使用 AutoTokenizer</strong></p>
 <p>与模型对应的 “Auto” 类类似，Hugging Face 提供了 <code class="docutils literal notranslate"><span class="pre">AutoTokenizer</span></code> 来自动加载正确的分词器。用法很像 <code class="docutils literal notranslate"><span class="pre">AutoModel</span></code>：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoTokenizer</span>
 
 <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;bert-base-uncased&quot;</span><span class="p">)</span>
 

@@ -17,7 +17,7 @@
         gtag('config', 'G-GESLLLJC6M');
     </script>
     
-    <title>SFT 微调 Phi-4 &#8212; 人工智能实践 0.6 文档</title>
+    <title>SFT 微调 Phi-4 &#8212; 人工智能实践 0.7 文档</title>
   
   
   
@@ -39,7 +39,7 @@
   <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=ed3f5f1b"></script>
+    <script src="../_static/documentation_options.js?v=447f2b7d"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -60,8 +60,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'fine-tunning/ft-phi4';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="练习：使用自监督学习微调Phi4-mini" href="ft-ph4-self.html" />
-    <link rel="prev" title="使用MLM微调Bert模型" href="mlm-bert.html" />
+    <link rel="next" title="微调表示型大模型" href="ft-rep-models.html" />
+    <link rel="prev" title="微调生成式大模型" href="ft-gen-models.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
   <meta name="docsearch:version" content="" />
@@ -139,7 +139,7 @@
   
   
   
-    <p class="title logo__title">人工智能实践 0.6 文档</p>
+    <p class="title logo__title">人工智能实践 0.7 文档</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -194,11 +194,17 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="ft-gen-models.html">微调生成式大模型</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">SFT 微调 Phi-4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ft-rep-models.html">微调表示型大模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mlm-bert.html">使用MLM微调Bert模型</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">SFT 微调 Phi-4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ft-ph4-self.html">练习：使用自监督学习微调Phi4-mini</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">智能体</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Agents/agents.html">智能体概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/LangGraph.html">基于LangGraph的智能体开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/mcp.html">模型上下文协议 MCP</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
 <ul class="nav bd-sidenav">
@@ -377,8 +383,8 @@
 <h2>测试模型的改写能力：<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <ol class="arabic">
 <li><p>加载模型</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModelForCausalLM</span><span class="p">,</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">pipeline</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoModelForCausalLM</span><span class="p">,</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">pipeline</span>
  
 <span class="n">torch</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
@@ -597,8 +603,8 @@ else:
 </div>
 </li>
 <li><p>加载Phi‑4并配置参数</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">unsloth</span> <span class="kn">import</span> <span class="n">FastLanguageModel</span>  <span class="c1"># FastVisionModel for LLMs</span>
-<span class="kn">import</span> <span class="nn">torch</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">unsloth</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastLanguageModel</span>  <span class="c1"># FastVisionModel for LLMs</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="n">max_seq_length</span> <span class="o">=</span> <span class="mi">2048</span>  <span class="c1"># Choose any! We auto support RoPE Scaling internally!</span>
 <span class="n">load_in_4bit</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Use 4bit quantization to reduce memory usage. Can be False.</span>
 
@@ -644,7 +650,7 @@ else:
 </div>
 </li>
 <li><p>添加微调数据</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
 
 <span class="c1"># 假设文件名为 data.json</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;json&quot;</span><span class="p">,</span> <span class="n">data_files</span><span class="o">=</span><span class="s2">&quot;/content/standardized-ms-style.json&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
@@ -656,9 +662,9 @@ else:
 </div>
 </li>
 <li><p>微调模型</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">trl</span> <span class="kn">import</span> <span class="n">SFTTrainer</span>
-<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">TrainingArguments</span><span class="p">,</span> <span class="n">DataCollatorForSeq2Seq</span>
-<span class="kn">from</span> <span class="nn">unsloth</span> <span class="kn">import</span> <span class="n">is_bfloat16_supported</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">trl</span><span class="w"> </span><span class="kn">import</span> <span class="n">SFTTrainer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">TrainingArguments</span><span class="p">,</span> <span class="n">DataCollatorForSeq2Seq</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">unsloth</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_bfloat16_supported</span>
 
 <span class="n">trainer</span> <span class="o">=</span> <span class="n">SFTTrainer</span><span class="p">(</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span>
@@ -691,7 +697,7 @@ else:
 </div>
 </li>
 <li><p>仅训练助手输出，忽略用户输入损失</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">unsloth.chat_templates</span> <span class="kn">import</span> <span class="n">train_on_responses_only</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">unsloth.chat_templates</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_on_responses_only</span>
 
 <span class="n">trainer</span> <span class="o">=</span> <span class="n">train_on_responses_only</span><span class="p">(</span>
     <span class="n">trainer</span><span class="p">,</span>
@@ -820,7 +826,7 @@ Peak reserved memory for training % of max memory = 2.424 %.
     <span class="n">return_tensors</span> <span class="o">=</span> <span class="s2">&quot;pt&quot;</span><span class="p">,</span>
 <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">TextStreamer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">TextStreamer</span>
 <span class="n">text_streamer</span> <span class="o">=</span> <span class="n">TextStreamer</span><span class="p">(</span><span class="n">tokenizer</span><span class="p">,</span> <span class="n">skip_prompt</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
     <span class="n">input_ids</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">streamer</span> <span class="o">=</span> <span class="n">text_streamer</span><span class="p">,</span> <span class="n">max_new_tokens</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
@@ -871,7 +877,7 @@ Peak reserved memory for training % of max memory = 2.424 %.
 </div>
 </li>
 <li><p>加载模型</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">llama_cpp</span> <span class="kn">import</span> <span class="n">Llama</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">llama_cpp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Llama</span>
 
 <span class="n">llm</span> <span class="o">=</span> <span class="n">Llama</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
 	<span class="n">repo_id</span><span class="o">=</span><span class="s2">&quot;galty687/Microsoft-Style-Editor&quot;</span><span class="p">,</span>
@@ -919,20 +925,20 @@ Peak reserved memory for training % of max memory = 2.424 %.
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="mlm-bert.html"
+       href="ft-gen-models.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title">使用MLM微调Bert模型</p>
+        <p class="prev-next-title">微调生成式大模型</p>
       </div>
     </a>
     <a class="right-next"
-       href="ft-ph4-self.html"
+       href="ft-rep-models.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title">练习：使用自监督学习微调Phi4-mini</p>
+        <p class="prev-next-title">微调表示型大模型</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

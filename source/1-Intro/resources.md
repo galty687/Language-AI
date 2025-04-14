@@ -43,6 +43,7 @@
 ### 翻译大模型
 
 - [Qwen-MT](https://help.aliyun.com/zh/model-studio/user-guide/machine-translation)
+- [ALMA: Advanced Language Model-based translator](https://github.com/fe1ixxu/ALMA)
 
 
 
@@ -83,7 +84,9 @@
 
 
 
-## 微调工具
+## 微调
+
+### 工具
 
 - [Firefly](https://github.com/yangjianxin1/Firefly)
 - [Unsloth](https://unsloth.ai/)
@@ -91,6 +94,17 @@
 - [ModelScope  SWIFT](https://github.com/modelscope/ms-swift)
 - [Hugging Face PEFT](https://huggingface.co/docs/peft/en/index)
 - [SuperAdapters](https://github.com/cckuailong/SuperAdapters/tree/master)
+- [Verl](https://github.com/volcengine/verl)
+
+### 原理
+
+
+
+## 推理增强
+
+- [Open-r1](https://github.com/huggingface/open-r1)
+- 
+- [OCNLI: Original Chinese Natural Language Inference](https://github.com/CLUEbenchmark/OCNLI/tree/main)
 
 
 
@@ -124,6 +138,7 @@
 ## 提示词
 
 - [提示词优化器](https://prompt.always200.com) | [源码](https://github.com/linshenkx/prompt-optimizer?tab=readme-ov-file)
+- [Prompty](https://prompty.ai)
 
 ## 工作流
 
@@ -133,13 +148,18 @@
 
 
 
-## 基于知识库的问答
+## RAG
+
+### 基于知识库的问答
 
 - [Qanything](https://github.com/netease-youdao/QAnything) (有道)
 - [ima](https://ima.qq.com) (腾讯)
 - [MaxKB](https://maxkb.cn)
 - [FastGPT](https://fastgpt.cn)
 - [RLAMA](https://rlama.dev)
+
+### 框架
+- [Morphik Core](https://github.com/morphik-org/morphik-core) （多模态支持）
 
 
 
@@ -154,6 +174,10 @@
 
 
 
+## MLOps
+
+- [Weights & Biases](https://wandb.ai)
+
 ## 学习资料
 
 - [大模型原理可视化](https://bbycroft.net/llm)
@@ -165,6 +189,8 @@
 - [Hugging Face Agent Course](https://huggingface.co/learn/agents-course/en/unit0/introduction)
 
 - [Hugging Face NLP Course](https://huggingface.co/learn/nlp-course/chapter0/1)
+
+- [Hugging Face Agents Course](https://huggingface.co/learn/agents-course/unit0/introduction)
 
 - [spreadsheets-are-all-you-need](https://github.com/ianand/spreadsheets-are-all-you-need)
 

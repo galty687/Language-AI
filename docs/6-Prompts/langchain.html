@@ -17,7 +17,7 @@
         gtag('config', 'G-GESLLLJC6M');
     </script>
     
-    <title>基于Langchain的提示词开发实践 &#8212; 人工智能实践 0.6 文档</title>
+    <title>基于Langchain的提示词开发实践 &#8212; 人工智能实践 0.7 文档</title>
   
   
   
@@ -39,7 +39,7 @@
   <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=ed3f5f1b"></script>
+    <script src="../_static/documentation_options.js?v=447f2b7d"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -139,7 +139,7 @@
   
   
   
-    <p class="title logo__title">人工智能实践 0.6 文档</p>
+    <p class="title logo__title">人工智能实践 0.7 文档</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -194,11 +194,17 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-gen-models.html">微调生成式大模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rep-models.html">微调表示型大模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/mlm-bert.html">使用MLM微调Bert模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">练习：使用自监督学习微调Phi4-mini</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">智能体</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Agents/agents.html">智能体概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/LangGraph.html">基于LangGraph的智能体开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/mcp.html">模型上下文协议 MCP</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
 <ul class="nav bd-sidenav">
@@ -387,10 +393,10 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!pip install langchain langchain-openai
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain_openai.chat_models</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span>
-<span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">userdata</span>
-<span class="kn">from</span> <span class="nn">langchain_openai.chat_models</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span>
-<span class="kn">from</span> <span class="nn">langchain.schema</span> <span class="kn">import</span> <span class="n">AIMessage</span><span class="p">,</span> <span class="n">HumanMessage</span><span class="p">,</span> <span class="n">SystemMessage</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_openai.chat_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatOpenAI</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">userdata</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_openai.chat_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatOpenAI</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">AIMessage</span><span class="p">,</span> <span class="n">HumanMessage</span><span class="p">,</span> <span class="n">SystemMessage</span>
 
 <span class="c1"># Instantiate ChatOpenAI with the desired settings</span>
 <span class="n">chat</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span>
@@ -462,8 +468,8 @@ Because light attracts bugs!
 </div>
 <p>但在调用 invoke 函数时会产生错误，因为 model 返回的值与 prompt 所期望的输入不兼容。</p>
 <p>接下来，让我们使用提示模板创建一个商业名称生成器，该生成器将返回五到七个相关的商业名称。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain_openai.chat_models</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span>
-<span class="kn">from</span> <span class="nn">langchain_core.prompts</span> <span class="kn">import</span> <span class="p">(</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_openai.chat_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatOpenAI</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">SystemMessagePromptTemplate</span><span class="p">,</span>
     <span class="n">ChatPromptTemplate</span>
 <span class="p">)</span>
@@ -517,9 +523,9 @@ Because light attracts bugs!
 <h2>在聊天模型中使用 PromptTemplate<a class="headerlink" href="#prompttemplate" title="Link to this heading">#</a></h2>
 <p>LangChain 提供了一种更传统的模板，称为 PromptTemplate，它需要传入 input_variables 和 template 参数。</p>
 <p>输入：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain_core.prompts</span> <span class="kn">import</span> <span class="n">PromptTemplate</span>
-<span class="kn">from</span> <span class="nn">langchain.prompts.chat</span> <span class="kn">import</span> <span class="n">SystemMessagePromptTemplate</span>
-<span class="kn">from</span> <span class="nn">langchain_openai.chat_models</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptTemplate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.prompts.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">SystemMessagePromptTemplate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_openai.chat_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatOpenAI</span>
 
 <span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptTemplate</span><span class="p">(</span>
     <span class="n">template</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;You are a helpful assistant that translates </span><span class="si">{input_language}</span><span class="s1"> to </span><span class="si">{output_language}</span><span class="s1">.&#39;&#39;&#39;</span><span class="p">,</span>
@@ -553,23 +559,23 @@ Because light attracts bugs!
 <li><p>.parse(llm_output: str)。该函数负责将 LLM 的响应解析为预定义的格式。</p></li>
 </ul>
 <p>输入：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain_core.prompts.chat</span> <span class="kn">import</span> <span class="p">(</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.prompts.chat</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">ChatPromptTemplate</span><span class="p">,</span>
     <span class="n">SystemMessagePromptTemplate</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">langchain_openai.chat_models</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span>
-<span class="kn">from</span> <span class="nn">langchain.output_parsers</span> <span class="kn">import</span> <span class="n">PydanticOutputParser</span>
-<span class="kn">from</span> <span class="nn">pydantic.v1</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_openai.chat_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatOpenAI</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.output_parsers</span><span class="w"> </span><span class="kn">import</span> <span class="n">PydanticOutputParser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic.v1</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span>
 
 <span class="n">temperature</span> <span class="o">=</span> <span class="mf">0.0</span>
 
-<span class="k">class</span> <span class="nc">BusinessName</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BusinessName</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;The name of the business&quot;</span><span class="p">)</span>
     <span class="n">rating_score</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;The rating score of the</span>
 <span class="s1">    business. 0 is the worst, 10 is the best.&#39;&#39;&#39;</span><span class="p">)</span>
 
-<span class="k">class</span> <span class="nc">BusinessNames</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BusinessNames</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BusinessName</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;A list</span>
 <span class="s1">    of business names&#39;&#39;&#39;</span><span class="p">)</span>
 
@@ -687,13 +693,13 @@ Because light attracts bugs!
 </div>
 <p>下面的脚本是一个笔记本的一部分，该笔记本之前已经定义了一个 DataFrame df。为了简洁起见，我们只研究脚本的评估部分，假设 DataFrame 已经定义。</p>
 <p>输入：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">langchain_mistralai.chat_models</span> <span class="kn">import</span> <span class="n">ChatMistralAI</span>
-<span class="kn">from</span> <span class="nn">langchain.output_parsers</span> <span class="kn">import</span> <span class="n">PydanticOutputParser</span>
-<span class="kn">from</span> <span class="nn">langchain_core.prompts</span> <span class="kn">import</span> <span class="n">ChatPromptTemplate</span>
-<span class="kn">from</span> <span class="nn">pydantic.v1</span> <span class="kn">import</span> <span class="n">BaseModel</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Union</span>
-<span class="kn">from</span> <span class="nn">langchain_core.output_parsers</span> <span class="kn">import</span> <span class="n">StrOutputParser</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_mistralai.chat_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatMistralAI</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.output_parsers</span><span class="w"> </span><span class="kn">import</span> <span class="n">PydanticOutputParser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatPromptTemplate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic.v1</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.output_parsers</span><span class="w"> </span><span class="kn">import</span> <span class="n">StrOutputParser</span>
 
 <span class="c1"># 1. 定义模型:</span>
 <span class="n">mistral_api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;MISTRAL_API_KEY&quot;</span><span class="p">]</span>
@@ -715,7 +721,7 @@ Because light attracts bugs!
 <span class="p">])</span>
 
 <span class="c1"># 3. 定义 Pydantic 模型:</span>
-<span class="k">class</span> <span class="nc">EnrichedTransactionInformation</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EnrichedTransactionInformation</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">transaction_type</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
         <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;Purchase&quot;</span><span class="p">,</span> <span class="s2">&quot;Withdrawal&quot;</span><span class="p">,</span> <span class="s2">&quot;Deposit&quot;</span><span class="p">,</span> <span class="s2">&quot;Bill Payment&quot;</span><span class="p">,</span> <span class="s2">&quot;Refund&quot;</span><span class="p">],</span> <span class="kc">None</span>
     <span class="p">]</span>
@@ -731,7 +737,7 @@ Because light attracts bugs!
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 
 <span class="c1"># 5. 定义一个函数，用于修正并移除反斜杠:</span>
-<span class="k">def</span> <span class="nf">remove_back_slashes</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">remove_back_slashes</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
     <span class="c1"># 双反斜杠用于转义</span>
     <span class="n">cleaned_string</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">cleaned_string</span>
@@ -746,7 +752,7 @@ Because light attracts bugs!
 
 <span class="c1"># 7. 对整个数据集调用该链:</span>
 <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">(),</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)):</span>
     <span class="n">transaction</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Transaction Description&quot;</span><span class="p">]</span>
     <span class="k">try</span><span class="p">:</span>
@@ -893,7 +899,7 @@ Because light attracts bugs!
 <p>在笔记本中，同一交易分类任务又以 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">ChatOpenAI(model=&quot;gpt-3.5-turbo-1106&quot;,</span> <span class="pre">model_kwargs={&quot;response_format&quot;:</span> <span class="pre">{&quot;type&quot;:</span> <span class="pre">&quot;json_object&quot;}})</span></code> 的模型重新运行。现在可以对 Mistral 和 GPT-3.5 的响应进行成对比较，如以下示例所示。从输出中你可以看到给出分数的推理理由。</p>
 <p>输入：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 使用 LangChain 评估器对答案进行评估：</span>
-<span class="kn">from</span> <span class="nn">langchain.evaluation</span> <span class="kn">import</span> <span class="n">load_evaluator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.evaluation</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_evaluator</span>
 <span class="n">evaluator</span> <span class="o">=</span> <span class="n">load_evaluator</span><span class="p">(</span><span class="s2">&quot;labeled_pairwise_string&quot;</span><span class="p">)</span>
 
 <span class="c1"># 从 DataFrame 中获取第一行数据</span>
@@ -1003,11 +1009,11 @@ Because light attracts bugs!
 这可以通过定义函数来实现，例如 <code class="docutils literal notranslate"><span class="pre">extract_contextual_data(context:</span> <span class="pre">str,</span> <span class="pre">data_points:</span> <span class="pre">List[str])</span></code> 或 <code class="docutils literal notranslate"><span class="pre">search_database(query:</span> <span class="pre">str)</span></code>。</p></li>
 </ul>
 <p>每个在函数调用中使用的函数都需要一个适当的 JSON schema。让我们通过一个 OpenAI 包的示例来进行探索：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openai</span> <span class="kn">import</span> <span class="n">OpenAI</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">os</span><span class="w"> </span><span class="kn">import</span> <span class="n">getenv</span>
 
-<span class="k">def</span> <span class="nf">schedule_meeting</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">attendees</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">schedule_meeting</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">attendees</span><span class="p">):</span>
     <span class="c1"># 连接到日历服务：</span>
     <span class="k">return</span> <span class="p">{</span> 
         <span class="s2">&quot;event_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span> 
@@ -1052,9 +1058,9 @@ Because light attracts bugs!
 使用 OpenAI 模型进行函数调用时，请务必定义详细的 JSON 模式（包括名称和描述）。  这相当于为函数提供了蓝图，引导模型理解何时以及如何正确调用该函数。</p>
 </div></blockquote>
 <p>在定义好函数之后，让我们发起一个 OpenAI API 请求。首先设置一个包含用户查询的消息列表。然后，使用 OpenAI 客户端对象将这条消息和函数模式发送给模型。LLM 分析对话后，会判断是否需要触发函数，并提供函数名称和参数。从 LLM 的响应中解析出 function 和 function_args。接着，执行该函数，并将其结果重新添加到对话中。最后，再次调用模型，以便生成整个过程的用户友好总结。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openai</span> <span class="kn">import</span> <span class="n">OpenAI</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">os</span><span class="w"> </span><span class="kn">import</span> <span class="n">getenv</span>
 
 <span class="c1">#初始化 OpenAI 客户端</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">))</span>
@@ -1165,7 +1171,7 @@ OpenAI 可能会虚构函数参数，因此在系统消息中需要更明确地�
 负责生成情节中未包含的其他场景，将整个故事分解成多个有效的场景。</p></li>
 </ul>
 <p>下面我们从创建三个独立的 <code class="docutils literal notranslate"><span class="pre">ChatPromptTemplate</span></code> 变量开始，每个链对应一个模板：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain_core.prompts.chat</span> <span class="kn">import</span> <span class="n">ChatPromptTemplate</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.prompts.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatPromptTemplate</span>
 
 <span class="n">character_generation_prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;I want you to brainstorm three to five characters for my short story. The</span>
@@ -1225,9 +1231,9 @@ OpenAI 可能会虚构函数参数，因此在系统消息中需要更明确地�
 该脚本对一系列场景文本进行摘要处理。请确保已安装 Pandas（使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pandas</span></code>）。</p>
 <hr class="docutils" />
 <p>首先，导入所需的工具：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain_text_splitters</span> <span class="kn">import</span> <span class="n">CharacterTextSplitter</span>
-<span class="kn">from</span> <span class="nn">langchain.chains.summarize</span> <span class="kn">import</span> <span class="n">load_summarize_chain</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_text_splitters</span><span class="w"> </span><span class="kn">import</span> <span class="n">CharacterTextSplitter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.chains.summarize</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_summarize_chain</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -1273,9 +1279,9 @@ OpenAI 可能会虚构函数参数，因此在系统消息中需要更明确地�
 </pre></div>
 </div>
 <p>整体脚本如下：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.text_splitter</span> <span class="kn">import</span> <span class="n">CharacterTextSplitter</span>
-<span class="kn">from</span> <span class="nn">langchain.chains.summarize</span> <span class="kn">import</span> <span class="n">load_summarize_chain</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">langchain.text_splitter</span><span class="w"> </span><span class="kn">import</span> <span class="n">CharacterTextSplitter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.chains.summarize</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_summarize_chain</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">generated_scenes</span><span class="p">)</span>
 <span class="n">all_character_script_text</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">character_script</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>

@@ -77,6 +77,13 @@
    fine-tunning/ft-ph4-self.md
    fine-tunning/ft-rl.md
 
+.. toctree::
+   :maxdepth: 1
+   :caption: 智能体
+   
+   Agents/agents.md
+   Agents/LangGraph.md
+   Agents/mcp.md
 
 .. toctree::
    :maxdepth: 1
