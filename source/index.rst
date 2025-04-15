@@ -83,6 +83,7 @@
    
    Agents/agents.md
    Agents/LangGraph.md
+   Agents/translation-agent.md
    Agents/mcp.md
 
 .. toctree::

@@ -1,0 +1,703 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GESLLLJC6M"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-GESLLLJC6M');
+    </script>
+    
+    <title>基于LangGraph的 Translation Agent的开发 &#8212; 人工智能实践 0.7 文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=447f2b7d"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Agents/translation-agent';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="模型上下文协议 MCP" href="mcp.html" />
+    <link rel="prev" title="LangGraph简介" href="LangGraph.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">人工智能实践 0.7 文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程简介</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/intro.html">课程大纲</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/terms.html">术语</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/setup.html">环境准备</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/llm-basics.html">LLM 基础</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">基于Transformer的自然语言处理</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/nlp-tasks.html">NLP 任务</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/transformer-nlp.html">基于HF Transformer的NLP实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/classification.html">文本分类</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/clusttering.html">文档聚类</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">语言学基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/linguistics-llm.html">大语言模型与语言学</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/llm-metrics.html">常见大模型评价指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/translation-metrics.html">译文质量评价方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/linguistics-intro.html">语言学简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/applied-linguistics.html">应用语言学</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">课程实践项目</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../5-Projects/projects.html">课程实践项目要求</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5-Projects/evaluating-llms.html">大模型的评估与选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5-Projects/evaluate-case.html">评价模型翻译能力</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">提示词</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../6-Prompts/prompts-intro.html">提示词导论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6-Prompts/prompts-examples.html">提示词案例分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6-Prompts/langchain.html">基于Langchain的提示词开发实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6-Prompts/good-examples.html">提示词案例分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6-Prompts/jail-break.html">提示词越狱</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-gen-models.html">微调生成式大模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rep-models.html">微调表示型大模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/mlm-bert.html">使用MLM微调Bert模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">练习：使用自监督学习微调Phi4-mini</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">智能体</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="agents.html">智能体概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LangGraph.html">LangGraph简介</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">基于LangGraph的 Translation Agent的开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mcp.html">模型上下文协议 MCP</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../answers/transformer-practice-answers.html">基于HF Transformer的NLP实践的练习答案</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Agents/translation-agent.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>基于LangGraph的 Translation Agent的开发</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#react">ReAct 模式</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">基础准备</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">代码</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="langgraph-translation-agent">
+<h1>基于LangGraph的 Translation Agent的开发<a class="headerlink" href="#langgraph-translation-agent" title="Link to this heading">#</a></h1>
+<section id="react">
+<h2>ReAct 模式<a class="headerlink" href="#react" title="Link to this heading">#</a></h2>
+<p>现代智能体（如基于 LangChain 框架的 Agent）常采用“ReAct”风格的设计，因为这种方式既结合了内在思考又能调用外部工具，还可以根据观察到的反馈不断改进最终答案。不同的应用场景可能会组合并调整这些模式，以满足特定任务的需求。</p>
+<p>整个“思考–行动–观察”循环的流程如下：</p>
+<ol class="arabic simple">
+<li><p><strong>思考（Thought）</strong></p>
+<ul class="simple">
+<li><p>分析用户输入，检索是否包含特殊术语。</p></li>
+<li><p>决策：是直接翻译，还是先处理术语。</p></li>
+</ul>
+</li>
+<li><p><strong>行动（Action）</strong></p>
+<ul class="simple">
+<li><p>构造调用翻译工具的命令，并传入原文和预定义术语（例如以 JSON 格式）。</p></li>
+<li><p>执行翻译动作。</p></li>
+</ul>
+</li>
+<li><p><strong>观察（Observation）</strong></p>
+<ul class="simple">
+<li><p>获取翻译工具返回的翻译结果作为反馈。</p></li>
+<li><p>通过反馈对翻译效果进行验证。</p></li>
+</ul>
+</li>
+<li><p><strong>更新思考并输出最终回答</strong></p>
+<ul class="simple">
+<li><p>根据反馈更新内在思考，确认翻译达到了预期效果。</p></li>
+<li><p>生成最终回答并回复给用户。</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="id1">
+<h2>基础准备<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>本练习以千问大模型作为Agent的大脑。需要开通阿里云百炼的API。</p>
+</section>
+<section id="id2">
+<h2>代码<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ol class="arabic">
+<li><p>安装 LangGraph 和 langchain_openai</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">langgraph</span> <span class="n">langchain_openai</span>
+</pre></div>
+</div>
+</li>
+<li><p>导入所需库和模型初始化</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">langgraph.graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">StateGraph</span><span class="p">,</span> <span class="n">START</span><span class="p">,</span> <span class="n">END</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.chat_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatOpenAI</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.messages</span><span class="w"> </span><span class="kn">import</span> <span class="n">HumanMessage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypedDict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># 初始化 LLM（此处示例为 Qwen，注意替换 API 参数）</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;qwen-plus&quot;</span><span class="p">,</span> 
+    <span class="n">openai_api_key</span><span class="o">=</span><span class="s2">&quot;you-api-key&quot;</span><span class="p">,</span>
+    <span class="n">openai_api_base</span><span class="o">=</span><span class="s2">&quot;https://dashscope.aliyuncs.com/compatible-mode/v1&quot;</span><span class="p">,</span>
+ 
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>定义状态数据结构</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>  <span class="k">class</span><span class="w"> </span><span class="nc">TranslationState</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+      <span class="n">original_text</span><span class="p">:</span> <span class="nb">str</span>               <span class="c1"># 待翻译的英文文本</span>
+      <span class="n">glossary</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>         <span class="c1"># 预定义的术语翻译映射</span>
+      <span class="n">final_translation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="c1"># 最终翻译结果</span>
+      <span class="n">messages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>     <span class="c1"># 与 LLM 交互的记录</span>
+</pre></div>
+</div>
+</li>
+<li><p>节点0：获取用户输入</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">get_user_input</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">TranslationState</span><span class="p">):</span>
+    <span class="n">user_text</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;请输入要翻译的文本：&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">user_text</span><span class="p">:</span>
+        <span class="c1"># 当检测不到输入时，采用默认文本</span>
+        <span class="n">user_text</span> <span class="o">=</span> <span class="s2">&quot;Promts and Tokens are important concepts in the field of Large Lanuage Models.&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;未检测到输入，默认使用示例文本。&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;original_text&quot;</span><span class="p">:</span> <span class="n">user_text</span><span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>节点1：加载预定义术语（这里直接内置，也可从文件加载）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="k">def</span><span class="w"> </span><span class="nf">lookup_glossary</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">TranslationState</span><span class="p">):</span>
+    <span class="n">predefined_glossary</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;Promts&quot;</span><span class="p">:</span> <span class="s2">&quot;提示词&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Token&quot;</span><span class="p">:</span> <span class="s2">&quot;词元&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Large Langauge Model&quot;</span><span class="p">:</span> <span class="s2">&quot;语言大模型&quot;</span>
+    <span class="p">}</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;预定义术语：&quot;</span><span class="p">,</span> <span class="n">predefined_glossary</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;glossary&quot;</span><span class="p">:</span> <span class="n">predefined_glossary</span><span class="p">}</span>
+
+</pre></div>
+</div>
+</li>
+<li><p>节点2：初始翻译 – 根据用户原文和预定义术语构造提示调用翻译工具</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">translate_text</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">TranslationState</span><span class="p">):</span>
+    <span class="n">original_text</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;original_text&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">glossary</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;glossary&quot;</span><span class="p">,</span> <span class="p">{})</span>
+
+    <span class="c1"># 构造提示：直接将全部预定义术语附加到提示中</span>
+    <span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;请将下面的英文文本翻译成中文：</span><span class="se">\n\n</span><span class="si">{</span><span class="n">original_text</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">glossary</span><span class="p">:</span>
+        <span class="n">prompt</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;请注意，以下术语必须使用规定翻译：</span><span class="si">{</span><span class="n">glossary</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+    
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span><span class="n">HumanMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">prompt</span><span class="p">)]</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+    <span class="n">initial_translation</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    
+    <span class="c1"># 更新状态并记录交互历史</span>
+    <span class="n">state</span><span class="p">[</span><span class="s2">&quot;messages&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span>
+        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">prompt</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">initial_translation</span><span class="p">}</span>
+    <span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;初始译文：&quot;</span><span class="p">,</span> <span class="n">initial_translation</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;final_translation&quot;</span><span class="p">:</span> <span class="n">initial_translation</span><span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>节点3：反思调整 – 模拟“思考–行动–观察”循环，反复改进翻译结果</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">refine_translation</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">TranslationState</span><span class="p">):</span>
+    <span class="n">max_iterations</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">iteration</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">current_translation</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;final_translation&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># 进入迭代循环，每次生成新的改进方案</span>
+    <span class="k">while</span> <span class="n">iteration</span> <span class="o">&lt;</span> <span class="n">max_iterations</span><span class="p">:</span>
+        <span class="c1"># 修改思考提示：</span>
+        <span class="c1"># 如果当前译文已足够好，请返回原译文，并在后面附加‘（已确认）’；否则，请给出详细改进后的译文。</span>
+        <span class="n">thought_prompt</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;当前翻译为：</span><span class="se">\n</span><span class="si">{</span><span class="n">current_translation</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;作为一名专业翻译专家，请你分析这段译文是否存在不足；&quot;</span>
+            <span class="s2">&quot;如果存在改进建议，请给出改进后的译文；&quot;</span>
+            <span class="s2">&quot;如果你认为当前翻译已经足够准确，请在原译文后附加‘（已确认）’二字，并返回完整译文。&quot;</span>
+        <span class="p">)</span>
+        <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span><span class="n">HumanMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">thought_prompt</span><span class="p">)]</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+        <span class="n">new_translation</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        
+        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;messages&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;(Iteration </span><span class="si">{</span><span class="n">iteration</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">) </span><span class="si">{</span><span class="n">new_translation</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">})</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;反思调整第 </span><span class="si">{</span><span class="n">iteration</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2"> 轮：&quot;</span><span class="p">,</span> <span class="n">new_translation</span><span class="p">)</span>
+        
+        <span class="c1"># 如果返回结果中包含 &quot;（已确认）&quot;，表示 LLM确认当前译文足够准确，</span>
+        <span class="c1"># 我们就剥离标记并认为翻译结果最终稳定</span>
+        <span class="k">if</span> <span class="s2">&quot;（已确认）&quot;</span> <span class="ow">in</span> <span class="n">new_translation</span><span class="p">:</span>
+            <span class="c1"># 去掉标记后作为最终译文</span>
+            <span class="n">current_translation</span> <span class="o">=</span> <span class="n">new_translation</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;（已确认）&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">break</span>
+        
+        <span class="c1"># 如果改进后的译文与当前译文基本相同，也认为无需继续调整</span>
+        <span class="k">if</span> <span class="n">new_translation</span> <span class="o">==</span> <span class="n">current_translation</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_translation</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_translation</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">current_translation</span> <span class="o">=</span> <span class="n">new_translation</span>
+            <span class="n">iteration</span> <span class="o">+=</span> <span class="mi">1</span>
+            
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;final_translation&quot;</span><span class="p">:</span> <span class="n">current_translation</span><span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>节点4：输出最终翻译结果</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">finalize</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">TranslationState</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== 翻译任务完成 ===&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;最终翻译结果：&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;final_translation&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">{}</span>
+</pre></div>
+</div>
+</li>
+<li><p>构建 LangGraph 流程图，将各节点按照顺序连接</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translation_graph</span> <span class="o">=</span> <span class="n">StateGraph</span><span class="p">(</span><span class="n">TranslationState</span><span class="p">)</span>
+<span class="n">translation_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;get_user_input&quot;</span><span class="p">,</span> <span class="n">get_user_input</span><span class="p">)</span>
+<span class="n">translation_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;lookup_glossary&quot;</span><span class="p">,</span> <span class="n">lookup_glossary</span><span class="p">)</span>
+<span class="n">translation_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;translate_text&quot;</span><span class="p">,</span> <span class="n">translate_text</span><span class="p">)</span>
+<span class="n">translation_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;refine_translation&quot;</span><span class="p">,</span> <span class="n">refine_translation</span><span class="p">)</span>
+<span class="n">translation_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;finalize&quot;</span><span class="p">,</span> <span class="n">finalize</span><span class="p">)</span>
+
+<span class="n">translation_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">START</span><span class="p">,</span> <span class="s2">&quot;get_user_input&quot;</span><span class="p">)</span>
+<span class="n">translation_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;get_user_input&quot;</span><span class="p">,</span> <span class="s2">&quot;lookup_glossary&quot;</span><span class="p">)</span>
+<span class="n">translation_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;lookup_glossary&quot;</span><span class="p">,</span> <span class="s2">&quot;translate_text&quot;</span><span class="p">)</span>
+<span class="n">translation_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;translate_text&quot;</span><span class="p">,</span> <span class="s2">&quot;refine_translation&quot;</span><span class="p">)</span>
+<span class="n">translation_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;refine_translation&quot;</span><span class="p">,</span> <span class="s2">&quot;finalize&quot;</span><span class="p">)</span>
+<span class="n">translation_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;finalize&quot;</span><span class="p">,</span> <span class="n">END</span><span class="p">)</span>
+
+<span class="n">compiled_graph</span> <span class="o">=</span> <span class="n">translation_graph</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p>初始化状态（注意：初始时 original_text、glossary 和翻译为空）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">initial_state</span><span class="p">:</span> <span class="n">TranslationState</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;original_text&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;glossary&quot;</span><span class="p">:</span> <span class="p">{},</span>
+    <span class="s2">&quot;final_translation&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>运行</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">compiled_graph</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">initial_state</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>输出结果：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>预定义术语： {&#39;Promts&#39;: &#39;提示词&#39;, &#39;Token&#39;: &#39;词元&#39;, &#39;Large Langauge Model&#39;: &#39;语言大模型&#39;}
+初始译文： 提示词和词元是语言大模型领域中的重要概念。
+反思调整第 1 轮： 提示词和词元是语言大模型领域中的重要概念。（已确认）
+
+=== 翻译任务完成 ===
+最终翻译结果：
+提示词和词元是语言大模型领域中的重要概念。
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="p">{</span><span class="s1">&#39;original_text&#39;</span><span class="p">:</span> <span class="s1">&#39;Promts and Tokens are important concepts in the field of Large Lanuage Models.&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;glossary&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Promts&#39;</span><span class="p">:</span> <span class="s1">&#39;提示词&#39;</span><span class="p">,</span> <span class="s1">&#39;Token&#39;</span><span class="p">:</span> <span class="s1">&#39;词元&#39;</span><span class="p">,</span> <span class="s1">&#39;Large Langauge Model&#39;</span><span class="p">:</span> <span class="s1">&#39;语言大模型&#39;</span><span class="p">},</span>
+ <span class="s1">&#39;final_translation&#39;</span><span class="p">:</span> <span class="s1">&#39;提示词和词元是语言大模型领域中的重要概念。&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;messages&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s2">&quot;请将下面的英文文本翻译成中文：</span><span class="se">\n\n</span><span class="s2">Promts and Tokens are important concepts in the field of Large Lanuage Models.</span><span class="se">\n\n</span><span class="s2">请注意，以下术语必须使用规定翻译：{&#39;Promts&#39;: &#39;提示词&#39;, &#39;Token&#39;: &#39;词元&#39;, &#39;Large Langauge Model&#39;: &#39;语言大模型&#39;}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">},</span>
+  <span class="p">{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="s1">&#39;assistant&#39;</span><span class="p">,</span> <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;提示词和词元是语言大模型领域中的重要概念。&#39;</span><span class="p">},</span>
+  <span class="p">{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="s1">&#39;assistant&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;(Iteration 1) 提示词和词元是语言大模型领域中的重要概念。（已确认）&#39;</span><span class="p">}]}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="LangGraph.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">LangGraph简介</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="mcp.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">模型上下文协议 MCP</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#react">ReAct 模式</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">基础准备</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">代码</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： 高志军
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright Zhijun Gao.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
