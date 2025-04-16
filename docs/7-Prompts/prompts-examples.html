@@ -1,0 +1,810 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GESLLLJC6M"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-GESLLLJC6M');
+    </script>
+    
+    <title>提示词案例分析 &#8212; 人工智能实践 0.7 文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=447f2b7d"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '7-Prompts/prompts-examples';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="基于Langchain的提示词开发实践" href="langchain.html" />
+    <link rel="prev" title="提示词导论" href="prompts-intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">人工智能实践 0.7 文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程简介</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/intro.html">课程大纲</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/terms.html">术语</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/setup.html">环境准备</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/llm-basics.html">LLM 基础</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">基于Transformer的自然语言处理</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/nlp-tasks.html">NLP 任务</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/transformer-nlp.html">基于HF Transformer的NLP实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/classification.html">文本分类</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/clusttering.html">文档聚类</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">语言学基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/linguistics-llm.html">大语言模型与语言学</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/llm-metrics.html">常见大模型评价指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/translation-metrics.html">译文质量评价方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/linguistics-intro.html">语言学简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/applied-linguistics.html">应用语言学</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型的选择与评价</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../5-evaluation/evaluating-llms.html">大模型的评估与选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5-evaluation/evaluate-case.html">评价模型翻译能力</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">课程实践项目</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../6-Projects/projects.html">课程实践项目要求</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6-Projects/final.html">课程项目作品展示</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">提示词</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="prompts-intro.html">提示词导论</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">提示词案例分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="langchain.html">基于Langchain的提示词开发实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="good-examples.html">提示词案例分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jail-break.html">提示词越狱</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-gen-models.html">微调生成式大模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rep-models.html">微调表示型大模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/mlm-bert.html">使用MLM微调Bert模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">练习：使用自监督学习微调Phi4-mini</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">智能体</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Agents/agents.html">智能体概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/LangGraph.html">LangGraph简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/translation-agent.html">基于LangGraph的Translation Agent 开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/mcp.html">模型上下文协议 MCP</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../answers/transformer-practice-answers.html">基于HF Transformer的NLP实践的练习答案</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/7-Prompts/prompts-examples.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>提示词案例分析</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#llm">使用LLM做分类</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">情感分类任务提示词</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#openai">在OpenAI中应用</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">其他应用</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">打分员</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#meta-prompt">Meta Prompt</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>提示词案例分析<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<section id="llm">
+<h2>使用LLM做分类<a class="headerlink" href="#llm" title="Link to this heading">#</a></h2>
+<p><strong>分类</strong>指的是预测给定数据点或样本所属的类别或类别。这是机器学习中的常见任务，其中模型被训练以根据学习到的模式为未标注数据分配预定义的标签。</p>
+<p>大语言模型（LLMs）在分类任务中非常强大，即使在提示中仅提供零个或少量示例，也能表现出色。为什么呢？这是因为像 GPT-4 这样的 LLM 之前已经在庞大的数据集上进行了训练，并且具备一定的推理能力。</p>
+<p>在使用 LLM 解决分类问题时，主要有两种策略：零样本学习（Zero-shot learning）和少样本学习（Few-shot learning）。</p>
+<section id="id2">
+<h3>情感分类任务提示词<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>Given the statement, classify it as either &quot;Compliment&quot;, &quot;Complaint&quot;, or &quot;Neutral&quot;:
+
+Examples:
+
+<span class="w">   </span><span class="k">1.</span> &quot;The sun is shining.&quot; → Neutral
+<span class="w">   </span><span class="k">2.</span> &quot;Your support team is fantastic!&quot; → Compliment
+   3.&quot;I had a terrible experience with your software.&quot; → Complaint
+
+Classification Rules:
+
+<span class="w">   </span><span class="k">1.</span> Only return the single classification word.
+<span class="w">   </span><span class="k">2.</span> The response should be either &quot;Compliment&quot;, &quot;Complaint&quot;, or &quot;Neutral&quot;.
+<span class="w">   </span><span class="k">3.</span> Perform the classification on the text enclosed within &quot;&quot;&quot; delimiters.
+
+Statement to Classify:
+
+&quot;&quot;&quot;The user interface is intuitive.&quot;&quot;&quot;
+Classification: 
+</pre></div>
+</div>
+</section>
+<section id="openai">
+<h3>在OpenAI中应用<a class="headerlink" href="#openai" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">userdata</span>
+
+
+<span class="c1"># 初始化 OpenAI 客户端</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">userdata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;OPENAI_API_KEY&#39;</span><span class="p">))</span>
+
+<span class="c1"># 基础提示模板</span>
+<span class="n">base_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Given the statement, classify it as either &quot;Compliment&quot;, &quot;Complaint&quot;, or &quot;Neutral&quot;:</span>
+<span class="s2">1. &quot;The sun is shining.&quot; - Neutral</span>
+<span class="s2">2. &quot;Your support team is fantastic!&quot; - Compliment</span>
+<span class="s2">3. &quot;I had a terrible experience with your software.&quot; - Complaint</span>
+
+<span class="s2">You must follow the following principles:</span>
+<span class="s2">- Only return the single classification word. The response should be either</span>
+<span class="s2">  &quot;Compliment&quot;, &quot;Complaint&quot;, or &quot;Neutral&quot;.</span>
+<span class="s2">- Perform the classification on the text enclosed within &#39;&#39;&#39; delimiters.</span>
+
+<span class="s2">&#39;&#39;&#39;</span><span class="si">{content}</span><span class="s2">&#39;&#39;&#39;</span>
+<span class="s2">Classification:</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># 存储响应结果</span>
+<span class="n">responses</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># 生成多个分类响应</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span>
+      	<span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">base_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">content</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;Outside is rainy, but I am having a great day. </span>
+<span class="s2">                    I just don&#39;t understand how people live, I&#39;m so sad!&quot;&quot;&quot;</span>
+                <span class="p">),</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">responses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+<span class="c1"># 找到最常见的分类</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">most_frequent_classification</span><span class="p">(</span><span class="n">responses</span><span class="p">):</span>
+     <span class="c1"># 使用字典统计每种分类的出现次数</span>
+    <span class="n">count_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">classification</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">:</span>
+        <span class="n">count_dict</span><span class="p">[</span><span class="n">classification</span><span class="p">]</span> <span class="o">=</span> <span class="n">count_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">classification</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="c1"># 返回出现次数最多的分类</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">count_dict</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">count_dict</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+  
+  
+<span class="n">most_frequent_classification</span><span class="p">(</span><span class="n">responses</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Neutral</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>在实验过程中，默认温度的情况下，偶然也会遇到输出 Complaint 的情形，如果需要复现可以设置温度为0： <code class="docutils literal notranslate"><span class="pre">temperature=0,</span></code></p>
+</div></blockquote>
+</section>
+<section id="id3">
+<h3>其他应用<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>客户评价分类</strong></p>
+<ul>
+<li><p>将用户评论分类为“正面”、“负面”或“中性”。</p></li>
+<li><p>进一步深入分析，可以识别子主题，如“可用性”、“客户支持”或“价格”。</p></li>
+</ul>
+</li>
+<li><p><strong>电子邮件过滤</strong></p>
+<ul>
+<li><p>检测电子邮件的意图或目的，并将其分类为“咨询”、“投诉”、“反馈”或“垃圾邮件”。</p></li>
+<li><p>这有助于企业合理安排回复优先级，并高效管理沟通。</p></li>
+</ul>
+</li>
+<li><p><strong>社交媒体情感分析</strong></p>
+<ul>
+<li><p>监测社交媒体平台上的品牌提及和情感倾向。</p></li>
+<li><p>将帖子或评论分类为“赞扬”、“批评”、“询问”或“中性”。</p></li>
+<li><p>通过分析公众舆论，调整营销或公关策略。</p></li>
+</ul>
+</li>
+<li><p><strong>新闻文章分类</strong></p>
+<ul>
+<li><p>面对每天大量生成的新闻内容，LLMs 可以根据主题或话题对文章进行分类，例如“政治”、“科技”、“环境”或“娱乐”。</p></li>
+</ul>
+</li>
+<li><p><strong>简历筛选</strong></p>
+<ul>
+<li><p>对于 HR 部门面临的大量简历，可根据预定义标准进行分类，例如“合格”、“资历过高”或“资历不足”。</p></li>
+<li><p>也可以按专业领域分类，如“软件开发”、“市场营销”或“销售”。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id4">
+<h2>打分员<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>人工的评估方法中，通常采用简单的<strong>点赞/点踩</strong>的评分机制，以确定模型的回答是否符合我们的预期。然而，人工评分既昂贵又繁琐，需要合格的评估者来判断回答的质量或识别错误。一个越来越常见的方法是使用更高级的大语言模型（LLM）来评估较小模型的回答质量。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># Initialize OpenAI client</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">))</span>
+
+<span class="c1"># Store responses</span>
+<span class="n">responses</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Generate responses</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="c1"># Concise if even, verbose if odd</span>
+    <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;concise&quot;</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;verbose&quot;</span>
+    
+    <span class="k">if</span> <span class="n">style</span> <span class="o">==</span> <span class="s2">&quot;concise&quot;</span><span class="p">:</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Return a </span><span class="si">{</span><span class="n">style</span><span class="si">}</span><span class="s2"> answer to the following question: What is the meaning of life?&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;Return an answer to the following question: What is the meaning of life?&quot;</span>
+    
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span>  <span class="c1"># Using GPT-3.5 Turbo for this example</span>
+        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">prompt</span><span class="p">}]</span>
+    <span class="p">)</span>
+    
+    <span class="n">responses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+<span class="c1"># System prompt for rating conciseness</span>
+<span class="n">system_prompt</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;You are assessing the conciseness of a response from a chatbot.</span>
+<span class="s2">You only respond with a 1 if the response is concise, and a 0 if it is not.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># Store ratings</span>
+<span class="n">ratings</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Evaluate responses</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">response</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">responses</span><span class="p">):</span>
+    <span class="n">rating</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">system_prompt</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">response</span><span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    
+    <span class="n">ratings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rating</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+<span class="c1"># Print results</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">rating</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ratings</span><span class="p">):</span>
+    <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;concise&quot;</span> <span class="k">if</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;verbose&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Style: </span><span class="si">{</span><span class="n">style</span><span class="si">}</span><span class="s2">, Rating: </span><span class="si">{</span><span class="n">rating</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Style</span><span class="p">:</span> <span class="n">concise</span><span class="p">,</span> <span class="n">Rating</span><span class="p">:</span> <span class="mi">1</span>
+<span class="n">Style</span><span class="p">:</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">Rating</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">Style</span><span class="p">:</span> <span class="n">concise</span><span class="p">,</span> <span class="n">Rating</span><span class="p">:</span> <span class="mi">1</span>
+<span class="n">Style</span><span class="p">:</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">Rating</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">Style</span><span class="p">:</span> <span class="n">concise</span><span class="p">,</span> <span class="n">Rating</span><span class="p">:</span> <span class="mi">1</span>
+<span class="n">Style</span><span class="p">:</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">Rating</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">Style</span><span class="p">:</span> <span class="n">concise</span><span class="p">,</span> <span class="n">Rating</span><span class="p">:</span> <span class="mi">1</span>
+<span class="n">Style</span><span class="p">:</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">Rating</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">Style</span><span class="p">:</span> <span class="n">concise</span><span class="p">,</span> <span class="n">Rating</span><span class="p">:</span> <span class="mi">1</span>
+<span class="n">Style</span><span class="p">:</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">Rating</span><span class="p">:</span> <span class="mi">0</span>
+
+</pre></div>
+</div>
+<p>这个脚本是一个 Python 程序，它通过与 OpenAI API 的交互来生成并评估基于简洁性的回答。下面是具体解释：</p>
+<ol class="arabic simple">
+<li><p><strong>responses = []</strong> 创建了一个名为 responses 的空列表，用来存储 OpenAI API 生成的回答。</p></li>
+<li><p><strong>for 循环运行 10 次</strong>，每次迭代都会生成一个回答。</p></li>
+<li><p>在循环内部，根据当前的迭代次数（i）确定回答的风格。偶数迭代为“简洁”，奇数迭代为“详细”。</p></li>
+<li><p>根据所选风格，格式化提示字符串，用不同方式（简洁或详细）询问“生命的意义是什么？”。</p></li>
+<li><p><strong>response = client.chat.completions.create(…)</strong> 向 OpenAI API 发送请求，根据提示生成回答，此处使用的模型为 “gpt-3.5-turbo”。</p></li>
+<li><p>将生成的回答去除首尾空白后添加到 responses 列表中。</p></li>
+<li><p><strong>system_prompt = “””You are assessing…”””</strong> 设置了一个用于评估生成回答简洁性的系统提示。</p></li>
+<li><p><strong>ratings = []</strong> 初始化一个空列表，用来存储简洁性评分。</p></li>
+<li><p>另一个 for 循环遍历 responses 列表中的每个回答。</p></li>
+<li><p>对于每个回答，脚本将回答和 system_prompt 一并发送给 OpenAI API，请求进行简洁性评估。这次使用的模型为 “gpt-4”。</p></li>
+<li><p>将评估得到的评分（1 表示简洁，0 表示不简洁）去除空白后添加到 ratings 列表中。</p></li>
+<li><p>最后一个 for 循环遍历 ratings 列表，对每个评分打印出回答的风格（“简洁”或“详细”）及其对应的简洁性评分。</p></li>
+</ol>
+</section>
+<section id="meta-prompt">
+<h2>Meta Prompt<a class="headerlink" href="#meta-prompt" title="Link to this heading">#</a></h2>
+<p>元提示是一种技术，涉及创建文本提示，而这些文本提示又能生成其他文本提示。然后，这些文本提示被用来生成在图像、视频以及更多文本等多种媒介中的新资源。</p>
+<p>为了更好地理解元提示，我们以借助 GPT-4 撰写儿童书籍为例。首先，你指示大型语言模型生成儿童书籍的文本内容。之后，你通过指令 GPT-4 生成适用于图像生成模型的提示，从而启动元提示。这可能意味着根据书中的情节生成情景描述或具体场景的提示，随后这些提示可以传递给 Midjourney 或 Stable Diffusion 等 AI 模型。</p>
+<p>因此，这些图像生成模型能够与由 AI 创作的儿童故事保持和谐一致地提供相应的图像。</p>
+<p>输入 ChatGPT o3-mini：</p>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>Act as a GPT Prompt Engineer, you are solely responsible for producing highly effective large language model text prompts given a task.
+
+You must follow the following principles:
+<span class="k">-</span><span class="w"> </span>Return only a single prompt, never return the output of a prompt.
+<span class="k">-</span><span class="w"> </span>You must follow the task properly.
+<span class="k">-</span><span class="w"> </span>You must either refine the prompt or create a new prompt depending upon the Task.
+<span class="k">-</span><span class="w"> </span>Bullet point out any important features so that another Prompt Engineer can easily copy inputs into the prompt.
+
+Task: You must create a copywriting guide ChatGPT several blog posts. Include relevant features within the ChatGPT prompt that will allow ChatGPT to imitate the writer. You must decide what the most important features are to mimic the writer&#39;s style etc. You will only be applying this style to new blog posts.
+
+Blog post text: You need a variety of soft skills in addition to technical skills to succeed in the technology sector. Soft skills are used by software professionals to collaborate with their peers...
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>You are an expert copywriting guide tasked with generating several new blog posts. Your objective is to create engaging, informative, and authentic blog posts that capture and reflect the unique style of a seasoned software professional writer. The writer emphasizes the importance of soft skills alongside technical expertise. Use the following guidelines to shape your output:
+
+    Voice &amp; Tone: Maintain a professional yet approachable tone that conveys expertise in both technology and interpersonal skills.
+    Style Mimicry: Imitate the writer’s style as seen in the sample text (&#39;You need a variety of soft skills in addition to technical skills to succeed in the technology sector. Soft skills are used by software professionals to collaborate with their peers...&#39;). Focus on clarity, concise language, and a balanced blend of technical insights with human-centered advice.
+    Content Focus: Each blog post should highlight how soft skills complement technical abilities, offering practical advice, examples, and actionable insights that appeal to professionals in the technology sector.
+    Structure &amp; Flow: Ensure the blog posts are logically structured, include engaging headlines, and smoothly transition between technical discussions and soft skills insights.
+    Consistency: Apply this style consistently across multiple posts, ensuring that each post feels like a natural extension of the writer’s voice and perspective.
+
+Using the above instructions, create several new blog posts that reflect the established style and focus on the integration of soft skills and technical skills in the tech industry.
+</pre></div>
+</div>
+<p>用提示词后的输出：</p>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>Below are several blog posts crafted to capture the unique style of a seasoned software professional writer who champions the integration of soft skills with technical expertise.
+
+---
+
+<span class="gu">### Blog Post 1: The Interplay of Soft Skills and Technical Expertise</span>
+
+<span class="gu">#### Introduction</span>
+In today’s technology sector, success isn’t determined solely by code quality or technical know-how. You need a variety of soft skills in addition to technical skills to succeed in the technology sector. Soft skills are used by software professionals to collaborate with their peers, navigate project challenges, and drive innovation. In this post, we explore how balancing technical acumen with interpersonal abilities can propel your career forward.
+
+<span class="gu">#### The Technical Foundation</span>
+Modern software development demands proficiency in programming languages, frameworks, and system design. However, the technical foundation is just the beginning. Projects often require integrating diverse technologies, troubleshooting complex issues, and continuously learning new paradigms. Mastering these technical skills lays the groundwork for professional growth.
+
+<span class="gu">#### The Soft Skills Edge</span>
+What sets great professionals apart is the ability to communicate ideas clearly, negotiate conflicts, and inspire teams. Whether you’re explaining a new algorithm to a non-technical stakeholder or collaborating on a high-pressure project, soft skills make the difference. For instance, active listening and empathy can transform a challenging team dynamic into a productive brainstorming session.
+
+<span class="gu">#### Practical Strategies for Integration</span>
+<span class="k">-</span><span class="w"> </span><span class="gs">**Collaborative Problem Solving:**</span> Schedule regular team meetings to discuss technical challenges and encourage input from all members. This approach not only solves problems faster but also builds trust.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Continuous Learning:**</span> Attend workshops or webinars focused on both technical updates and communication techniques. Blending these perspectives ensures you stay ahead in both areas.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Feedback Culture:**</span> Establish a routine of peer feedback where technical critique is balanced with constructive personal insights. This dual approach fosters both innovation and professional growth.
+
+<span class="gu">#### Conclusion</span>
+Balancing technical expertise with strong soft skills is not an option but a necessity in the evolving tech landscape. By nurturing both aspects, you can unlock a well-rounded professional profile that stands out in any team. Embrace the synergy between hard skills and soft skills to drive your career forward.
+
+---
+
+<span class="gu">### Blog Post 2: Communication in Code: Why Soft Skills Are as Crucial as Technical Know-How</span>
+
+<span class="gu">#### Introduction</span>
+In the fast-paced world of technology, technical skills often get all the spotlight. Yet, it’s the soft skills that enable software professionals to bridge the gap between brilliant ideas and practical solutions. In this post, we delve into why effective communication is just as vital as writing clean code.
+
+<span class="gu">#### The Communication Challenge in Tech</span>
+Developers and engineers are experts in their domains, but conveying complex technical ideas can be challenging. Miscommunication not only leads to errors but can also create friction within teams. This is where a focus on soft skills, such as clarity in communication and active listening, proves invaluable.
+
+<span class="gu">#### Examples from the Field</span>
+Consider a scenario where a developer must explain a new feature to a project manager with limited technical background. Using clear, relatable language, complemented by visual aids or analogies, can demystify complex concepts. This not only facilitates better decision-making but also strengthens team cohesion.
+
+<span class="gu">#### Actionable Tips for Enhancing Communication</span>
+<span class="k">-</span><span class="w"> </span><span class="gs">**Practice Clarity:**</span> Break down technical jargon into simple terms. Use diagrams and real-life examples to support your points.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Engage in Active Listening:**</span> Encourage team discussions where every voice is heard. This helps in capturing diverse perspectives and finding innovative solutions.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Feedback Loops:**</span> Regularly solicit feedback on your communication style. Adjusting your approach based on input can lead to continuous improvement in how you share ideas.
+
+<span class="gu">#### Conclusion</span>
+Strong communication skills are essential for translating technical expertise into effective collaboration. By honing your ability to articulate ideas clearly and listen actively, you’ll not only enhance your technical contributions but also foster a more productive, innovative work environment.
+
+---
+
+<span class="gu">### Blog Post 3: Leading with Empathy in Tech: Merging Technical Rigor with Human-Centered Leadership</span>
+
+<span class="gu">#### Introduction</span>
+The technology industry is renowned for its focus on metrics, algorithms, and scalable solutions. However, true leadership in tech goes beyond technical achievements. Leading with empathy and integrating soft skills into your daily interactions can create a more inclusive and dynamic workplace.
+
+<span class="gu">#### The Role of Empathy in Technical Teams</span>
+Empathy might seem like an unconventional tool in the world of software development, but it’s critical for understanding team dynamics. When leaders practice empathy, they create a culture where every team member feels valued and understood. This fosters an environment where technical challenges are met with collective creativity and resilience.
+
+<span class="gu">#### Bridging the Gap Between Code and People</span>
+Imagine a scenario where a team faces a tight deadline, and tensions are running high. A leader who takes the time to understand each team member’s perspective can diffuse stress and refocus the group on common goals. By aligning technical objectives with personal well-being, projects not only succeed but also build long-term team loyalty.
+
+<span class="gu">#### Strategies for Empathetic Leadership</span>
+<span class="k">-</span><span class="w"> </span><span class="gs">**Regular Check-Ins:**</span> Schedule one-on-one meetings with team members to understand their challenges and aspirations. This practice encourages open dialogue and personal growth.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Transparent Communication:**</span> Share both successes and challenges with your team. Transparency builds trust and encourages collective problem-solving.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Invest in Professional Development:**</span> Support opportunities for both technical training and soft skills development. Empower your team to grow in all aspects of their careers.
+
+<span class="gu">#### Conclusion</span>
+Incorporating empathy into technical leadership is a game changer. When you combine the analytical rigor of software development with the human touch of effective leadership, you create a team that is not only technically proficient but also deeply committed to collective success. Embrace empathy to lead with confidence and foster a culture of innovation and inclusivity.
+
+---
+
+Each of these blog posts is designed to resonate with technology professionals by offering clear, actionable advice while underscoring the critical role of soft skills in a tech-centric environment. Enjoy sharing these insights with your audience!
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="prompts-intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">提示词导论</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="langchain.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">基于Langchain的提示词开发实践</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#llm">使用LLM做分类</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">情感分类任务提示词</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#openai">在OpenAI中应用</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">其他应用</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">打分员</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#meta-prompt">Meta Prompt</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： 高志军
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright Zhijun Gao.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

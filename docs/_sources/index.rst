@@ -46,25 +46,31 @@
    4-Linguistics/linguistics-intro.md
    4-Linguistics/applied-linguistics.md
 
+.. toctree::
+   :maxdepth: 1
+   :caption: 大模型评估
+   
+   5-evaluation/evaluating-llms.md
+   5-evaluation//evaluate-case.md
+   
 
 .. toctree::
    :maxdepth: 1
    :caption: 课程实践项目
    
-   5-Projects/projects.md
-   5-Projects/evaluating-llms.md
-   5-Projects/evaluate-case.md
-   
+   6-Projects/projects.md
+   6-Projects/final.md
+   6-Projects/paper.md
 
 .. toctree::
    :maxdepth: 1
    :caption: 提示词
    
-   6-Prompts/prompts-intro.md
-   6-Prompts/prompts-examples.md
-   6-Prompts/langchain.md
-   6-Prompts/good-examples.md
-   6-Prompts/jail-break.md   
+   7-Prompts/prompts-intro.md
+   7-Prompts/prompts-examples.md
+   7-Prompts/langchain.md
+   7-Prompts/good-examples.md
+   7-Prompts/jail-break.md   
 
 .. toctree::
    :maxdepth: 1

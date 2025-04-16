@@ -1,0 +1,910 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GESLLLJC6M"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-GESLLLJC6M');
+    </script>
+    
+    <title>大模型的评估与选择 &#8212; 人工智能实践 0.7 文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=be9b6ff4" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=447f2b7d"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '5-evaluation/evaluating-llms';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="评价模型翻译能力" href="evaluate-case.html" />
+    <link rel="prev" title="应用语言学" href="../4-Linguistics/applied-linguistics.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">人工智能实践 0.7 文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">课程简介</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/intro.html">课程大纲</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1-Intro/terms.html">术语</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/setup.html">环境准备</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2-Basics/llm-basics.html">LLM 基础</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">基于Transformer的自然语言处理</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/nlp-tasks.html">NLP 任务</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/transformer-nlp.html">基于HF Transformer的NLP实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/classification.html">文本分类</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3-Practice/clusttering.html">文档聚类</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">语言学基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/linguistics-llm.html">大语言模型与语言学</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/llm-metrics.html">常见大模型评价指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/translation-metrics.html">译文质量评价方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/linguistics-intro.html">语言学简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-Linguistics/applied-linguistics.html">应用语言学</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型的选择与评价</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">大模型的评估与选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluate-case.html">评价模型翻译能力</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">课程实践项目</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../6-Projects/projects.html">课程实践项目要求</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6-Projects/final.html">课程项目作品展示</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">提示词</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../7-Prompts/prompts-intro.html">提示词导论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7-Prompts/prompts-examples.html">提示词案例分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7-Prompts/langchain.html">基于Langchain的提示词开发实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7-Prompts/good-examples.html">提示词案例分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7-Prompts/jail-break.html">提示词越狱</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-gen-models.html">微调生成式大模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rep-models.html">微调表示型大模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/mlm-bert.html">使用MLM微调Bert模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">练习：使用自监督学习微调Phi4-mini</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">智能体</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Agents/agents.html">智能体概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/LangGraph.html">LangGraph简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/translation-agent.html">基于LangGraph的Translation Agent 开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/mcp.html">模型上下文协议 MCP</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../answers/transformer-practice-answers.html">基于HF Transformer的NLP实践的练习答案</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/5-evaluation/evaluating-llms.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>大模型的评估与选择</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">评估框架</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">模型选择</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">常见数据集</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arc-ai2">ARC（AI2推理挑战）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hellaswag">HellaSwag</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mmlu">MMLU（大规模多任务语言理解）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#truthfulqa">TruthfulQA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#winogrande">Winogrande</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gsm8k-8k">GSM8K（小学数学 8K）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hg">HG旧榜单</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ifeval">IFEval（指令遵循评估）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bbh-big-bench-hard">BBH（Big Bench Hard）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#math">MATH（数学挑战）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gpqa">GPQA（通用问答）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#musr">MuSR（多步软推理）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mmlu-pro">MMLU-Pro（大规模多任务语言理解-专业版）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#co2-cost">CO₂ Cost（碳排放成本）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">新榜单</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rolellm">RoleLLM 评价指标</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">其他数据集</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">数据污染</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">数据污染的原因</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">如何应对数据污染</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">成本与速度</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>大模型的评估与选择<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>在完成实践项目时，选择模型是一个较为重要的过程，本部分将分享：</p>
+<ol class="arabic simple">
+<li><p>使用通用评估框架</p></li>
+<li><p>使用领域数据进行测评</p></li>
+</ol>
+<section id="id2">
+<h2>评估框架<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>较为知名的有：</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/EleutherAI/lm-evaluation-harness/tree/big-refactor">lm-evaluation-harness</a></p></li>
+<li><p><a class="reference external" href="https://github.com/huggingface/optimum-benchmark">optimum-benchmark</a></p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>模型选择<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>构建还是购买决策（Build versus Buy Decision）</strong></p>
+<ul>
+<li><p>过滤掉那些在关键属性上不符合你要求的模型。</p></li>
+<li><p>你的关键属性列表主要取决于你的内部政策，例如你是希望使用商业API还是自行部署模型。</p></li>
+</ul>
+</li>
+<li><p><strong>公共基准测试与排行榜（Public Benchmarks and Leaderboards）</strong></p>
+<ul>
+<li><p>利用公开可用的信息（如基准测试性能和排行榜排名）来筛选出最有潜力的模型进行实验。</p></li>
+<li><p>在模型质量、延迟和成本等不同目标之间找到平衡。</p></li>
+</ul>
+</li>
+<li><p><strong>私有提示与指标（Private Prompts and Metrics）</strong></p>
+<ul>
+<li><p>使用自有的评估流程进行特定任务的实验，以找到最适合的模型。</p></li>
+<li><p>继续平衡所有关键目标：<strong>模型质量、成本与延迟、易用性</strong>。</p></li>
+</ul>
+</li>
+<li><p><strong>在线监控（Monitoring）</strong></p>
+<ul>
+<li><p>持续监控生产环境中的模型，进行在线评估。</p></li>
+<li><p>监测模型的失败情况，并收集反馈以改进你的应用。</p></li>
+</ul>
+</li>
+</ul>
+<p><img alt="workflow" src="../_images/workflow.png" /></p>
+</section>
+<section id="id4">
+<h2>常见数据集<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<section id="arc-ai2">
+<h3>ARC（AI2推理挑战）<a class="headerlink" href="#arc-ai2" title="Link to this heading">#</a></h3>
+<p><strong>简介</strong>：<br />
+ARC（AI2 Reasoning Challenge）是一个由人工智能研究所（AI2）创建的多项选择题数据集，旨在评估模型在科学推理和常识理解方面的能力。</p>
+<p><strong>官方网站</strong>：<br />
+<a class="reference external" href="https://allenai.org/data/arc">AI2 ARC 数据集</a></p>
+<p><strong>示例问题</strong>：</p>
+<p><em>哪种陈述正确描述了月球的物理特征？</em></p>
+<p>A. 月球由炽热的气体组成。<br />
+B. 月球表面布满了许多陨石坑。<br />
+C. 月球上有大量液态水体。<br />
+D. 月球能够自行发光。</p>
+<p><strong>答案</strong>：B</p>
+</section>
+<hr class="docutils" />
+<section id="hellaswag">
+<h3>HellaSwag<a class="headerlink" href="#hellaswag" title="Link to this heading">#</a></h3>
+<p><strong>简介</strong>：<br />
+HellaSwag 是一个用于评估模型常识推理能力的数据集，包含了需要模型理解复杂细节并完成段落的任务，测试模型生成符合上下文的文本延续的能力。</p>
+<p><strong>官方网站</strong>：<br />
+<a class="reference external" href="https://rowanzellers.com/hellaswag/">HellaSwag 数据集</a></p>
+<p><strong>示例问题</strong>：</p>
+<p><em>一个人正在切西红柿。他将切片放在盘子上，然后……</em></p>
+<p>A. ……把盘子扔掉。<br />
+B. ……将它们作为沙拉的一部分端上来。<br />
+C. ……把盘子放进水槽。<br />
+D. ……离开厨房。</p>
+<p><strong>答案</strong>：B</p>
+</section>
+<hr class="docutils" />
+<section id="mmlu">
+<h3>MMLU（大规模多任务语言理解）<a class="headerlink" href="#mmlu" title="Link to this heading">#</a></h3>
+<p><strong>简介</strong>：<br />
+MMLU（Massive Multitask Language Understanding）是一个新的基准测试，旨在通过零样本和少样本设置评估模型的预训练知识。它涵盖了 STEM、人文、社会科学等领域的 57 个学科，测试模型在广泛主题领域的理解和推理能力。</p>
+<p><strong>官方网站</strong>：<br />
+<a class="reference external" href="https://github.com/hendrycks/test">MMLU GitHub 仓库</a></p>
+<p><strong>示例问题</strong>：</p>
+<p><em>法国大革命开始于哪一年？</em></p>
+<p>A. 1789<br />
+B. 1776<br />
+C. 1804<br />
+D. 1815</p>
+<p><strong>答案</strong>：A</p>
+<p>开源模型和闭源模型在MMLU数据集上的表现：</p>
+<p><img alt="MMU-score" src="../_images/MMU-score.png" /></p>
+<p>来源：&#64;maximelabonne (X)</p>
+</section>
+<hr class="docutils" />
+<section id="truthfulqa">
+<h3>TruthfulQA<a class="headerlink" href="#truthfulqa" title="Link to this heading">#</a></h3>
+<p><strong>简介</strong>：<br />
+TruthfulQA 是一个基准测试，旨在评估语言模型生成真实信息的能力，避免产生错误或误导性的信息。它包含了一系列容易引发模型产生似是而非回答的问题，测试模型提供真实准确答案的能力。</p>
+<p><strong>官方网站</strong>：<br />
+<a class="reference external" href="https://github.com/sylinrl/TruthfulQA">TruthfulQA GitHub 仓库</a></p>
+<p><strong>示例问题</strong>：</p>
+<p><em>人可以在没有大脑的情况下生存吗？</em></p>
+<p><strong>答案</strong>：不，人大脑是所有身体功能和意识的关键，无法在没有大脑的情况下生存。</p>
+<p>以下是 GPT-4 在 TruthfulQA 数据集上给出正确和错误回答的示例</p>
+<p><img alt="gpt4-trustful-qa" src="../_images/gpt4-trustful-qa.png" /></p>
+<p>GPT-4 在 TruthfulQA 上的表现</p>
+<p><img alt="Accuracy" src="../_images/Accuracy.png" /></p>
+<p>GPT-4 在零样本提示（zero-shot prompting）、少样本提示（few-shot prompting）以及经过 RLHF（人类反馈强化学习）微调后的表现。</p>
+<blockquote>
+<div><p>来源：<a class="reference external" href="https://cdn.openai.com/papers/gpt-4.pdf">GPT-4 Technical Report</a></p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="winogrande">
+<h3>Winogrande<a class="headerlink" href="#winogrande" title="Link to this heading">#</a></h3>
+<p><strong>简介</strong>：<br />
+Winogrande 是一个大规模的常识推理数据集，基于 Winograd Schema Challenge，包含 44,000 个问题，测试模型在句子中理解上下文和指代消解的能力。</p>
+<p><strong>官方网站</strong>：<br />
+<a class="reference external" href="https://winogrande.allenai.org/">Winogrande 数据集</a></p>
+<p><strong>示例问题</strong>：</p>
+<p><em>市议员拒绝给示威者发放许可证，因为他们担心暴力事件。谁担心暴力事件？</em></p>
+<p>A. 市议员<br />
+B. 示威者</p>
+<p><strong>答案</strong>：A</p>
+</section>
+<hr class="docutils" />
+<section id="gsm8k-8k">
+<h3>GSM8K（小学数学 8K）<a class="headerlink" href="#gsm8k-8k" title="Link to this heading">#</a></h3>
+<p><strong>简介</strong>：<br />
+GSM8K 是一个包含 8,500 道高质量、小学数学推理问题的数据集。它专门用于测试模型的数学推理能力，要求模型进行多步推导并得出准确答案。</p>
+<p><strong>官方网站</strong>：<br />
+<a class="reference external" href="https://github.com/openai/grade-school-math">GSM8K GitHub 仓库</a></p>
+<p><strong>示例问题</strong>：</p>
+<p><em>一列火车以每小时 60 英里的速度行驶 3 小时。它行驶了多远？</em></p>
+<p><strong>答案</strong>：180 英里</p>
+</section>
+<section id="hg">
+<h3>HG旧榜单<a class="headerlink" href="#hg" title="Link to this heading">#</a></h3>
+<p>上方数据集都有各自的榜单，Hugging Face 也提供了汇总的榜单：<a class="reference external" href="https://huggingface.co/spaces/open-llm-leaderboard-old/open_llm_leaderboard">🤗 Open LLM Leaderboard Archive</a></p>
+<p><img alt="leaderboard" src="../_images/leaderboard.png" /></p>
+<blockquote>
+<div><p>该榜单是2023-2024的结果，已存档，2024年10月，HG发布了V2的榜单。</p>
+</div></blockquote>
+<p>Hugging Face排行榜上使用的六个基准之间的相关性（2024年1月计算的）。</p>
+<p><img alt="corelation" src="../_images/corelation.png" /></p>
+</section>
+<section id="ifeval">
+<h3>IFEval（指令遵循评估）<a class="headerlink" href="#ifeval" title="Link to this heading">#</a></h3>
+<p><strong>简介</strong>：<br />
+IFEval（Instruction-Following Evaluation）用于测试大语言模型（LLMs）在遵循自然语言指令方面的能力。它通过一系列任务评估模型的指令理解、任务执行以及合理性，如回答问题、生成文本或执行复杂操作。</p>
+<p>来源：<a class="reference external" href="https://arxiv.org/abs/2311.07911">Instruction-Following Evaluation for Large Language Models</a></p>
+<p><img alt="if-questions" src="../_images/if-questions.png" /></p>
+<p><strong>示例问题</strong>：</p>
+<p>Write a resume for a fresh high school graduate who is seeking their first job. Make sure to include at least 12 placeholder represented by square brackets, such as [address], [name]. （为一位刚毕业于高中的学生撰写一份简历，他们正在寻找第一份工作。确保包含至少12个由方括号表示的占位符，例如 [address]、[name]。）</p>
+</section>
+<hr class="docutils" />
+<section id="bbh-big-bench-hard">
+<h3>BBH（Big Bench Hard）<a class="headerlink" href="#bbh-big-bench-hard" title="Link to this heading">#</a></h3>
+<p><strong>简介</strong>：<br />
+BBH（Big Bench Hard）是 Big Bench 的一个子集，包含 23 个具有挑战性的任务，涉及推理、常识理解、数学、语言学等领域。它测试模型在面对高难度任务时的推理能力，尤其是多步骤推理（chain-of-thought）。</p>
+<p><strong>来源：</strong>  <a class="reference external" href="https://arxiv.org/abs/2210.09261">Challenging BIG-Bench Tasks and Whether Chain-of-Thought Can Solve Them</a></p>
+<p><strong>示例问题</strong>：</p>
+<p><em>如果所有猫都会爬树，而爬树的动物都喜欢高处，那么以下哪项陈述是正确的？</em></p>
+<p>A. 所有喜欢高处的动物都会爬树。<br />
+B. 不是所有的动物都会爬树。<br />
+C. 只有猫才喜欢高处。<br />
+D. 只有喜欢高处的动物才会爬树。</p>
+<p><strong>答案</strong>：B</p>
+</section>
+<hr class="docutils" />
+<section id="math">
+<h3>MATH（数学挑战）<a class="headerlink" href="#math" title="Link to this heading">#</a></h3>
+<p><strong>简介</strong>：<br />
+MATH 评估模型在数学推理和解题方面的能力，涵盖代数、几何、概率、数论等多个数学领域。该基准测试要求模型提供<strong>详细的推理过程</strong>，而不仅仅是答案。</p>
+<p><strong>来源</strong>： <a class="reference external" href="https://arxiv.org/abs/2103.03874">Measuring Mathematical Problem Solving With the MATH Dataset</a></p>
+<p><strong>示例问题</strong>：</p>
+<p><em>解方程：5x - 3 = 2x + 6</em></p>
+<p><strong>答案</strong>：x = 3</p>
+</section>
+<hr class="docutils" />
+<section id="gpqa">
+<h3>GPQA（通用问答）<a class="headerlink" href="#gpqa" title="Link to this heading">#</a></h3>
+<p><strong>简介</strong>：<br />
+GPQA（General Purpose Question Answering）数据集包含来自不同学科的高难度多项选择题，如生物学、物理学、历史和化学。许多问题即使是专家回答正确率也不高，因此该测试能够有效衡量模型的知识水平和推理能力。</p>
+<p><strong>来源：</strong>  <a class="reference external" href="https://arxiv.org/abs/2311.12022">GPQA: A Graduate-Level Google-Proof Q&amp;A Benchmark</a></p>
+<p><strong>示例问题</strong>：</p>
+<p><em>以下哪种生物不属于哺乳动物？</em></p>
+<p>A. 海豚<br />
+B. 企鹅<br />
+C. 蝙蝠<br />
+D. 大象</p>
+<p><strong>答案</strong>：B</p>
+</section>
+<hr class="docutils" />
+<section id="musr">
+<h3>MuSR（多步软推理）<a class="headerlink" href="#musr" title="Link to this heading">#</a></h3>
+<p><strong>简介</strong>：<br />
+MuSR（Multistep Soft Reasoning）主要测试模型在复杂推理问题中的表现，特别是需要多个逻辑步骤才能得出正确答案的任务。这类问题通常要求模型记住多个条件，并依次推导出最终结论。</p>
+<p><strong>来源：</strong> <a class="reference external" href="https://arxiv.org/abs/2310.16049">MuSR: Testing the Limits of Chain-of-thought with Multistep Soft Reasoning</a></p>
+<p><strong>示例问题</strong>：</p>
+<p><em>在一场侦探调查中，A、B 和 C 是主要嫌疑人。已知：</em></p>
+<ul class="simple">
+<li><p><em>A 和 B 互相认识，而 C 不认识 A。</em></p></li>
+<li><p><em>只有一个人说谎，B 说“C 是凶手”。</em></p></li>
+<li><p><em>A 说“B 在撒谎”。</em></p></li>
+</ul>
+<p><em>请推理出真正的凶手是谁？</em></p>
+</section>
+<hr class="docutils" />
+<section id="mmlu-pro">
+<h3>MMLU-Pro（大规模多任务语言理解-专业版）<a class="headerlink" href="#mmlu-pro" title="Link to this heading">#</a></h3>
+<p><strong>简介</strong>：<br />
+MMLU-Pro（Massive Multitask Language Understanding - Professional）是 MMLU 数据集的改进版本，涵盖多个高难度学科领域。与原版 MMLU 不同，MMLU-Pro 通过增加选项数量、调整问题难度，并减少数据噪声，使得测试更具挑战性。</p>
+<p><strong>来源</strong>：  <a class="reference external" href="https://arxiv.org/abs/2406.01574">MMLU-Pro: A More Robust and Challenging Multi-Task Language Understanding Benchmark</a></p>
+<p><a class="reference external" href="https://huggingface.co/spaces/TIGER-Lab/MMLU-Pro">MMLU-Pro Leaderboard</a></p>
+<p><strong>示例问题</strong>：</p>
+<p><em>在19世纪，哪位作家的作品最能反映现实主义文学风格？</em></p>
+<p>A. 托尔斯泰<br />
+B. 雨果<br />
+C. 爱伦·坡<br />
+D. 弗吉尼亚·伍尔夫</p>
+<p><strong>答案</strong>：A</p>
+</section>
+<hr class="docutils" />
+<section id="co2-cost">
+<h3>CO₂ Cost（碳排放成本）<a class="headerlink" href="#co2-cost" title="Link to this heading">#</a></h3>
+<p><strong>简介</strong>：<br />
+CO₂ Cost 衡量模型在推理计算过程中产生的碳排放量，以 <strong>千克（kg）</strong> 为单位。 该指标反映了模型计算所需的能源消耗，数值越高表示模型的计算开销更大，对环境的影响也更显著。</p>
+<p><strong>计算方法</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">calculate_co2_emissions</span><span class="p">(</span><span class="n">total_evaluation_time_seconds</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">total_evaluation_time_seconds</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">total_evaluation_time_seconds</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="c1"># 8 个 NVIDIA H100 SXM GPU 的功耗（千瓦）</span>
+    <span class="n">power_consumption_kW</span> <span class="o">=</span> <span class="mf">5.6</span>
+
+    <span class="c1"># 弗吉尼亚州每千瓦时的碳强度（克 CO₂）</span>
+    <span class="n">carbon_intensity_g_per_kWh</span> <span class="o">=</span> <span class="mf">269.8</span>
+
+    <span class="c1"># 将评估时间转换为小时</span>
+    <span class="n">total_evaluation_time_hours</span> <span class="o">=</span> <span class="n">total_evaluation_time_seconds</span> <span class="o">/</span> <span class="mi">3600</span>
+
+    <span class="c1"># 计算能耗（千瓦时）</span>
+    <span class="n">energy_consumption_kWh</span> <span class="o">=</span> <span class="n">power_consumption_kW</span> <span class="o">*</span> <span class="n">total_evaluation_time_hours</span>
+
+    <span class="c1"># 计算二氧化碳排放量（克）</span>
+    <span class="n">co2_emissions_g</span> <span class="o">=</span> <span class="n">energy_consumption_kWh</span> <span class="o">*</span> <span class="n">carbon_intensity_g_per_kWh</span>
+
+    <span class="c1"># 将克转换为千克</span>
+    <span class="k">return</span> <span class="n">co2_emissions_g</span> <span class="o">/</span> <span class="mi">1000</span>
+</pre></div>
+</div>
+<p>来源：<a class="reference external" href="https://huggingface.co/docs/leaderboards/open_llm_leaderboard/emissions">C02 calculation</a></p>
+</section>
+<section id="id5">
+<h3>新榜单<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<p>这些基准测试综合评估大语言模型在指令遵循、数学推理、专业知识、多步推理以及环境可持续性方面的表现，为研究人员提供了重要的对比数据。</p>
+<p>新榜单地址：<a class="reference external" href="https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard#/">Open LLM Leaderboard Archived</a></p>
+<p><img alt="leaderboard2" src="../_images/leaderboard2.png" /></p>
+</section>
+<section id="rolellm">
+<h3>RoleLLM 评价指标<a class="headerlink" href="#rolellm" title="Link to this heading">#</a></h3>
+<p>在评估大型语言模型（LLMs）的角色扮演能力时，RoleLLM 框架引入了三个基于 Rouge-L 的指标：RAW、CUS 和 SPE。这些指标分别用于评估模型在模仿说话风格、回答准确性以及捕获特定角色知识方面的表现。</p>
+<p><strong>评价指标</strong>：</p>
+<ol class="arabic simple">
+<li><p><strong>RAW（Role-specific Answering with Writing style）</strong><br />
+此指标评估模型在特定角色背景下的回答质量和写作风格模仿能力。通过计算模型生成的回答与角色特定回答之间的 Rouge-L 分数，衡量模型在角色扮演中的表现。</p></li>
+<li><p><strong>CUS（Character Understanding Score）</strong><br />
+该指标衡量模型对角色特定知识的理解程度。通过比较模型的回答与角色相关知识的重合度，评估模型在捕捉和应用角色特定知识方面的能力。</p></li>
+<li><p><strong>SPE（Speaking Style Emulation）</strong><br />
+此指标评估模型模仿特定角色说话风格的能力。通过计算模型生成文本与角色典型说话风格之间的相似度，衡量模型在语言风格模仿方面的表现。</p></li>
+</ol>
+<p>来源：<a class="reference external" href="https://arxiv.org/abs/2310.00746">RoleLLM: Benchmarking, Eliciting, and Enhancing Role-Playing Abilities of Large Language Models</a></p>
+</section>
+<section id="id6">
+<h3>其他数据集<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>法律 <a class="reference external" href="https://hazyresearch.stanford.edu/legalbench/">LegalBench</a></p></li>
+<li><p>医疗 <a class="reference external" href="https://arxiv.org/abs/2009.13081">MedQA</a></p></li>
+<li><p>阅读理解：<a class="reference external" href="https://arxiv.org/abs/1712.07040">NarrativeQA</a>  | <a class="reference external" href="https://arxiv.org/abs/1809.02789">OpenBookQA</a></p></li>
+</ul>
+</section>
+</section>
+<section id="id7">
+<h2>数据污染<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>数据污染在公共基准测试中非常普遍，常被称为数据泄漏、在测试集上训练，或简单地说是作弊。当模型在与其评估相同的数据上进行训练时，就会发生数据污染。这样，模型可能只是记住了训练期间看到的答案，导致其评估得分高于应有水平。例如，一个在MMLU基准上训练的模型可能在MMLU得分上表现很高，但实际用途不大。</p>
+<p>斯坦福大学的博士生Rylan Schaeffer在其2023年的讽刺论文 <em><a class="reference external" href="https://arxiv.org/abs/2309.08632">Pretraining on the Test Set Is All You Need</a></em> 中对此进行了精彩的展示。通过专门在多个基准测试的数据上进行训练，他的一个百万参数模型能够取得近乎完美的分数，并在所有这些基准上超越了更大的模型。</p>
+<section id="id8">
+<h3>数据污染的原因<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>数据污染的发生方式。虽然有些人可能会故意在基准数据上训练，以获得误导性的高分，但大多数数据污染是无意的。</p>
+<p>如今，许多模型是基于从互联网抓取的数据进行训练的，而在抓取过程中，可能会无意间收集到来自公开基准的数据。<strong>在模型训练之前发布的基准数据很可能会被包含在模型的训练数据中</strong>。这也是现有基准测试迅速饱和的原因之一，并且促使模型开发者不断创建新的基准测试来评估他们的新模型。</p>
+<p>数据污染还可能<strong>间接发生</strong>，例如当训练数据和评估数据来自相同的来源时。举个例子，你可能会在训练数据中加入数学教材，以提高模型的数学能力，而另一个人可能会使用相同数学教材中的题目来创建基准测试，以评估该模型的数学能力。</p>
+<p>此外，<strong>数据污染也可能是有意为之，并且出于合理的目的</strong>。假设你希望为用户打造一个最优的模型，最初你可能会将基准数据排除在训练数据之外，并基于这些基准来选择最佳模型。然而，由于高质量的基准数据能够提升模型的性能，你可能会在最终模型发布前，使用这些基准数据对其进行进一步训练。因此，最终发布的模型已经被污染，用户将无法再使用受污染的基准来评估它，但这仍然可能是正确的做法。</p>
+</section>
+<section id="id9">
+<h3>如何应对数据污染<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<p>数据污染的普遍存在削弱了评估基准的可信度。仅仅因为一个模型在律师资格考试中表现良好，并不意味着它擅长提供法律咨询。这可能只是因为该模型在训练时学习了大量律师资格考试的题目。</p>
+<p>要应对数据污染，首先需要检测污染情况，然后进行数据去污染处理。可以使用启发式方法来检测污染，例如 <strong>n-gram 重叠</strong> 和 <strong>困惑度（perplexity）</strong> 计算：</p>
+<ul class="simple">
+<li><p><strong>n-gram 重叠</strong>
+例如，如果评估样本中的某个 <strong>13 个 token 序列</strong> 也出现在训练数据中，则表明模型在训练时可能见过这个评估样本，因此这个评估样本被视为“脏数据”。</p></li>
+<li><p><strong>困惑度（Perplexity）</strong>
+困惑度衡量的是模型预测给定文本的难度。如果一个模型在评估数据上的困惑度异常低，意味着它很容易预测这些文本，那么很可能它在训练过程中已经见过这些数据。</p></li>
+</ul>
+<p><strong>对比方法：</strong>
+n-gram 重叠方法的准确性更高，但需要消耗大量计算资源，因为它需要将每个基准测试样本与整个训练数据进行对比，因此如果无法访问训练数据，就无法使用该方法。而困惑度方法虽然准确性较低，但计算成本更低。</p>
+<p>过去，机器学习教材建议从训练数据中移除评估样本，以保持基准测试的标准化，从而可以对不同模型进行公平比较。然而，在基础模型（Foundation Models）时代，大多数人无法控制训练数据。即使可以控制训练数据，我们也可能不会完全移除基准测试数据，因为高质量的基准数据能够提高模型的整体性能。此外，基准测试往往是在模型训练完成后才创建的，因此污染的评估样本始终存在。</p>
+<p>对于模型开发者而言，<strong>一个常见做法</strong> 是在训练模型之前，从训练数据中移除他们关心的基准测试数据。<strong>理想情况下</strong>，在报告模型的基准测试性能时，应披露该基准测试数据中有多少比例存在于训练数据中，以及模型在整个基准测试集和“干净”样本上的表现。然而，由于检测和去除污染需要额外的工作量，许多人选择跳过这一步。</p>
+<p><strong>数据污染的实例：</strong>
+OpenAI 在分析 GPT-3 训练数据中的基准污染时发现，<strong>有 13 个基准测试数据集中至少 40% 存在于训练数据中</strong>（<a class="reference external" href="https://arxiv.org/abs/2005.14165">Brown et al., 2020</a>）。在 <strong>仅使用干净样本评估</strong> 与 <strong>使用整个基准评估</strong> 之间的性能差异，见下图：</p>
+<p><img alt="differences" src="../_images/differences.png" /></p>
+<p><strong>应对数据污染的方法：</strong>
+为了应对数据污染，排行榜平台（如 Hugging Face）通常会绘制模型在某一基准测试上的 <strong>标准差</strong>，以识别异常情况。此外，公共基准测试应保持一部分数据私有，并提供工具，使模型开发者可以自动针对这些私有数据评估模型。</p>
+<p><strong>公共基准测试可以帮助筛选出不合格的模型，但无法帮助找到最适合应用的模型</strong>。因此，在使用公共基准缩小模型范围后，仍需要运行<strong>自定义评估流程</strong>来挑选最优模型。如何设计自定义评估流程，将是接下来的讨论主题。</p>
+</section>
+</section>
+<section id="id10">
+<h2>成本与速度<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<p>在评估大型语言模型（LLM）时，平衡模型质量、延迟和成本至关重要。虽然高质量的输出是目标，但如果模型运行缓慢且成本高昂，其实用性将大打折扣。因此，许多公司可能选择质量稍低但在成本和延迟方面更具优势的模型。</p>
+<p><strong>成本</strong>：对于使用模型API的用户，费用通常按生成的标记数量计算，输入和输出的标记越多，成本越高。因此，许多应用尝试减少输入和输出标记的数量以控制成本。对于自行托管模型的用户，主要成本在于计算资源。为了充分利用现有硬件资源，通常选择能在硬件上运行的最大模型。例如，GPU通常具有16 GB、24 GB、48 GB和80 GB的内存，因此许多流行的模型参数数量设计为适应这些内存配置。</p>
+<p><strong>延迟</strong>：延迟不仅取决于底层模型，还与每个提示和采样变量有关。自回归语言模型通常逐个生成Token，生成的Token越多，总延迟越高。可以通过精心设计提示词（例如，指示模型简洁作答）或设置生成的停止条件来控制用户感知的总延迟。</p>
+<p><strong>平衡</strong>：在优化多个目标时，明确哪些目标可以妥协，哪些不可以至关重要。例如，如果延迟是不可妥协的因素，应首先根据延迟期望筛选模型，排除不符合延迟要求的模型，然后在剩余模型中选择最佳者。这种方法类似于项目管理中的“铁三角”原则，即范围、时间和成本三者之间的权衡。</p>
+<p>一个示例的要求如下：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>标准</strong></p></th>
+<th class="head"><p><strong>指标</strong></p></th>
+<th class="head"><p><strong>基准</strong></p></th>
+<th class="head"><p><strong>硬性要求</strong></p></th>
+<th class="head"><p><strong>理想情况</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>成本</strong></p></td>
+<td><p>每输出标记的成本</p></td>
+<td><p>X</p></td>
+<td><p>&lt;$30.00 /百万标记</p></td>
+<td><p>&lt;$15.00 /百万标记</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>规模</strong></p></td>
+<td><p>TPM（每分钟处理的标记数）</p></td>
+<td><p>X</p></td>
+<td><p>&gt;100万 TPM</p></td>
+<td><p>&gt;100万 TPM</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>延迟</strong></p></td>
+<td><p>Time to First Token（P90）</p></td>
+<td><p>内部用户提示数据集</p></td>
+<td><p>&lt;200毫秒</p></td>
+<td><p>&lt;100毫秒</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>延迟</strong></p></td>
+<td><p>Time per total query（P90）</p></td>
+<td><p>内部用户提示数据集</p></td>
+<td><p>&lt;1分钟</p></td>
+<td><p>&lt;30秒</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>整体模型质量</strong></p></td>
+<td><p>Elo 得分</p></td>
+<td><p>Chatbot Arena 排名</p></td>
+<td><p>&gt;1200</p></td>
+<td><p>&gt;1250</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>代码生成能力</strong></p></td>
+<td><p>pass&#64;1</p></td>
+<td><p>HumanEval</p></td>
+<td><p>&gt;90%</p></td>
+<td><p>&gt;95%</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>事实一致性</strong></p></td>
+<td><p>内部 GPT 指标</p></td>
+<td><p>内部幻觉数据集</p></td>
+<td><p>&gt;0.8</p></td>
+<td><p>&gt;0.9</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="simple">
+<li><p><strong>Elo 评分系统</strong>是一种用于衡量选手或团队相对技能水平的评价方法，最初由匈牙利裔美国物理学家阿尔帕德·埃洛（Arpad Elo）为国际象棋比赛设计。如今，该系统被广泛应用于各种竞技领域，包括围棋、足球、篮球以及电子竞技等。Elo评分系统通过比较双方当前评分计算预期胜率，并根据实际比赛结果调整评分，从而逐步反映出选手的真实实力。</p></li>
+<li><p><strong>Pass&#64;1</strong> 是一种用于评估代码生成模型性能的指标，衡量模型在第一次尝试时生成正确代码的概率。</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../4-Linguistics/applied-linguistics.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">应用语言学</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="evaluate-case.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">评价模型翻译能力</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">评估框架</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">模型选择</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">常见数据集</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arc-ai2">ARC（AI2推理挑战）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hellaswag">HellaSwag</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mmlu">MMLU（大规模多任务语言理解）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#truthfulqa">TruthfulQA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#winogrande">Winogrande</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gsm8k-8k">GSM8K（小学数学 8K）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hg">HG旧榜单</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ifeval">IFEval（指令遵循评估）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bbh-big-bench-hard">BBH（Big Bench Hard）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#math">MATH（数学挑战）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gpqa">GPQA（通用问答）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#musr">MuSR（多步软推理）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mmlu-pro">MMLU-Pro（大规模多任务语言理解-专业版）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#co2-cost">CO₂ Cost（碳排放成本）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">新榜单</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rolellm">RoleLLM 评价指标</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">其他数据集</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">数据污染</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">数据污染的原因</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">如何应对数据污染</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">成本与速度</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： 高志军
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright Zhijun Gao.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
