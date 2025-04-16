@@ -17,7 +17,7 @@
         gtag('config', 'G-GESLLLJC6M');
     </script>
     
-    <title>基于LangGraph的 Translation Agent的开发 &#8212; 人工智能实践 0.7 文档</title>
+    <title>基于LangGraph的Translation Agent 开发 &#8212; 人工智能实践 0.7 文档</title>
   
   
   
@@ -204,7 +204,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="agents.html">智能体概述</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LangGraph.html">LangGraph简介</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">基于LangGraph的 Translation Agent的开发</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">基于LangGraph的Translation Agent 开发</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mcp.html">模型上下文协议 MCP</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
@@ -340,7 +340,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>基于LangGraph的 Translation Agent的开发</h1>
+    <h1>基于LangGraph的Translation Agent 开发</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -351,8 +351,11 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#react">ReAct 模式</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">基础准备</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">代码</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">基础准备</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">翻译流程设定</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">示例代码</a></li>
 </ul>
             </nav>
         </div>
@@ -364,8 +367,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="langgraph-translation-agent">
-<h1>基于LangGraph的 Translation Agent的开发<a class="headerlink" href="#langgraph-translation-agent" title="Link to this heading">#</a></h1>
+  <section id="langgraphtranslation-agent">
+<h1>基于LangGraph的Translation Agent 开发<a class="headerlink" href="#langgraphtranslation-agent" title="Link to this heading">#</a></h1>
 <section id="react">
 <h2>ReAct 模式<a class="headerlink" href="#react" title="Link to this heading">#</a></h2>
 <p>现代智能体（如基于 LangChain 框架的 Agent）常采用“ReAct”风格的设计，因为这种方式既结合了内在思考又能调用外部工具，还可以根据观察到的反馈不断改进最终答案。不同的应用场景可能会组合并调整这些模式，以满足特定任务的需求。</p>
@@ -400,9 +403,15 @@
 <section id="id1">
 <h2>基础准备<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>本练习以千问大模型作为Agent的大脑。需要开通阿里云百炼的API。</p>
-</section>
 <section id="id2">
-<h2>代码<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h3>翻译流程设定<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>本部分主要是为了快速演示Agent的开发，而非设计完整而强大的 Translation Agent，因此只设计了最简单的流程。</p>
+<a class="reference internal image-reference" href="../_images/workflow1.png"><img alt="流程图" src="../_images/workflow1.png" style="width: 20%;" />
+</a>
+</section>
+</section>
+<section id="id3">
+<h2>示例代码<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <ol class="arabic">
 <li><p>安装 LangGraph 和 langchain_openai</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">langgraph</span> <span class="n">langchain_openai</span>
@@ -644,8 +653,11 @@
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#react">ReAct 模式</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">基础准备</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">代码</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">基础准备</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">翻译流程设定</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">示例代码</a></li>
 </ul>
   </nav></div>
 

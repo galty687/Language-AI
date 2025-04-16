@@ -1,4 +1,4 @@
-# 基于LangGraph的 Translation Agent的开发
+# 基于LangGraph的Translation Agent 开发
 
 
 
@@ -29,7 +29,19 @@
 
 
 
-## 代码
+### 翻译流程设定
+
+本部分主要是为了快速演示Agent的开发，而非设计完整而强大的 Translation Agent，因此只设计了最简单的流程。
+
+```{image} images/workflow.png
+:width: 20%
+:alt: 流程图
+```
+
+
+
+
+## 示例代码
 
 
 
