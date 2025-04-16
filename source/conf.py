@@ -22,7 +22,7 @@ copyright = 'Zhijun Gao'
 author = '高志军'
 
 # The full version, including alpha/beta/rc tags
-release = '0.7'
+release = '0.8'
 
 
 # -- General configuration ---------------------------------------------------
