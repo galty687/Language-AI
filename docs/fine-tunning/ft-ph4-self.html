@@ -17,7 +17,7 @@
         gtag('config', 'G-GESLLLJC6M');
     </script>
     
-    <title>练习：使用自监督学习微调Phi4-mini &#8212; 人工智能实践 0.8 文档</title>
+    <title>练习：使用自回归目标微调 Phi4-mini &#8212; 人工智能实践 0.8 文档</title>
   
   
   
@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'fine-tunning/ft-ph4-self';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="基于人类反馈微调大模型（RLHF + DPO）" href="ft-rl.html" />
+    <link rel="next" title="智能体概述" href="../Agents/agents.html" />
     <link rel="prev" title="使用MLM微调Bert模型" href="mlm-bert.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
@@ -200,10 +200,10 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="ft-gen-models.html">微调生成式大模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ft-phi4.html">SFT 微调 Phi-4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ft-rep-models.html">微调表示型大模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mlm-bert.html">使用MLM微调Bert模型</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">练习：使用自监督学习微调Phi4-mini</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">练习：使用自回归目标微调 Phi4-mini</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">智能体</span></p>
 <ul class="nav bd-sidenav">
@@ -345,7 +345,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>练习：使用自监督学习微调Phi4-mini</h1>
+    <h1>练习：使用自回归目标微调 Phi4-mini</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -357,6 +357,7 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">要求</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">背景知识</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">基本思路</a></li>
 </ul>
             </nav>
         </div>
@@ -369,7 +370,7 @@
                 <article class="bd-article">
                   
   <section id="phi4-mini">
-<h1>练习：使用自监督学习微调Phi4-mini<a class="headerlink" href="#phi4-mini" title="Link to this heading">#</a></h1>
+<h1>练习：使用自回归目标微调 Phi4-mini<a class="headerlink" href="#phi4-mini" title="Link to this heading">#</a></h1>
 <section id="id1">
 <h2>要求<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>让 Phi 4 mini 模型<strong>学习微软文档的领域知识和语言风格</strong>，无需人工标注。</p>
@@ -413,6 +414,17 @@
 </ol>
 <p>总结来说，因果（自回归）语言建模微调是一种专门针对生成任务设计的训练策略，通过预测下一个词来训练模型，使其在生成文本时能够保持语义连贯与一致。</p>
 </section>
+<section id="id3">
+<h2>基本思路<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>准备数据，并加载数据集</p></li>
+<li><p>加载 tokenizer 与模型</p></li>
+<li><p>文本切分与编码</p></li>
+<li><p>准备 DataCollator（CLM 版）</p></li>
+<li><p>设置训练参数</p></li>
+<li><p>Trainer 启动训练</p></li>
+</ol>
+</section>
 </section>
 
 
@@ -436,11 +448,11 @@
       </div>
     </a>
     <a class="right-next"
-       href="ft-rl.html"
+       href="../Agents/agents.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title">基于人类反馈微调大模型（RLHF + DPO）</p>
+        <p class="prev-next-title">智能体概述</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -463,6 +475,7 @@
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">要求</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">背景知识</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">基本思路</a></li>
 </ul>
   </nav></div>
 

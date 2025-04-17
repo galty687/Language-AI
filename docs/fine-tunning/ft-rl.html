@@ -60,8 +60,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'fine-tunning/ft-rl';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="智能体概述" href="../Agents/agents.html" />
-    <link rel="prev" title="练习：使用自监督学习微调Phi4-mini" href="ft-ph4-self.html" />
+    <link rel="next" title="微调表示型大模型" href="ft-rep-models.html" />
+    <link rel="prev" title="SFT 微调 Phi-4" href="ft-phi4.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
   <meta name="docsearch:version" content="" />
@@ -200,10 +200,10 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="ft-gen-models.html">微调生成式大模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ft-phi4.html">SFT 微调 Phi-4</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">基于人类反馈微调大模型（RLHF + DPO）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ft-rep-models.html">微调表示型大模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mlm-bert.html">使用MLM微调Bert模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ft-ph4-self.html">练习：使用自监督学习微调Phi4-mini</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">基于人类反馈微调大模型（RLHF + DPO）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ft-ph4-self.html">练习：使用自回归目标微调 Phi4-mini</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">智能体</span></p>
 <ul class="nav bd-sidenav">
@@ -356,32 +356,32 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">引言</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rlhf">1. RLHF 概述</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1 什么是 RLHF？</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.2 奖励模型的训练</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proximal-policy-optimization-ppo">1.3 Proximal Policy Optimization（PPO）</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.4 RLHF 的局限性</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rlhf">RLHF 概述</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">什么是 RLHF？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">奖励模型的训练</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proximal-policy-optimization-ppo">Proximal Policy Optimization（PPO）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">RLHF 的局限性</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dpo">2. 直接策略优化（DPO）</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.1 DPO 的基本概念</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.2 DPO 的优点</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dpo">直接策略优化（DPO）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">DPO 的基本概念</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">DPO 的优点</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dpo-qwen2-50-5b-instruct">3. 使用 DPO 微调 Qwen2.5–0.5B-Instruct</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dpo-qwen2-50-5b-instruct">使用 DPO 微调 Qwen2.5–0.5B-Instruct</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.1 数据准备</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.2 代码实现</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3.2.1 导入必要的库</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.2.2 加载数据集和模型</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">3.2.3 生成示例标题</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">3.2.4 设置 DPO 训练参数</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">3.2.5 训练模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">代码实现</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1 导入必要的库</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2 加载数据集和模型</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">3 生成示例标题</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">4 设置 DPO 训练参数</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">5 训练模型</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">3.3 评估微调后的模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">评估微调后的模型</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">4. 结论</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">结论</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">参考</a></li>
 </ul>
             </nav>
@@ -398,16 +398,16 @@
 <h1>基于人类反馈微调大模型（RLHF + DPO）<a class="headerlink" href="#rlhf-dpo" title="Link to this heading">#</a></h1>
 <section id="id1">
 <h2>引言<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
-<p>大语言模型（LLMs）可以执行各种自然语言处理（NLP）任务，但其初始训练数据来源广泛，可能导致输出内容与人类期望不一致。因此，需要进一步微调，使其更符合人类偏好。本教程介绍如何使用强化学习（RLHF）和直接策略优化（DPO）对大模型进行微调，并提供 Python 代码示例。</p>
+<p>大语言模型（LLMs）可以执行各种自然语言处理（NLP）任务，但其初始训练数据来源广泛，可能导致输出内容与人类期望不一致。因此，需要进一步微调，使其更符合人类偏好。本教程介绍如何使用强化学习（RLHF）和直接策略优化（DPO）对大模型进行微调。</p>
 </section>
 <section id="rlhf">
-<h2>1. RLHF 概述<a class="headerlink" href="#rlhf" title="Link to this heading">#</a></h2>
+<h2>RLHF 概述<a class="headerlink" href="#rlhf" title="Link to this heading">#</a></h2>
 <section id="id2">
-<h3>1.1 什么是 RLHF？<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<h3>什么是 RLHF？<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <p>强化学习（RL）是一种通过试错方式进行学习的训练方法。RLHF（Reinforcement Learning from Human Feedback）指的是通过人类反馈训练奖励模型（Reward Model），再用该奖励模型优化 LLM，使其输出更符合人类偏好。</p>
 </section>
 <section id="id3">
-<h3>1.2 奖励模型的训练<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<h3>奖励模型的训练<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p>生成多个候选响应。</p></li>
 <li><p>由人工标注员根据特定准则对这些响应进行排序。</p></li>
@@ -415,22 +415,22 @@
 </ol>
 </section>
 <section id="proximal-policy-optimization-ppo">
-<h3>1.3 Proximal Policy Optimization（PPO）<a class="headerlink" href="#proximal-policy-optimization-ppo" title="Link to this heading">#</a></h3>
+<h3>Proximal Policy Optimization（PPO）<a class="headerlink" href="#proximal-policy-optimization-ppo" title="Link to this heading">#</a></h3>
 <p>在 RLHF 过程中，常用的优化算法是 Proximal Policy Optimization（PPO）。其目标是最大化奖励模型的分数，同时限制模型更新的幅度，以保证稳定性。</p>
 </section>
 <section id="id4">
-<h3>1.4 RLHF 的局限性<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<h3>RLHF 的局限性<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <p>RLHF 受到训练数据质量的限制，最终性能取决于奖励模型的准确性。此外，其训练流程复杂，需要大量计算资源。</p>
 </section>
 </section>
 <section id="dpo">
-<h2>2. 直接策略优化（DPO）<a class="headerlink" href="#dpo" title="Link to this heading">#</a></h2>
+<h2>直接策略优化（DPO）<a class="headerlink" href="#dpo" title="Link to this heading">#</a></h2>
 <section id="id5">
-<h3>2.1 DPO 的基本概念<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<h3>DPO 的基本概念<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <p>DPO（Direct Policy Optimization）是一种无需 RL 过程即可优化模型的替代方案。DPO 通过将 RLHF 重新表述为一个文本分类任务，直接调整模型的概率分布。</p>
 </section>
 <section id="id6">
-<h3>2.2 DPO 的优点<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<h3>DPO 的优点<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>训练流程更简单，无需额外的奖励模型。</p></li>
 <li><p>计算开销更小。</p></li>
@@ -439,7 +439,7 @@
 </section>
 </section>
 <section id="dpo-qwen2-50-5b-instruct">
-<h2>3. 使用 DPO 微调 Qwen2.5–0.5B-Instruct<a class="headerlink" href="#dpo-qwen2-50-5b-instruct" title="Link to this heading">#</a></h2>
+<h2>使用 DPO 微调 Qwen2.5–0.5B-Instruct<a class="headerlink" href="#dpo-qwen2-50-5b-instruct" title="Link to this heading">#</a></h2>
 <section id="id7">
 <h3>3.1 数据准备<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
 <p>为了微调模型，我们需要一个偏好数据集。数据准备流程如下：</p>
@@ -452,9 +452,9 @@
 </ol>
 </section>
 <section id="id8">
-<h3>3.2 代码实现<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<h3>代码实现<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
 <section id="id9">
-<h4>3.2.1 导入必要的库<a class="headerlink" href="#id9" title="Link to this heading">#</a></h4>
+<h4>1 导入必要的库<a class="headerlink" href="#id9" title="Link to this heading">#</a></h4>
 <div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>from datasets import load_dataset
 from trl import DPOConfig, DPOTrainer
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
@@ -463,7 +463,7 @@ import torch
 </div>
 </section>
 <section id="id10">
-<h4>3.2.2 加载数据集和模型<a class="headerlink" href="#id10" title="Link to this heading">#</a></h4>
+<h4>2 加载数据集和模型<a class="headerlink" href="#id10" title="Link to this heading">#</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 加载数据集</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;shawhin/youtube-titles-dpo&quot;</span><span class="p">)</span>
 
@@ -476,7 +476,7 @@ import torch
 </div>
 </section>
 <section id="id11">
-<h4>3.2.3 生成示例标题<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
+<h4>3 生成示例标题<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 格式化用户输入</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">format_chat_prompt</span><span class="p">(</span><span class="n">user_input</span><span class="p">):</span>
     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;|im_start|&gt;user</span><span class="se">\n</span><span class="si">{</span><span class="n">user_input</span><span class="si">}</span><span class="s2">&lt;|im_end|&gt;</span><span class="se">\n</span><span class="s2">&lt;|im_start|&gt;assistant</span><span class="se">\n</span><span class="s2">&quot;</span>
@@ -492,7 +492,7 @@ import torch
 </div>
 </section>
 <section id="id12">
-<h4>3.2.4 设置 DPO 训练参数<a class="headerlink" href="#id12" title="Link to this heading">#</a></h4>
+<h4>4 设置 DPO 训练参数<a class="headerlink" href="#id12" title="Link to this heading">#</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ft_model_name</span> <span class="o">=</span> <span class="n">model_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Instruct&quot;</span><span class="p">,</span> <span class="s2">&quot;DPO&quot;</span><span class="p">)</span>
 <span class="n">training_args</span> <span class="o">=</span> <span class="n">DPOConfig</span><span class="p">(</span>
     <span class="n">output_dir</span><span class="o">=</span><span class="n">ft_model_name</span><span class="p">,</span>
@@ -510,7 +510,7 @@ import torch
 </div>
 </section>
 <section id="id13">
-<h4>3.2.5 训练模型<a class="headerlink" href="#id13" title="Link to this heading">#</a></h4>
+<h4>5 训练模型<a class="headerlink" href="#id13" title="Link to this heading">#</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">trainer</span> <span class="o">=</span> <span class="n">DPOTrainer</span><span class="p">(</span>
     <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
     <span class="n">args</span><span class="o">=</span><span class="n">training_args</span><span class="p">,</span>
@@ -524,7 +524,7 @@ import torch
 </section>
 </section>
 <section id="id14">
-<h3>3.3 评估微调后的模型<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<h3>评估微调后的模型<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
 <p>为了评估微调效果，我们使用以下步骤：</p>
 <ol class="arabic simple">
 <li><p>选取 50 个随机视频创意。</p></li>
@@ -536,7 +536,7 @@ import torch
 </section>
 </section>
 <section id="id15">
-<h2>4. 结论<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<h2>结论<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>RLHF 通过强化学习优化模型，但训练复杂，计算成本高。</p></li>
 <li><p>DPO 通过重构 RLHF 任务，避免了强化学习过程，使训练更简单高效。</p></li>
@@ -565,20 +565,20 @@ import torch
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="ft-ph4-self.html"
+       href="ft-phi4.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title">练习：使用自监督学习微调Phi4-mini</p>
+        <p class="prev-next-title">SFT 微调 Phi-4</p>
       </div>
     </a>
     <a class="right-next"
-       href="../Agents/agents.html"
+       href="ft-rep-models.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title">智能体概述</p>
+        <p class="prev-next-title">微调表示型大模型</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -600,32 +600,32 @@ import torch
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">引言</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rlhf">1. RLHF 概述</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1 什么是 RLHF？</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.2 奖励模型的训练</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proximal-policy-optimization-ppo">1.3 Proximal Policy Optimization（PPO）</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.4 RLHF 的局限性</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rlhf">RLHF 概述</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">什么是 RLHF？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">奖励模型的训练</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proximal-policy-optimization-ppo">Proximal Policy Optimization（PPO）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">RLHF 的局限性</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dpo">2. 直接策略优化（DPO）</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.1 DPO 的基本概念</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.2 DPO 的优点</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dpo">直接策略优化（DPO）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">DPO 的基本概念</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">DPO 的优点</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dpo-qwen2-50-5b-instruct">3. 使用 DPO 微调 Qwen2.5–0.5B-Instruct</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dpo-qwen2-50-5b-instruct">使用 DPO 微调 Qwen2.5–0.5B-Instruct</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.1 数据准备</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.2 代码实现</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3.2.1 导入必要的库</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.2.2 加载数据集和模型</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">3.2.3 生成示例标题</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">3.2.4 设置 DPO 训练参数</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">3.2.5 训练模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">代码实现</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1 导入必要的库</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2 加载数据集和模型</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">3 生成示例标题</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">4 设置 DPO 训练参数</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">5 训练模型</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">3.3 评估微调后的模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">评估微调后的模型</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">4. 结论</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">结论</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">参考</a></li>
 </ul>
   </nav></div>

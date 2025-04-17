@@ -78,10 +78,11 @@
 
    fine-tunning/ft-gen-models.md
    fine-tunning/ft-phi4.md
+   fine-tunning/ft-rl.md
    fine-tunning/ft-rep-models.md
    fine-tunning/mlm-bert.md
    fine-tunning/ft-ph4-self.md
-   fine-tunning/ft-rl.md
+   
 
 .. toctree::
    :maxdepth: 1
