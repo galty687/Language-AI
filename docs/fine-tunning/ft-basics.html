@@ -367,6 +367,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#checkpoint">Checkpoint（模型检查点）</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-accumulation">Gradient Accumulation（梯度累积）</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">过拟合与欠拟合</a></li>
 </ul>
 </li>
@@ -439,6 +440,11 @@
 <h4>Checkpoint（模型检查点）<a class="headerlink" href="#checkpoint" title="Link to this heading">#</a></h4>
 <p>模型训练到一定阶段时保存的中间结果，可以在中断或失败时从该点继续训练。 例如：训练到一半（如第2个Epoch后）保存Checkpoint，出现意外中断后能从此处继续训练，不用从头开始。</p>
 </section>
+</section>
+<section id="gradient-accumulation">
+<h3>Gradient Accumulation（梯度累积）<a class="headerlink" href="#gradient-accumulation" title="Link to this heading">#</a></h3>
+<p>累积多个批次（Batch）的梯度后，再进行一次参数更新。
+例如：Gradient Accumulation 设置为 4 时，每4个批次才进行一次参数更新，可以间接模拟更大的 Batch Size，节省显存。</p>
 </section>
 <section id="id4">
 <h3>过拟合与欠拟合<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
@@ -550,6 +556,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#checkpoint">Checkpoint（模型检查点）</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-accumulation">Gradient Accumulation（梯度累积）</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">过拟合与欠拟合</a></li>
 </ul>
 </li>

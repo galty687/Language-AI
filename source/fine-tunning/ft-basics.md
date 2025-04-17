@@ -48,6 +48,13 @@
 
 
 
+### Gradient Accumulation（梯度累积）
+
+累积多个批次（Batch）的梯度后，再进行一次参数更新。
+例如：Gradient Accumulation 设置为 4 时，每4个批次才进行一次参数更新，可以间接模拟更大的 Batch Size，节省显存。
+
+
+
 ### 过拟合与欠拟合
 
 ![under-over](images2/under-over.jpeg)
