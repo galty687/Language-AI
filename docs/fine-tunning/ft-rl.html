@@ -371,18 +371,20 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dpo-qwen2-50-5b-instruct">使用 DPO 微调 Qwen2.5–0.5B-Instruct</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.1 数据准备</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">代码实现</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1 导入必要的库</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2 加载数据集和模型</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">3 生成示例标题</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">4 设置 DPO 训练参数</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">5 训练模型</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">0 安装库</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1 导入必要的库</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2 加载数据集和模型</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">3 生成示例标题</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">4 设置 DPO 训练参数</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">5 训练模型</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">6 使用微调后的模型</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">评估微调后的模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">评估微调后的模型</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">结论</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">参考</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">结论</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">参考</a></li>
 </ul>
             </nav>
         </div>
@@ -454,7 +456,17 @@
 <section id="id8">
 <h3>代码实现<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
 <section id="id9">
-<h4>1 导入必要的库<a class="headerlink" href="#id9" title="Link to this heading">#</a></h4>
+<h4>0 安装库<a class="headerlink" href="#id9" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!pip install datasets        # for `from datasets import load_dataset`
+!pip install trl             # for `from trl import DPOConfig, DPOTrainer`
+!pip install transformers    # for `from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline`
+!pip install torch           # for `import torch`
+
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h4>1 导入必要的库<a class="headerlink" href="#id10" title="Link to this heading">#</a></h4>
 <div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>from datasets import load_dataset
 from trl import DPOConfig, DPOTrainer
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
@@ -462,8 +474,8 @@ import torch
 </pre></div>
 </div>
 </section>
-<section id="id10">
-<h4>2 加载数据集和模型<a class="headerlink" href="#id10" title="Link to this heading">#</a></h4>
+<section id="id11">
+<h4>2 加载数据集和模型<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 加载数据集</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;shawhin/youtube-titles-dpo&quot;</span><span class="p">)</span>
 
@@ -475,8 +487,8 @@ import torch
 </pre></div>
 </div>
 </section>
-<section id="id11">
-<h4>3 生成示例标题<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
+<section id="id12">
+<h4>3 生成示例标题<a class="headerlink" href="#id12" title="Link to this heading">#</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 格式化用户输入</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">format_chat_prompt</span><span class="p">(</span><span class="n">user_input</span><span class="p">):</span>
     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;|im_start|&gt;user</span><span class="se">\n</span><span class="si">{</span><span class="n">user_input</span><span class="si">}</span><span class="s2">&lt;|im_end|&gt;</span><span class="se">\n</span><span class="s2">&lt;|im_start|&gt;assistant</span><span class="se">\n</span><span class="s2">&quot;</span>
@@ -491,8 +503,8 @@ import torch
 </pre></div>
 </div>
 </section>
-<section id="id12">
-<h4>4 设置 DPO 训练参数<a class="headerlink" href="#id12" title="Link to this heading">#</a></h4>
+<section id="id13">
+<h4>4 设置 DPO 训练参数<a class="headerlink" href="#id13" title="Link to this heading">#</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ft_model_name</span> <span class="o">=</span> <span class="n">model_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Instruct&quot;</span><span class="p">,</span> <span class="s2">&quot;DPO&quot;</span><span class="p">)</span>
 <span class="n">training_args</span> <span class="o">=</span> <span class="n">DPOConfig</span><span class="p">(</span>
     <span class="n">output_dir</span><span class="o">=</span><span class="n">ft_model_name</span><span class="p">,</span>
@@ -508,9 +520,50 @@ import torch
 <span class="p">)</span>
 </pre></div>
 </div>
+<p>各参数含义：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>参数名</p></th>
+<th class="head"><p>含义说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>output_dir</strong></p></td>
+<td><p>模型训练结果（包括 checkpoints）的输出路径。<br/>训练完成后的模型会保存在这个目录。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>logging_steps</strong></p></td>
+<td><p>每隔多少步记录一次训练过程中的日志（如 loss 值、学习率等）。<br/>此处设为25，即每25步输出一次日志。</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>per_device_train_batch_size</strong></p></td>
+<td><p>每个GPU（或设备）用于训练的批次大小（batch size）。<br/>此处为每个设备8个样本。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>per_device_eval_batch_size</strong></p></td>
+<td><p>每个GPU（或设备）用于评估时的批次大小（batch size）。<br/>此处为8个样本，与训练批次大小一致。</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>num_train_epochs</strong></p></td>
+<td><p>训练的总轮数（epochs）。<br/>此处设为3，表示数据集整体被遍历三次。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>load_best_model_at_end</strong></p></td>
+<td><p>训练结束后是否自动加载性能最优的模型。<br/>这里设为<code class="docutils literal notranslate"><span class="pre">True</span></code>，会自动加载在验证集上表现最好的checkpoint。</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>metric_for_best_model</strong></p></td>
+<td><p>选择最佳模型的指标。<br/>这里使用的是<code class="docutils literal notranslate"><span class="pre">eval_loss</span></code>，表示以验证集上的loss作为评判标准。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>save_strategy</strong></p></td>
+<td><p>模型的保存策略。<br/>这里为<code class="docutils literal notranslate"><span class="pre">&quot;epoch&quot;</span></code>，表示在每个epoch结束时保存一次checkpoint。</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>eval_strategy</strong></p></td>
+<td><p>模型的评估策略。<br/>这里为<code class="docutils literal notranslate"><span class="pre">&quot;epoch&quot;</span></code>，即每个epoch结束时进行一次验证。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>eval_steps</strong></p></td>
+<td><p>执行评估时的步数间隔（仅当评估策略为<code class="docutils literal notranslate"><span class="pre">steps</span></code>时有效）。<br/>由于这里设置的是<code class="docutils literal notranslate"><span class="pre">epoch</span></code>，此参数并不生效，但通常设置为步数间隔进行中间验证时使用。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
-<section id="id13">
-<h4>5 训练模型<a class="headerlink" href="#id13" title="Link to this heading">#</a></h4>
+<section id="id14">
+<h4>5 训练模型<a class="headerlink" href="#id14" title="Link to this heading">#</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">trainer</span> <span class="o">=</span> <span class="n">DPOTrainer</span><span class="p">(</span>
     <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
     <span class="n">args</span><span class="o">=</span><span class="n">training_args</span><span class="p">,</span>
@@ -521,10 +574,109 @@ import torch
 <span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
 </pre></div>
 </div>
+<p>运行后的输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Extracting prompt in train dataset: 100%|██████████| 1026/1026 [00:00&lt;00:00, 12014.88 examples/s]
+Applying chat template to train dataset: 100%|██████████| 1026/1026 [00:00&lt;00:00, 8241.62 examples/s]
+Tokenizing train dataset: 100%|██████████| 1026/1026 [00:00&lt;00:00, 3414.80 examples/s]
+Extracting prompt in eval dataset: 100%|██████████| 114/114 [00:00&lt;00:00, 11163.40 examples/s]
+Applying chat template to eval dataset: 100%|██████████| 114/114 [00:00&lt;00:00, 7319.34 examples/s]
+Tokenizing eval dataset: 100%|██████████| 114/114 [00:00&lt;00:00, 3080.27 examples/s]
+</pre></div>
+</div>
+<p><strong>Progress:</strong> <code class="docutils literal notranslate"><span class="pre">[387/387</span> <span class="pre">13:18,</span> <span class="pre">Epoch</span> <span class="pre">3/3]</span></code></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Epoch</p></th>
+<th class="head"><p>Training Loss</p></th>
+<th class="head"><p>Validation Loss</p></th>
+<th class="head"><p>Rewards/chosen</p></th>
+<th class="head"><p>Rewards/rejected</p></th>
+<th class="head"><p>Rewards/accuracies</p></th>
+<th class="head"><p>Rewards/margins</p></th>
+<th class="head"><p>Logps/chosen</p></th>
+<th class="head"><p>Logps/rejected</p></th>
+<th class="head"><p>Logits/chosen</p></th>
+<th class="head"><p>Logits/rejected</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>0.560100</p></td>
+<td><p>0.562748</p></td>
+<td><p>2.503206</p></td>
+<td><p>1.936790</p></td>
+<td><p>0.658333</p></td>
+<td><p>0.566416</p></td>
+<td><p>-31.019157</p></td>
+<td><p>-40.121326</p></td>
+<td><p>-3.392188</p></td>
+<td><p>-3.384011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>0.408400</p></td>
+<td><p>0.520122</p></td>
+<td><p>1.082610</p></td>
+<td><p>-0.059237</p></td>
+<td><p>0.766667</p></td>
+<td><p>1.141847</p></td>
+<td><p>-45.225121</p></td>
+<td><p>-60.081593</p></td>
+<td><p>-3.431983</p></td>
+<td><p>-3.411697</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>0.286200</p></td>
+<td><p>0.584226</p></td>
+<td><p>0.153396</p></td>
+<td><p>-1.310745</p></td>
+<td><p>0.725000</p></td>
+<td><p>1.464142</p></td>
+<td><p>-54.517258</p></td>
+<td><p>-72.596687</p></td>
+<td><p>-3.212612</p></td>
+<td><p>-3.183683</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id15">
+<h4>6 使用微调后的模型<a class="headerlink" href="#id15" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the fine-tuned model</span>
+<span class="n">ft_model</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">model</span>
+
+<span class="c1"># Set up text generation pipeline</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s2">&quot;text-generation&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">ft_model</span><span class="p">,</span> <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;mps&#39;</span><span class="p">)</span>
+
+<span class="c1"># Example prompt</span>
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">format_chat_prompt</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;valid&#39;</span><span class="p">][</span><span class="s1">&#39;prompt&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">])</span>
+
+<span class="c1"># Generate output</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">generator</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">truncation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_return_sequences</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;generated_text&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>Device set to use mps
+/Users/zhijungao/ENTER/lib/python3.10/site-packages/transformers/pytorch_utils.py:328: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  test_elements = torch.tensor(test_elements)
+&lt;|im_start|&gt;user
+Given the YouTube video idea write an engaging title.
+
+<span class="gs">**Video Idea**</span>: intro independent component analysis
+
+<span class="gs">**Additional Guidance**</span>:
+<span class="k">-</span><span class="w"> </span>Title should be between 30 and 75 characters long
+<span class="k">-</span><span class="w"> </span>Only return the title idea, nothing else!&lt;|im_end|&gt;
+&lt;|im_start|&gt;assistant
+Independent Component Analysis for Beginners
+</pre></div>
+</div>
 </section>
 </section>
-<section id="id14">
-<h3>评估微调后的模型<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<section id="id16">
+<h3>评估微调后的模型<a class="headerlink" href="#id16" title="Link to this heading">#</a></h3>
 <p>为了评估微调效果，我们使用以下步骤：</p>
 <ol class="arabic simple">
 <li><p>选取 50 个随机视频创意。</p></li>
@@ -535,8 +687,8 @@ import torch
 <p>最终结果表明，微调后的模型标题在 68% 的情况下被认为更优。</p>
 </section>
 </section>
-<section id="id15">
-<h2>结论<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<section id="id17">
+<h2>结论<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>RLHF 通过强化学习优化模型，但训练复杂，计算成本高。</p></li>
 <li><p>DPO 通过重构 RLHF 任务，避免了强化学习过程，使训练更简单高效。</p></li>
@@ -544,11 +696,12 @@ import torch
 </ul>
 <p>如果你对该方法感兴趣，欢迎尝试使用不同的数据集和模型进行实验！</p>
 </section>
-<section id="id16">
-<h2>参考<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
+<section id="id18">
+<h2>参考<a class="headerlink" href="#id18" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://github.com/ShawhinT/YouTube-Blog/blob/main/LLMs/dpo/1-generate_synthetic_titles.ipynb">示例代码</a></p></li>
 <li><p><a class="reference external" href="https://huggingface.co/datasets/shawhin/youtube-titles-dpo">数据集</a></p></li>
+<li><p>电子书： <a class="reference external" href="https://rlhfbook.com/">Reinforcement Learning from Human Feedback</a></p></li>
 </ol>
 </section>
 </section>
@@ -615,18 +768,20 @@ import torch
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dpo-qwen2-50-5b-instruct">使用 DPO 微调 Qwen2.5–0.5B-Instruct</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.1 数据准备</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">代码实现</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1 导入必要的库</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2 加载数据集和模型</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">3 生成示例标题</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">4 设置 DPO 训练参数</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">5 训练模型</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">0 安装库</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1 导入必要的库</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2 加载数据集和模型</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">3 生成示例标题</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">4 设置 DPO 训练参数</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">5 训练模型</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">6 使用微调后的模型</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">评估微调后的模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">评估微调后的模型</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">结论</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">参考</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">结论</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">参考</a></li>
 </ul>
   </nav></div>
 

@@ -38,6 +38,20 @@ DPO（Direct Policy Optimization）是一种无需 RL 过程即可优化模型�
 5. 格式化数据，使其包含 `prompt`、`chosen` 和 `rejected` 三列。
 
 ### 代码实现
+
+#### 0 安装库
+
+```
+!pip install datasets        # for `from datasets import load_dataset`
+!pip install trl             # for `from trl import DPOConfig, DPOTrainer`
+!pip install transformers    # for `from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline`
+!pip install torch           # for `import torch`
+
+```
+
+
+
+
 #### 1 导入必要的库
 ```markdown
 from datasets import load_dataset
@@ -90,7 +104,25 @@ training_args = DPOConfig(
 )
 ```
 
+
+
+各参数含义：
+
+| 参数名                          | 含义说明                                                     |
+| ------------------------------- | ------------------------------------------------------------ |
+| **output_dir**                  | 模型训练结果（包括 checkpoints）的输出路径。<br/>训练完成后的模型会保存在这个目录。 |
+| **logging_steps**               | 每隔多少步记录一次训练过程中的日志（如 loss 值、学习率等）。<br/>此处设为25，即每25步输出一次日志。 |
+| **per_device_train_batch_size** | 每个GPU（或设备）用于训练的批次大小（batch size）。<br/>此处为每个设备8个样本。 |
+| **per_device_eval_batch_size**  | 每个GPU（或设备）用于评估时的批次大小（batch size）。<br/>此处为8个样本，与训练批次大小一致。 |
+| **num_train_epochs**            | 训练的总轮数（epochs）。<br/>此处设为3，表示数据集整体被遍历三次。 |
+| **load_best_model_at_end**      | 训练结束后是否自动加载性能最优的模型。<br/>这里设为`True`，会自动加载在验证集上表现最好的checkpoint。 |
+| **metric_for_best_model**       | 选择最佳模型的指标。<br/>这里使用的是`eval_loss`，表示以验证集上的loss作为评判标准。 |
+| **save_strategy**               | 模型的保存策略。<br/>这里为`"epoch"`，表示在每个epoch结束时保存一次checkpoint。 |
+| **eval_strategy**               | 模型的评估策略。<br/>这里为`"epoch"`，即每个epoch结束时进行一次验证。 |
+| **eval_steps**                  | 执行评估时的步数间隔（仅当评估策略为`steps`时有效）。<br/>由于这里设置的是`epoch`，此参数并不生效，但通常设置为步数间隔进行中间验证时使用。 |
+
 #### 5 训练模型
+
 ```python
 trainer = DPOTrainer(
     model=model,
@@ -102,7 +134,65 @@ trainer = DPOTrainer(
 trainer.train()
 ```
 
+运行后的输出：
+
+```
+Extracting prompt in train dataset: 100%|██████████| 1026/1026 [00:00<00:00, 12014.88 examples/s]
+Applying chat template to train dataset: 100%|██████████| 1026/1026 [00:00<00:00, 8241.62 examples/s]
+Tokenizing train dataset: 100%|██████████| 1026/1026 [00:00<00:00, 3414.80 examples/s]
+Extracting prompt in eval dataset: 100%|██████████| 114/114 [00:00<00:00, 11163.40 examples/s]
+Applying chat template to eval dataset: 100%|██████████| 114/114 [00:00<00:00, 7319.34 examples/s]
+Tokenizing eval dataset: 100%|██████████| 114/114 [00:00<00:00, 3080.27 examples/s]
+```
+
+**Progress:** `[387/387 13:18, Epoch 3/3]`
+
+| Epoch | Training Loss | Validation Loss | Rewards/chosen | Rewards/rejected | Rewards/accuracies | Rewards/margins | Logps/chosen | Logps/rejected | Logits/chosen | Logits/rejected |
+| ----- | ------------- | --------------- | -------------- | ---------------- | ------------------ | --------------- | ------------ | -------------- | ------------- | --------------- |
+| 1     | 0.560100      | 0.562748        | 2.503206       | 1.936790         | 0.658333           | 0.566416        | -31.019157   | -40.121326     | -3.392188     | -3.384011       |
+| 2     | 0.408400      | 0.520122        | 1.082610       | -0.059237        | 0.766667           | 1.141847        | -45.225121   | -60.081593     | -3.431983     | -3.411697       |
+| 3     | 0.286200      | 0.584226        | 0.153396       | -1.310745        | 0.725000           | 1.464142        | -54.517258   | -72.596687     | -3.212612     | -3.183683       |
+
+#### 6 使用微调后的模型
+
+```python
+# Load the fine-tuned model
+ft_model = trainer.model
+
+# Set up text generation pipeline
+generator = pipeline("text-generation", model=ft_model, tokenizer=tokenizer, device='mps')
+
+# Example prompt
+prompt = format_chat_prompt(dataset['valid']['prompt'][0][0]['content'])
+
+# Generate output
+outputs = generator(prompt, max_length=100, truncation=True, num_return_sequences=1, temperature=0.7)
+
+print(outputs[0]['generated_text'])
+```
+
+输出：
+
+```markdown
+Device set to use mps
+/Users/zhijungao/ENTER/lib/python3.10/site-packages/transformers/pytorch_utils.py:328: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  test_elements = torch.tensor(test_elements)
+<|im_start|>user
+Given the YouTube video idea write an engaging title.
+
+**Video Idea**: intro independent component analysis
+
+**Additional Guidance**:
+- Title should be between 30 and 75 characters long
+- Only return the title idea, nothing else!<|im_end|>
+<|im_start|>assistant
+Independent Component Analysis for Beginners
+```
+
+
+
 ### 评估微调后的模型
+
 为了评估微调效果，我们使用以下步骤：
 1. 选取 50 个随机视频创意。
 2. 用基础模型和微调模型分别生成标题。
@@ -124,3 +214,4 @@ trainer.train()
 
 1. [示例代码](https://github.com/ShawhinT/YouTube-Blog/blob/main/LLMs/dpo/1-generate_synthetic_titles.ipynb)
 2. [数据集](https://huggingface.co/datasets/shawhin/youtube-titles-dpo)
+3. 电子书： [Reinforcement Learning from Human Feedback](https://rlhfbook.com/)

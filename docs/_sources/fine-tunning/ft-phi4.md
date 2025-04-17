@@ -366,7 +366,38 @@ Ensure that you have a backup. Check your network connectivity. Verify that your
    )
    ```
 
-   
+   各参数含义：
+   SFTTrainer 构造器参数
+
+   | 参数                 | 含义                                                         |
+   | -------------------- | ------------------------------------------------------------ |
+   | `model`              | 待微调的模型实例，通常是 `transformers` 的 `PreTrainedModel`（如 `AutoModelForSeq2SeqLM`）。 |
+   | `tokenizer`          | 与模型配套的分词器，用于将原始文本转换成模型可接收的 token ID 序列，并负责解码输出。 |
+   | `train_dataset`      | 训练用的数据集对象，应实现 PyTorch Dataset 接口，返回样本字典（至少包含 `"text"` 字段）。 |
+   | `dataset_text_field` | 指定数据集中，承载文本输入的字段名（本例中为 `"text"`），Trainer 会从此字段获取原始字符串进行编码。 |
+   | `max_seq_length`     | 序列最大长度（以 token 数计），对超过该长度的输入进行截断，对不足的输入进行填充（pad）。 |
+   | `data_collator`      | 用于组 batch 时的“数据拼接”函数，本例使用 `DataCollatorForSeq2Seq`，可自动填充（pad）并构造 Seq2Seq 任务所需的 decoder 输入。 |
+   | `dataset_num_proc`   | 数据预处理（如 tokenization、映射函数）时的多进程数，可加速大规模数据集的预处理。 |
+   | `packing`            | 是否启用“packing”技术：将若干短序列拼接到一起填满 `max_seq_length`，对短文本训练速度有显著加速；`False` 则关闭此优化。 |
+
+   TrainingArguments 超参数配置
+
+   | 参数                          | 含义                                                         |
+   | ----------------------------- | ------------------------------------------------------------ |
+   | `per_device_train_batch_size` | 每个设备（GPU/CPU）上真实执行的微调 batch 大小；结合 `gradient_accumulation_steps` 可模拟更大的全局 batch。 |
+   | `gradient_accumulation_steps` | 梯度累积步数：每过此数目步才进行一次参数更新，用于在显存受限情况下获得等同于 `batch_size × accum_steps` 的效果。 |
+   | `warmup_steps`                | 学习率预热步数：训练初期将学习率从 0 线性升到设定值，帮助模型更稳定地收敛。 |
+   | `max_steps`                   | 最大训练步数：达到此步数后即停止训练（与 `num_train_epochs` 二选一，若同时设置则以先触发者为准）。 |
+   | `learning_rate`               | 初始学习率（LR），决定每次参数更新的步长；需根据模型规模、batch 大小等调优。 |
+   | `fp16`                        | 是否开启 16-bit 半精度训练（FP16），可显著节省显存并加速；本例在不支持 BF16 时启用。 |
+   | `bf16`                        | 是否开启 Brain Floating Point 16 (BF16) 训练，若硬件支持则优先使用 BF16，否则退回 FP16。 |
+   | `logging_steps`               | 日志记录间隔（步数）：每训练多少步在控制台输出一次 loss、lr 等指标。 |
+   | `optim`                       | 优化器类型，本例用 `"adamw_8bit"` 表示基于 8-bit 量化 AdamW，可进一步降低显存占用。 |
+   | `weight_decay`                | 权重衰减系数（L2 正则化），帮助防止过拟合，一般在 0.01 左右。 |
+   | `lr_scheduler_type`           | 学习率调度策略，本例用 `"linear"`，即先 warmup 再线性衰减到 0。 |
+   | `seed`                        | 全局随机种子，保证可复现（Shuffle、初始化等一致）。          |
+   | `output_dir`                  | 模型检查点和训练日志保存目录；训练过程中会在此目录下写入 `checkpoint-xxx`。 |
+   | `report_to`                   | 指定日志/指标上报目标，例如 `"wandb"`、`"tensorboard"` 等；设置为 `"none"` 则关闭所有外部上报。 |
 
 6. 仅训练助手输出，忽略用户输入损失
 

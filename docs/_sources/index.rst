@@ -76,6 +76,7 @@
    :maxdepth: 1
    :caption: 微调
 
+   fine-tunning/ft-basics.md
    fine-tunning/ft-gen-models.md
    fine-tunning/ft-phi4.md
    fine-tunning/ft-rl.md
