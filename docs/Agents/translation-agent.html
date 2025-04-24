@@ -198,12 +198,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-basics.html">微调基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-gen-models.html">微调生成式大模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rep-models.html">微调表示型大模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/mlm-bert.html">使用MLM微调Bert模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">练习：使用自监督学习微调Phi4-mini</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">练习：使用自回归目标微调 Phi4-mini</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">智能体</span></p>
 <ul class="current nav bd-sidenav">
@@ -211,6 +212,7 @@
 <li class="toctree-l1"><a class="reference internal" href="LangGraph.html">LangGraph简介</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">基于LangGraph的Translation Agent 开发</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mcp.html">模型上下文协议 MCP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ex-translation.html">练习：翻译智能体的设计与实现</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
 <ul class="nav bd-sidenav">
@@ -376,7 +378,7 @@
 <h1>基于LangGraph的Translation Agent 开发<a class="headerlink" href="#langgraphtranslation-agent" title="Link to this heading">#</a></h1>
 <section id="react">
 <h2>ReAct 模式<a class="headerlink" href="#react" title="Link to this heading">#</a></h2>
-<p>现代智能体（如基于 LangChain 框架的 Agent）常采用“ReAct”风格的设计，因为这种方式既结合了内在思考又能调用外部工具，还可以根据观察到的反馈不断改进最终答案。不同的应用场景可能会组合并调整这些模式，以满足特定任务的需求。</p>
+<p>现代智能体（如基于 LangChain 框架的 Agent）常采用“ReAct”风格设计，因为这种方式既结合了内在思考又能调用外部工具，还可以根据观察到的反馈不断改进最终答案。不同的应用场景可能会组合并调整这些模式，以满足特定任务的需求。</p>
 <p>整个“思考–行动–观察”循环的流程如下：</p>
 <ol class="arabic simple">
 <li><p><strong>思考（Thought）</strong></p>
@@ -411,7 +413,7 @@
 <section id="id2">
 <h3>翻译流程设定<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <p>本部分主要是为了快速演示Agent的开发，而非设计完整而强大的 Translation Agent，因此只设计了最简单的流程。</p>
-<a class="reference internal image-reference" href="../_images/workflow1.png"><img alt="流程图" src="../_images/workflow1.png" style="width: 20%;" />
+<a class="reference internal image-reference" href="../_images/workflow1.png"><img alt="流程图" src="../_images/workflow1.png" style="width: 30%;" />
 </a>
 </section>
 </section>

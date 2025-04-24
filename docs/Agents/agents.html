@@ -61,7 +61,7 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="LangGraph简介" href="LangGraph.html" />
-    <link rel="prev" title="基于人类反馈微调大模型（RLHF + DPO）" href="../fine-tunning/ft-rl.html" />
+    <link rel="prev" title="练习：使用自回归目标微调 Phi4-mini" href="../fine-tunning/ft-ph4-self.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
   <meta name="docsearch:version" content="" />
@@ -198,12 +198,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-basics.html">微调基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-gen-models.html">微调生成式大模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rep-models.html">微调表示型大模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/mlm-bert.html">使用MLM微调Bert模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">练习：使用自监督学习微调Phi4-mini</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">练习：使用自回归目标微调 Phi4-mini</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">智能体</span></p>
 <ul class="current nav bd-sidenav">
@@ -211,6 +212,7 @@
 <li class="toctree-l1"><a class="reference internal" href="LangGraph.html">LangGraph简介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="translation-agent.html">基于LangGraph的Translation Agent 开发</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mcp.html">模型上下文协议 MCP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ex-translation.html">练习：翻译智能体的设计与实现</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
 <ul class="nav bd-sidenav">
@@ -369,7 +371,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#thought">Thought</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#action">Action</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">观察</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">更新的思考</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">更新思考</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">最终动作</a></li>
 </ul>
 </li>
@@ -377,20 +379,20 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#react">思考：内部推理与 ReAct 方法</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">ReAct 方法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">ReAct</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">行动：使智能体与其环境交互</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">智能体行动类型</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">行动的用途</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">停止与解析 方法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">停止与解析</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">观察：整合反馈以反思和适应</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">观察结果如何附加？</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">开源项目</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Agent项目</a></li>
 </ul>
             </nav>
         </div>
@@ -408,7 +410,7 @@
 <h2>什么是Agent<a class="headerlink" href="#agent" title="Link to this heading">#</a></h2>
 <section id="id2">
 <h3>哲学中的 Agent：行动者的概念<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
-<p>在哲学，尤其是<strong>伦理学、心灵哲学和行动哲学</strong>中：**Agent指的是 **一个有能力做出自主决定并采取行动的存在。</p>
+<p>在哲学，尤其是<strong>伦理学、心灵哲学和行动哲学</strong>中：Agent指的是一个有能力做出自主决定并采取行动的存在。</p>
 <ul class="simple">
 <li><p>它具备：</p>
 <ul>
@@ -423,7 +425,7 @@
 </section>
 <section id="id3">
 <h3>咖啡 Agent<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
-<p>假设这个咖啡 Agent收到一个任务：“我需要一杯咖啡。”</p>
+<p>假设咖啡 Agent收到一个任务：“我需要一杯咖啡。”</p>
 <p>Agent开始推理和计划：</p>
 <ol class="arabic simple">
 <li><p>去厨房</p></li>
@@ -431,7 +433,7 @@
 <li><p>冲调咖啡</p></li>
 <li><p>端上咖啡</p></li>
 </ol>
-<p>Agent有计划后，他就会执行。为了执行他的计划，他会使用他已知的工具，也就是咖啡机。</p>
+<p>有计划后，Agent就会执行。为完成计划，他会使用工具，也就是咖啡机。</p>
 <blockquote>
 <div><p>智能体：一个<strong>能够进行推理、规划和与环境交互的人工智能模型</strong>。</p>
 </div></blockquote>
@@ -451,7 +453,7 @@
 <h3>智能体光谱<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
-<tr class="row-odd"><th class="head"><p>代理级别</p></th>
+<tr class="row-odd"><th class="head"><p>级别</p></th>
 <th class="head"><p>描述</p></th>
 <th class="head"><p>名称</p></th>
 <th class="head"><p>示例模式</p></th>
@@ -459,27 +461,27 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p>☆☆☆</p></td>
-<td><p>代理输出不会影响程序流程</p></td>
+<td><p>智能体输出不会影响程序流程</p></td>
 <td><p>简单处理器</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">process_llm_output(llm_response)</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>★☆☆</p></td>
-<td><p>代理输出决定基本控制流</p></td>
+<td><p>智能体输出决定基本控制流</p></td>
 <td><p>路由器</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">llm_decision():</span> <span class="pre">path_a()</span> <span class="pre">else:</span> <span class="pre">path_b()</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>★★☆</p></td>
-<td><p>代理输出决定函数执行</p></td>
+<td><p>智能体输出决定函数执行</p></td>
 <td><p>工具调用器</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">run_function(llm_chosen_tool,</span> <span class="pre">llm_chosen_args)</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>★★★</p></td>
-<td><p>代理输出控制迭代和程序继续</p></td>
+<td><p>智能体输出控制迭代和程序继续</p></td>
 <td><p>多步骤代理</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">llm_should_continue():</span> <span class="pre">execute_next_step()</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>★★★</p></td>
-<td><p>一个代理化工作流可以启动另一个代理化工作流</p></td>
+<td><p>一个智能体可以启动另一个智能体</p></td>
 <td><p>多智能体</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">llm_trigger():</span> <span class="pre">execute_agent()</span></code></p></td>
 </tr>
@@ -489,11 +491,12 @@
 </section>
 <section id="id6">
 <h3>Agent可执行的任务<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
-<p>Agent 可以通过我们实现的工具（Tools）执行任何任务，以完成各种动作（Actions）。工具的设计非常重要，会极大地影响你的 Agent 的质量。某些任务需要专门定制非常具体的工具，而其他任务则可以使用像 “web_search” 这样的通用工具来解决。</p>
+<p>Agent 可以通过我们实现的工具（Tools）执行任何任务，以完成各种动作（Actions）。工具的设计非常重要，会极大地影响 Agent 的质量。某些任务需要定制开发专门工具，有些任务则可以使用像 “web_search” 这样的通用工具来解决。</p>
 <blockquote>
-<div><p>请注意：<strong>动作（Action）</strong> 与 <strong>工具（Tool）</strong> 并不相同。例如，一个动作可能需要调用多个工具才能完成任务。</p>
+<div><p>⚠️注意</p>
+<p><strong>动作（Action）</strong> 与 <strong>工具（Tool）</strong> 并不相同。例如，一个动作可能需要调用多个工具才能完成任务。</p>
 </div></blockquote>
-<p>工具是提供给 LLM 的一个函数。该函数应完成明确的目标。</p>
+<p>工具是提供给 LLM 的函数。该函数应完成明确的目标。</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>工具</p></th>
@@ -516,11 +519,11 @@
 </tbody>
 </table>
 </div>
-<p>总而言之，Agent 是一个以 AI 模型（通常是大型语言模型）为核心推理引擎的系统，能够：</p>
+<p>总而言之，Agent 是一个以 AI 模型（通常是大语言模型）为核心推理引擎的系统，能够：</p>
 <ul class="simple">
 <li><p><strong>理解自然语言</strong>：以有意义的方式解释并响应人类指令。</p></li>
 <li><p><strong>推理与规划</strong>：分析信息、做出决策并制定解决问题的策略。</p></li>
-<li><p><strong>与环境交互</strong>：收集信息、执行操作并观察这些操作的结果。</p></li>
+<li><p><strong>与环境交互</strong>：收集信息、执行操作并观察操作结果。</p></li>
 </ul>
 </section>
 </section>
@@ -546,7 +549,7 @@
 <section id="action">
 <h4>Action<a class="headerlink" href="#action" title="Link to this heading">#</a></h4>
 <p><strong>工具使用：</strong></p>
-<p>基于其推理以及 已知 <code class="docutils literal notranslate"><span class="pre">get_weather</span></code> 工具的事实，Agent 准备了一个 JSON 格式的命令来调用天气 API 工具。例如，它的第一个动作可能是：</p>
+<p>基于其推理以及已知 <code class="docutils literal notranslate"><span class="pre">get_weather</span></code> 工具的事实，Agent 准备了一个 JSON 格式的命令来调用天气 API 工具。例如，它的第一个动作可能是：</p>
 <p>Thought：我需要检查纽约的当前天气。</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="p">{</span>
 <span class="w">     </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;get_weather&quot;</span><span class="p">,</span>
@@ -566,14 +569,14 @@
 <p>该观察结果随后被添加到提示中，作为额外的上下文。它充当现实世界的反馈，确认动作是否成功并提供所需的详细信息。</p>
 </section>
 <section id="id11">
-<h4>更新的思考<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
+<h4>更新思考<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
 <p>反思：</p>
 <p>有了观察结果，Agent 更新了它的内部推理：</p>
-<p>“现在我已经获得了纽约的天气数据，就可以为用户整理回答了。”</p>
+<p>“现在我已经获得了纽约的天气数据，可以为用户整理回答了。”</p>
 </section>
 <section id="id12">
 <h4>最终动作<a class="headerlink" href="#id12" title="Link to this heading">#</a></h4>
-<p>Agent 生成最终响应，按照我们告诉它的格式：</p>
+<p>Agent 生成最终响应，并按照我们规定的格式回答：</p>
 <p>Thought：我现在已经有了天气数据。当前纽约的天气是局部多云，气温15°C，相对湿度60%。</p>
 <p>最终回答：当前纽约的天气是局部多云，气温15°C，相对湿度60%。</p>
 <p>此最终动作将答案发送回用户，完成整个循环。</p>
@@ -585,11 +588,11 @@
 <p><strong>智能体不断循环直到目标完成：</strong>
 Agent 的过程是循环的。它从一次思考开始，然后通过调用工具来执行动作，最后观察结果。如果观察显示有错误或数据不完整，Agent 可以重新进入循环以修正方法。</p>
 <p><strong>工具集成：</strong>
-调用工具（如天气 API）的能力使 Alfred 能够超越静态知识，检索实时数据，这是许多 AI 智能体的关键特性。</p>
+调用工具（如天气 API）的能力使天气智能体够超越静态知识，检索实时数据，这是许多 AI 智能体的关键特性。</p>
 <p><strong>动态适应：</strong>
 每个循环都允许智能体将新信息（观察结果）纳入其推理（思考）中，确保最终回答信息充分且准确。</p>
-<p>这个示例展示了 ReAct 循环背后的核心概念（我们将在下一节中详细讨论）：思考、行动和观察的相互作用，使 AI 智能体能够迭代地解决复杂任务。</p>
-<p>通过理解并应用这些原则，你可以设计出不仅能推理其任务，还能有效利用外部工具完成任务，并根据环境反馈不断完善输出的智能体。</p>
+<p>这个示例展示了 ReAct 循环背后的核心概念：思考、行动和观察的相互作用，使 AI 智能体能够迭代地解决复杂任务。</p>
+<p>通过理解并应用这些原则，你设计的智能体不仅能对任务进行推理，还能有效利用外部工具完成任务，并根据环境反馈不断完善输回答。</p>
 </section>
 </section>
 <section id="react">
@@ -609,48 +612,49 @@ Agent 的过程是循环的。它从一次思考开始，然后通过调用工�
 </thead>
 <tbody>
 <tr class="row-even"><td><p>规划</p></td>
-<td><p>“我需要将此任务分解为三步：1）收集数据；2）分析趋势；3）生成报告”</p></td>
+<td><p>我需要将此任务分解为三步：1）收集数据；2）分析趋势；3）生成报告</p></td>
 </tr>
 <tr class="row-odd"><td><p>分析</p></td>
-<td><p>“根据错误信息，问题似乎出在数据库连接参数上”</p></td>
+<td><p>根据错误信息，问题似乎出在数据库连接参数上</p></td>
 </tr>
 <tr class="row-even"><td><p>决策</p></td>
-<td><p>“考虑到用户的预算限制，我应该推荐中端方案”</p></td>
+<td><p>考虑到用户的预算限制，我应该推荐中端方案</p></td>
 </tr>
 <tr class="row-odd"><td><p>问题解决</p></td>
-<td><p>“为了优化这段代码，我应首先进行性能分析以识别瓶颈”</p></td>
+<td><p>为了优化这段代码，我应首先进行性能分析以识别瓶颈</p></td>
 </tr>
 <tr class="row-even"><td><p>记忆整合</p></td>
-<td><p>“用户之前提到他们更喜欢 Python，所以我将提供 Python 示例”</p></td>
+<td><p>用户之前提到他更喜欢 Python，所以我将提供 Python 示例</p></td>
 </tr>
 <tr class="row-odd"><td><p>自我反思</p></td>
-<td><p>“我上次的方法效果不佳，我应该尝试不同的策略”</p></td>
+<td><p>我上次的方法效果不佳，我应该尝试不同的策略</p></td>
 </tr>
 <tr class="row-even"><td><p>目标设定</p></td>
-<td><p>“要完成此任务，我需要首先确定验收标准”</p></td>
+<td><p>要完成此任务，我需要首先确定验收标准</p></td>
 </tr>
 <tr class="row-odd"><td><p>优先级排序</p></td>
-<td><p>“应在添加新功能之前先解决安全漏洞”</p></td>
+<td><p>应在添加新功能之前先解决安全漏洞</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <blockquote>
-<div><p>注意：对于经过微调以支持函数调用的 LLM，思考过程是可选的。如果你不熟悉函数调用，将在“行动”部分提供更多细节。</p>
+<div><p>⚠️ 注意</p>
+<p>对于经过微调以支持函数调用的 LLM，思考过程是可选的。</p>
 </div></blockquote>
 <section id="id14">
-<h3>ReAct 方法<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<h3>ReAct<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
 <p>一个关键方法是 ReAct 方法，即将“推理”（Reasoning，Think）与“行动”（Acting，Act）结合。</p>
 <ul class="simple">
-<li><p>ReAct 是一种简单的提示技术，在让 LLM 解码下一个 token 之前，附加“让我们一步步思考”（Let’s think step by step）。</p></li>
-<li><p>通过提示模型“逐步思考”，解码过程更倾向于生成一个计划，而不是直接给出最终解决方案，因为模型被鼓励将问题分解为子任务。</p></li>
-<li><p>这使模型能够更详细地考虑各个子步骤，通常比尝试直接生成最终解决方案时更少出错。</p></li>
+<li><p>ReAct 是一种简单的提示词技术，在让 LLM 解码下一个 token 之前，附加“让我们一步步思考”（Let’s think step by step）。</p></li>
+<li><p>通过提示模型“逐步思考”，解码过程更倾向于生成一个计划，而不是直接给出最终解决方案，因为模型得到鼓励能将问题分解为子任务。</p></li>
+<li><p>这使模型能够更详细地考虑各子步骤，通常比尝试直接生成最终解决方案时更少出错。</p></li>
 </ul>
 </section>
 </section>
 <section id="id15">
 <h2>行动：使智能体与其环境交互<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
-<p>在本节中，我们探讨 AI 智能体与其环境交互所采取的具体步骤。<br />
+<p>在部分，我们探讨 AI 智能体与其环境交互所采取的具体步骤。<br />
 我们将介绍如何表示操作（使用 JSON 或代码）、停止与解析方法的重要性，并介绍不同类型的智能体。<br />
 操作是 AI 智能体与其环境交互时所采取的具体步骤。</p>
 <p>无论是浏览网页获取信息，还是控制物理设备，每个操作都是智能体执行的有意图的动作。</p>
@@ -707,7 +711,7 @@ Agent 的过程是循环的。它从一次思考开始，然后通过调用工�
 <p>LLM 仅处理文本，并使用文本来描述它要执行的操作以及要传递给工具的参数。</p>
 </section>
 <section id="id18">
-<h3>停止与解析 方法<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
+<h3>停止与解析<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
 <p>实现操作的关键方法之一是“停止与解析”方法。此方法可确保智能体的输出具有结构化且可预测的特点：</p>
 <ol class="arabic simple">
 <li><p>结构化格式生成。智能体以清晰的、预先定义的格式（JSON 或代码）输出其预期执行的操作。</p></li>
@@ -725,21 +729,21 @@ Action :
 </div>
 <p>框架随后可以轻松解析要调用的函数名称及其参数。这种清晰的机器可读格式将错误降至最低，并使外部工具能够准确地处理智能体的命令。</p>
 <blockquote>
-<div><p>[!NOTE]</p>
-<p>注意：函数调用型智能体以类似方式工作，通过结构化每个动作来调用指定函数并传入正确的参数。我们将在后续单元中深入探讨这类智能体。</p>
+<div><p>⚠️ 注意</p>
+<p>函数调用型智能体以类似方式工作，通过结构化每个动作来调用指定函数并传入正确的参数。</p>
 </div></blockquote>
 </section>
 </section>
 <section id="id19">
 <h2>观察：整合反馈以反思和适应<a class="headerlink" href="#id19" title="Link to this heading">#</a></h2>
-<p>观察是智能体感知其行动后果的方式。  它们提供了推动智能体思考过程并指导后续行动的关键信息。  它们是来自环境的信号——无论是 API 返回的数据、错误信息还是系统日志——都指导下一轮思考。</p>
+<p>观察是智能体感知其行动后果的方式。  它们提供了推动智能体思考过程并指导后续行动的关键信息。  它们是来自环境的信号——无论是 API 返回的数据、错误信息还是系统日志——都可以指导下一轮思考。</p>
 <p>在观察阶段，智能体会：</p>
 <ul class="simple">
 <li><p><strong>收集反馈</strong>：接收数据或确认其行动是否成功（或失败）。</p></li>
 <li><p><strong>附加结果</strong>：将新信息整合到现有上下文中，有效更新其记忆。</p></li>
 <li><p><strong>调整策略</strong>：利用更新后的上下文来完善后续的思考和行动。</p></li>
 </ul>
-<p>例如，如果天气 API 返回“局部多云，15°C，60% 湿度”，该观察结果会被附加到智能体的记忆中（提示末尾）。</p>
+<p>例如，如果天气 API 返回“局部多云，15°C，60% 湿度”，该观察结果会被附加到智能体的记忆中（提示词末尾）。</p>
 <p>智能体随后会根据该信息决定是否需要额外数据，或是否已准备好提供最终回答。</p>
 <p>这种反馈的迭代整合确保智能体始终与其目标保持动态一致，不断根据现实世界的结果学习和调整。</p>
 <p>这些观察可以采取多种形式，从读取网页文本到监控机器人手臂的位置。这类似于工具“日志”，为操作执行提供文本反馈。</p>
@@ -779,7 +783,13 @@ Action :
 </section>
 </section>
 <section id="id21">
-<h2>开源项目<a class="headerlink" href="#id21" title="Link to this heading">#</a></h2>
+<h2>Agent项目<a class="headerlink" href="#id21" title="Link to this heading">#</a></h2>
+<p>商业项目</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://manus.im">Manus</a></p></li>
+<li><p><a class="reference external" href="https://www.coze.cn/space-preview">扣子 Agent</a></p></li>
+</ul>
+<p>开源</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/camel-ai/owl/blob/main/README_zh.md">OWL</a> （ GAIA 基准测试中取得 58.18 平均分，在开源框架中排名，排名第一）</p></li>
 <li><p><a class="reference external" href="https://github.com/mannaandpoem/OpenManus">OpenManus</a></p></li>
@@ -807,12 +817,12 @@ Action :
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../fine-tunning/ft-rl.html"
+       href="../fine-tunning/ft-ph4-self.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title">基于人类反馈微调大模型（RLHF + DPO）</p>
+        <p class="prev-next-title">练习：使用自回归目标微调 Phi4-mini</p>
       </div>
     </a>
     <a class="right-next"
@@ -855,7 +865,7 @@ Action :
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#thought">Thought</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#action">Action</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">观察</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">更新的思考</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">更新思考</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">最终动作</a></li>
 </ul>
 </li>
@@ -863,20 +873,20 @@ Action :
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#react">思考：内部推理与 ReAct 方法</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">ReAct 方法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">ReAct</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">行动：使智能体与其环境交互</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">智能体行动类型</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">行动的用途</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">停止与解析 方法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">停止与解析</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">观察：整合反馈以反思和适应</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">观察结果如何附加？</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">开源项目</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Agent项目</a></li>
 </ul>
   </nav></div>
 

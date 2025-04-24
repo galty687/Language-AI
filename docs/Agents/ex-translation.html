@@ -17,7 +17,7 @@
         gtag('config', 'G-GESLLLJC6M');
     </script>
     
-    <title>LangGraph简介 &#8212; 人工智能实践 0.8 文档</title>
+    <title>练习：翻译智能体的设计与实现 &#8212; 人工智能实践 0.8 文档</title>
   
   
   
@@ -57,11 +57,11 @@
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="../_static/translations.js?v=beaddf03"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'Agents/LangGraph';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Agents/ex-translation';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="基于LangGraph的Translation Agent 开发" href="translation-agent.html" />
-    <link rel="prev" title="智能体概述" href="agents.html" />
+    <link rel="next" title="基于HF Transformer的NLP实践的练习答案" href="../answers/transformer-practice-answers.html" />
+    <link rel="prev" title="模型上下文协议 MCP" href="mcp.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
   <meta name="docsearch:version" content="" />
@@ -209,10 +209,10 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">智能体</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="agents.html">智能体概述</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">LangGraph简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LangGraph.html">LangGraph简介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="translation-agent.html">基于LangGraph的Translation Agent 开发</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mcp.html">模型上下文协议 MCP</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ex-translation.html">练习：翻译智能体的设计与实现</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">练习：翻译智能体的设计与实现</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
 <ul class="nav bd-sidenav">
@@ -271,7 +271,7 @@
       
       
       
-      <li><a href="../_sources/Agents/LangGraph.md" target="_blank"
+      <li><a href="../_sources/Agents/ex-translation.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="下载源文件"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -347,7 +347,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>LangGraph简介</h1>
+    <h1>练习：翻译智能体的设计与实现</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -357,18 +357,18 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">LangGraph简介</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">LangGraph 如何工作？</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-langgraph">它与常规 Python 有何不同？为什么需要 LangGraph？</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">0. 预初始化（与术语模块并列新增组件）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#react">ReAct 流程（升级版）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t0">T0 — 任务理解 &amp; 策略规划</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t1">T1 — 源文本局部推理</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a1">A1 — 翻译执行（携带双重提示）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#o1">O1 — 质量与策略验证</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a2">A2 — 策略驱动的自我修正</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t2">T2 — 终审</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-answer">Final Answer — 回复用户</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">LangGraph的组成部分</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#state">State</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#node">Node</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#edge">Edge</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stategraph">StateGraph</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agent">在实际 Agent 中落地的关键点</a></li>
 </ul>
             </nav>
         </div>
@@ -380,204 +380,193 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="langgraph">
-<h1>LangGraph简介<a class="headerlink" href="#langgraph" title="Link to this heading">#</a></h1>
-<section id="id1">
-<h2>LangGraph简介<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
-<p>LangGraph 是由 LangChain 开发的一个框架，用于管理集成大型语言模型（LLM）的应用程序的控制流程。</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>框架</p></th>
-<th class="head"><p>定义</p></th>
-<th class="head"><p>核心功能</p></th>
-<th class="head"><p>典型场景</p></th>
-<th class="head"><p>可视化 / 调试</p></th>
-<th class="head"><p>集成与扩展</p></th>
-<th class="head"><p>安装命令</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><strong>LangChain</strong></p></td>
-<td><p>面向 LLM 的通用开发框架</p></td>
-<td><p>链式调用（Chains）、Prompt 管理、Memory、工具调用（Tools）</p></td>
-<td><p>快速搭建问答、RAG、插件化 Agent、流水线式文本处理</p></td>
-<td><p>日志输出，第三方插件支持少</p></td>
-<td><p>可与任何 LLM、检索后端、数据库、API 无缝对接</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">langchain</span></code></p></td>
-</tr>
-<tr class="row-odd"><td><p><strong>LangGraph</strong></p></td>
-<td><p>基于图的执行引擎，用于管理复杂或多 Agent 的控制流程</p></td>
-<td><p>有向图（Nodes/Edges）、状态机、执行图可视化</p></td>
-<td><p>多步骤工作流、条件分支、子 Agent 协作、流程可视化</p></td>
-<td><p>内置执行图渲染、交互式调试</p></td>
-<td><p>可选使用 LangChain 的 LLM/Tool 类；也可独立管理自定义节点逻辑</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">langgraph</span></code></p></td>
-</tr>
-<tr class="row-even"><td><p><strong>LangSmith</strong></p></td>
-<td><p>LangChain Labs 推出的观测与管理平台</p></td>
-<td><p>调试面板、执行轨迹记录、Prompt &amp; 变量历史、性能指标</p></td>
-<td><p>线上应用监控、Prompt 调优、团队协作、模型和流程性能分析</p></td>
-<td><p>丰富的可视化仪表盘、追踪回溯</p></td>
-<td><p>与 LangChain、LangGraph 深度集成；支持多项目、多环境隔离</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">langsmith</span></code></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p><strong>LangGraph 擅长的关键场景包括：</strong></p>
-<ul class="simple">
-<li><p>需要对流程进行显式控制的多步骤推理过程</p></li>
-<li><p>需要在各步骤之间保持状态持久化的应用</p></li>
-<li><p>将确定性逻辑与 AI 能力相结合的系统</p></li>
-<li><p>需要人机交互介入的工作流</p></li>
-<li><p>多个组件协同工作的复杂智能体架构</p></li>
-</ul>
+  <section id="id1">
+<h1>练习：翻译智能体的设计与实现<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>请首先设计一个功能更完善的翻译智能体，然后使用LangGraph（或其他Agent框架）实现一个翻译智能体。</p>
+<p>示例 StateGraph</p>
+<a class="reference internal image-reference" href="../_images/translation-workflow.png"><img alt="流程图" src="../_images/translation-workflow.png" style="width: 20%;" />
+</a>
+<p>流程图解释：</p>
 <section id="id2">
-<h3>LangGraph 如何工作？<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
-<p>LangGraph 的核心是使用有向图结构来定义应用的流程：</p>
-<ul class="simple">
-<li><p><strong>节点（Nodes）</strong> 代表各个处理步骤（例如调用 LLM、使用工具或做出决策）。</p></li>
-<li><p><strong>边（Edges）</strong> 定义步骤之间可能的转换。</p></li>
-<li><p><strong>状态（State）</strong> 由用户定义，在执行过程中维护并在节点之间传递。当决定下一个要执行哪个节点时，会参考当前状态。</p></li>
-</ul>
-</section>
-<section id="python-langgraph">
-<h3>它与常规 Python 有何不同？为什么需要 LangGraph？<a class="headerlink" href="#python-langgraph" title="Link to this heading">#</a></h3>
-<p>你可能会想：“我完全可以用常规的 Python <code class="docutils literal notranslate"><span class="pre">if-else</span></code> 语句来处理所有这些流程。”</p>
-<p>虽然从技术上讲确实可行，但 LangGraph 在构建复杂系统时相较于纯 Python 提供了诸多优势。你可以不用 LangGraph 也能实现同样的功能，但 LangGraph 为你构建了更简便的工具和抽象，包括：</p>
-<ul class="simple">
-<li><p><strong>状态管理</strong></p></li>
-<li><p><strong>可视化</strong></p></li>
-<li><p><strong>日志记录（执行轨迹）</strong></p></li>
-<li><p><strong>内置人机交互</strong></p></li>
-<li><p>以及更多功能。</p></li>
-</ul>
-</section>
-</section>
-<section id="id3">
-<h2>LangGraph的组成部分<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
-<p>在 LangGraph 中，一个应用从入口点（entrypoint）开始，执行过程中，流程会根据情况转向不同的函数，直到到达结束（END）。</p>
-<p><img alt="application" src="../_images/application.png" /></p>
+<h2>0. 预初始化（与术语模块并列新增组件）<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
-<tr class="row-odd"><th class="head"><p>概念</p></th>
-<th class="head"><p>说明</p></th>
+<tr class="row-odd"><th class="head"><p>组件</p></th>
+<th class="head"><p>作用</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><strong>State</strong></p></td>
-<td><p>用户定义的状态对象，包含执行流程中所需的所有数据，并在各节点间传递，用于决策和控制流程。</p></td>
+<tr class="row-even"><td><p><strong>Strategy Planner</strong></p></td>
+<td><p>根据任务简报、目标受众、领域标签，输出推荐的翻译策略参数（Domestication ↔ Foreignization 0-1 权重、直译-意译阈值、敬语等级、文本功能等）</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>Nodes</strong></p></td>
-<td><p>有向图中的节点，表示具体的处理步骤或操作（如调用 LLM、执行工具、做出决策等）。</p></td>
+<tr class="row-odd"><td><p><strong>Style Adapter</strong></p></td>
+<td><p>保存品牌或作者既定风格指南（语域、读者级别、排版规范、用词偏好等），并在生成与修正环节注入提示</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>Edges</strong></p></td>
-<td><p>有向图中的边，定义节点之间的可能跳转路径及其条件，决定流程的分支和顺序。</p></td>
-</tr>
-<tr class="row-odd"><td><p><strong>StateGraph</strong></p></td>
-<td><p>由节点（Nodes）和边（Edges）组成的有向图结构，描述整个应用的执行流程和状态流转。</p></td>
+<tr class="row-even"><td><p><strong>Cultural-QE</strong></p></td>
+<td><p>评估译文的文化恰当度与可读性，可基于 BLEURT、COMET + 规则（如借词过多／不够本土化等）</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<section id="state">
-<h3>State<a class="headerlink" href="#state" title="Link to this heading">#</a></h3>
-<p>状态是 LangGraph 中的核心概念，它代表了在你的应用程序中流动的所有信息。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing_extensions</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypedDict</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">State</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
-    <span class="n">graph_state</span><span class="p">:</span> <span class="nb">str</span>
-</pre></div>
-</div>
 </section>
-<section id="node">
-<h3>Node<a class="headerlink" href="#node" title="Link to this heading">#</a></h3>
-<p>节点是 Python 函数。每个节点：</p>
+<hr class="docutils" />
+<section id="react">
+<h2>ReAct 流程（升级版）<a class="headerlink" href="#react" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>仍遵循 Thought → Action → Observation 循环，但 Thought 阶段拆分为 <strong>T0（任务理解）</strong> 与 <strong>T1（句级推理）</strong>，中间插入 Strategy Planner。</p>
+</div></blockquote>
+<section id="t0">
+<h3>T0 — 任务理解 &amp; 策略规划<a class="headerlink" href="#t0" title="Link to this heading">#</a></h3>
+<ol class="arabic">
+<li><p><strong>提取翻译简报</strong></p>
 <ul class="simple">
-<li><p>以当前状态作为输入</p></li>
-<li><p>执行某些操作</p></li>
-<li><p>返回对状态的更新</p></li>
+<li><p>来源：用户显式说明或默认配置</p></li>
+<li><p>关键字段：目标语言/地区、读者画像、用途（学术/营销/法律…）、品牌风格</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">node_1</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---Node 1---&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;graph_state&quot;</span><span class="p">:</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;graph_state&#39;</span><span class="p">]</span> <span class="o">+</span><span class="s2">&quot; I am&quot;</span><span class="p">}</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">node_2</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---Node 2---&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;graph_state&quot;</span><span class="p">:</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;graph_state&#39;</span><span class="p">]</span> <span class="o">+</span><span class="s2">&quot; happy!&quot;</span><span class="p">}</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">node_3</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---Node 3---&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;graph_state&quot;</span><span class="p">:</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;graph_state&#39;</span><span class="p">]</span> <span class="o">+</span><span class="s2">&quot; sad!&quot;</span><span class="p">}</span>
+</li>
+<li><p><strong>调用 Strategy Planner</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="n">planner</span><span class="o">.</span><span class="n">decide</span><span class="p">(</span>
+    <span class="n">audience</span><span class="o">=</span><span class="s2">&quot;技术从业者&quot;</span><span class="p">,</span>
+    <span class="n">domain</span><span class="o">=</span><span class="s2">&quot;软件文档&quot;</span><span class="p">,</span>
+    <span class="n">prefer</span><span class="o">=</span><span class="s2">&quot;准确优先&quot;</span><span class="p">,</span>
+    <span class="n">brand_tone</span><span class="o">=</span><span class="s2">&quot;neutral&quot;</span>
+<span class="p">)</span>
+<span class="c1"># 返回示例</span>
+<span class="p">{</span>
+  <span class="s2">&quot;domestication&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>   <span class="c1"># 越低 → 趋向异化</span>
+  <span class="s2">&quot;literal_weight&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>   <span class="c1"># 句法保留度</span>
+  <span class="s2">&quot;formality&quot;</span><span class="p">:</span> <span class="s2">&quot;neutral&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;preserve_ids&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">}</span>
 </pre></div>
 </div>
-<p>例如，节点可以包含：</p>
-<ul class="simple">
-<li><p>LLM 调用：生成文本或做出决策</p></li>
-<li><p>工具调用：与外部系统交互</p></li>
-<li><p>条件逻辑：确定下一步操作</p></li>
-<li><p>人工干预：获取用户输入</p></li>
+</li>
+<li><p><strong>更新 Memory</strong>：记录本次策略，以便后续同域调用保持一致。</p></li>
+</ol>
+</section>
+<section id="t1">
+<h3>T1 — 源文本局部推理<a class="headerlink" href="#t1" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>语言检测、术语检索、句型复杂度分析</p></li>
+<li><p><strong>附加决策</strong>：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>if params.domestication &lt; 0.5:
+    strategic_note = &quot;保留源文化元素并注释&quot;
+else:
+    strategic_note = &quot;用本地类似概念替换&quot;
+</pre></div>
+</div>
+</li>
 </ul>
+</section>
+<section id="a1">
+<h3>A1 — 翻译执行（携带双重提示）<a class="headerlink" href="#a1" title="Link to this heading">#</a></h3>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;tool&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NMT_API&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;payload&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;glossary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;system_prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;You are a professional translator.&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;DomesticationWeight=0.3&quot;</span><span class="p">,</span><span class="w">          </span><span class="c1">// 异化偏高</span>
+<span class="w">      </span><span class="s2">&quot;LiteralWeight=0.8&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;Formality=neutral&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;StrategicNote=保留源文化元素并通过圆括号短注释&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;StyleGuide: ①简洁句 ②技术术语准确 ③避免口语化&quot;</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <blockquote>
-<div><p>ℹ️ Info</p>
-<p>某些对整个工作流至关重要的节点（如 START 和 END）是由 langGraph 直接提供的。</p>
+<div><p><em>实现细节</em>：在 LangGraph / LangChain 中可用 <code class="docutils literal notranslate"><span class="pre">prompt_template.format(**params)</span></code> 注入。</p>
 </div></blockquote>
 </section>
-<section id="edge">
-<h3>Edge<a class="headerlink" href="#edge" title="Link to this heading">#</a></h3>
-<p>边连接节点，并定义了在图中可能的路径：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">decide_mood</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;node_2&quot;</span><span class="p">,</span> <span class="s2">&quot;node_3&quot;</span><span class="p">]:</span>
-    
-    <span class="c1"># Often, we will use state to decide on the next node to visit</span>
-    <span class="n">user_input</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;graph_state&#39;</span><span class="p">]</span> 
-    
-    <span class="c1"># Here, let&#39;s just do a 50 / 50 split between nodes 2, 3</span>
-    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
-
-        <span class="c1"># 50% of the time, we return Node 2</span>
-        <span class="k">return</span> <span class="s2">&quot;node_2&quot;</span>
-    
-    <span class="c1"># 50% of the time, we return Node 3</span>
-    <span class="k">return</span> <span class="s2">&quot;node_3&quot;</span>
-</pre></div>
-</div>
-<p>边可以是：</p>
+<section id="o1">
+<h3>O1 — 质量与策略验证<a class="headerlink" href="#o1" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>术语一致性</strong>（如前）</p></li>
+<li><p><strong>Cultural-QE</strong></p>
 <ul class="simple">
-<li><p>直接：始终从节点 A 到节点 B</p></li>
-<li><p>条件：根据当前状态选择下一个节点</p></li>
+<li><p>指标：读者易读性、外来语密度、文化实用度</p></li>
+<li><p>输出：<code class="docutils literal notranslate"><span class="pre">cultural_flags</span></code>: [“过度本土化 - 缺少源文化说明”]</p></li>
+</ul>
+</li>
+<li><p><strong>Style Check</strong>：对照 Style Adapter 检查格式、语域</p></li>
+</ol>
+<p>若出现术语或文化冲突 → 进入 <strong>A2 自我修正</strong>。</p>
+</section>
+<section id="a2">
+<h3>A2 — 策略驱动的自我修正<a class="headerlink" href="#a2" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>文化偏差</strong></p>
+<ul>
+<li><p>若过度本土化：恢复外来专名，并添加释义</p></li>
+<li><p>若过度异化：选用本地对应概念，保留原词拼写作括注</p></li>
+</ul>
+</li>
+<li><p><strong>文体不符</strong></p>
+<ul>
+<li><p>调低／调高句子简洁度，或替换敬语</p></li>
+</ul>
+</li>
+<li><p><strong>术语违例</strong></p>
+<ul>
+<li><p>按上一版流程回滚修正</p></li>
+</ul>
+</li>
 </ul>
 </section>
-<section id="stategraph">
-<h3>StateGraph<a class="headerlink" href="#stategraph" title="Link to this heading">#</a></h3>
-<p>StateGraph 是承载整个代理工作流的容器：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">display</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">langgraph.graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">StateGraph</span><span class="p">,</span> <span class="n">START</span><span class="p">,</span> <span class="n">END</span>
-
-<span class="c1"># Build graph</span>
-<span class="n">builder</span> <span class="o">=</span> <span class="n">StateGraph</span><span class="p">(</span><span class="n">State</span><span class="p">)</span>
-<span class="n">builder</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;node_1&quot;</span><span class="p">,</span> <span class="n">node_1</span><span class="p">)</span>
-<span class="n">builder</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;node_2&quot;</span><span class="p">,</span> <span class="n">node_2</span><span class="p">)</span>
-<span class="n">builder</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;node_3&quot;</span><span class="p">,</span> <span class="n">node_3</span><span class="p">)</span>
-
-<span class="c1"># Logic</span>
-<span class="n">builder</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">START</span><span class="p">,</span> <span class="s2">&quot;node_1&quot;</span><span class="p">)</span>
-<span class="n">builder</span><span class="o">.</span><span class="n">add_conditional_edges</span><span class="p">(</span><span class="s2">&quot;node_1&quot;</span><span class="p">,</span> <span class="n">decide_mood</span><span class="p">)</span>
-<span class="n">builder</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;node_2&quot;</span><span class="p">,</span> <span class="n">END</span><span class="p">)</span>
-<span class="n">builder</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;node_3&quot;</span><span class="p">,</span> <span class="n">END</span><span class="p">)</span>
-
-<span class="c1"># Add</span>
-<span class="n">graph</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>可以可视化。</p>
-<p><img alt="basic_graph" src="../_images/basic_graph.jpeg" /></p>
-<div class="highlight-me notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
+<section id="t2">
+<h3>T2 — 终审<a class="headerlink" href="#t2" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>集合 <strong>QE score</strong>、<strong>glossary_violations</strong>、<strong>cultural_flags</strong></p></li>
+<li><p>若全部 &lt; 阈值 → Pass<br />
+否则 <code class="docutils literal notranslate"><span class="pre">requires_human_review:</span> <span class="pre">true</span></code></p></li>
+</ul>
 </section>
+<section id="final-answer">
+<h3>Final Answer — 回复用户<a class="headerlink" href="#final-answer" title="Link to this heading">#</a></h3>
+<blockquote>
+<div><p>（若策略有显式说明需求，可在回复顶部简要标注）</p>
+</div></blockquote>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="gu">### 翻译（技术语准确 + 略偏异化）</span>
+...
+<span class="k">&gt; </span><span class="ge">译者说明：为保留原文文化元素，专有名词沿用英文并在首次出现时括注中文释义。</span>
+</pre></div>
+</div>
+<p>后台同时：</p>
+<ul class="simple">
+<li><p><strong>Memory</strong> 更新策略使用次数 → 用于长期个性化</p></li>
+<li><p><strong>日志</strong> 记录策略 → 可做 RLHF / DPO</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="agent">
+<h2>在实际 Agent 中落地的关键点<a class="headerlink" href="#agent" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>维度</p></th>
+<th class="head"><p>做法</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>个性化策略偏好</strong></p></td>
+<td><p>在 Memory 中维护 <code class="docutils literal notranslate"><span class="pre">preferred_domestication_weight</span></code>，下次默认调用</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>动态调节</strong></p></td>
+<td><p>若用户后来要求「地道本地化」，即时修改 <code class="docutils literal notranslate"><span class="pre">params.domestication</span> <span class="pre">=</span> <span class="pre">0.9</span></code> 并保存</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>多语种</strong></p></td>
+<td><p>Strategy Planner 针对不同目标语种设定默认权重（例如日语技术文档常保留英文专名）</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>评估指标积累</strong></p></td>
+<td><p>Cultural-QE 打分和用户反馈可反哺，微调 LoRA 获得更稳的风格控件</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这样，Translation Agent 就形成了一个 <strong>术语一致性 + 翻译策略可控 + 文化／文体自评 + 多轮修正</strong> 的完整闭环，可满足从技术文档到文学内容等多样化场景的生产需求。</p>
 </section>
 </section>
 
@@ -593,20 +582,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="agents.html"
+       href="mcp.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title">智能体概述</p>
+        <p class="prev-next-title">模型上下文协议 MCP</p>
       </div>
     </a>
     <a class="right-next"
-       href="translation-agent.html"
+       href="../answers/transformer-practice-answers.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title">基于LangGraph的Translation Agent 开发</p>
+        <p class="prev-next-title">基于HF Transformer的NLP实践的练习答案</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -627,18 +616,18 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">LangGraph简介</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">LangGraph 如何工作？</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-langgraph">它与常规 Python 有何不同？为什么需要 LangGraph？</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">0. 预初始化（与术语模块并列新增组件）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#react">ReAct 流程（升级版）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t0">T0 — 任务理解 &amp; 策略规划</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t1">T1 — 源文本局部推理</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a1">A1 — 翻译执行（携带双重提示）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#o1">O1 — 质量与策略验证</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a2">A2 — 策略驱动的自我修正</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t2">T2 — 终审</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-answer">Final Answer — 回复用户</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">LangGraph的组成部分</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#state">State</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#node">Node</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#edge">Edge</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stategraph">StateGraph</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agent">在实际 Agent 中落地的关键点</a></li>
 </ul>
   </nav></div>
 

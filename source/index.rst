@@ -92,7 +92,9 @@
    Agents/agents.md
    Agents/LangGraph.md
    Agents/translation-agent.md
+   Agents/memory.md
    Agents/mcp.md
+   Agents/ex-translation.md
 
 .. toctree::
    :maxdepth: 1

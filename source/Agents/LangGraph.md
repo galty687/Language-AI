@@ -32,7 +32,7 @@ LangGraph 的核心是使用有向图结构来定义应用的流程：
 
 ### 它与常规 Python 有何不同？为什么需要 LangGraph？
 
-你可能会想：“我完全可以用常规的 Python `if-else` 语句来处理所有这些流程，对吧？”
+你可能会想：“我完全可以用常规的 Python `if-else` 语句来处理所有这些流程。”
 
 虽然从技术上讲确实可行，但 LangGraph 在构建复杂系统时相较于纯 Python 提供了诸多优势。你可以不用 LangGraph 也能实现同样的功能，但 LangGraph 为你构建了更简便的工具和抽象，包括：
 
@@ -61,3 +61,118 @@ LangGraph 的核心是使用有向图结构来定义应用的流程：
 ### State
 
 状态是 LangGraph 中的核心概念，它代表了在你的应用程序中流动的所有信息。
+
+```python
+from typing_extensions import TypedDict
+
+class State(TypedDict):
+    graph_state: str
+```
+
+
+
+### Node
+
+节点是 Python 函数。每个节点：
+
+- 以当前状态作为输入
+- 执行某些操作
+- 返回对状态的更新
+
+```python
+def node_1(state):
+    print("---Node 1---")
+    return {"graph_state": state['graph_state'] +" I am"}
+
+def node_2(state):
+    print("---Node 2---")
+    return {"graph_state": state['graph_state'] +" happy!"}
+
+def node_3(state):
+    print("---Node 3---")
+    return {"graph_state": state['graph_state'] +" sad!"}
+```
+
+
+
+例如，节点可以包含：
+
+- LLM 调用：生成文本或做出决策
+- 工具调用：与外部系统交互
+- 条件逻辑：确定下一步操作
+- 人工干预：获取用户输入
+
+
+
+> ℹ️ Info
+>
+> 某些对整个工作流至关重要的节点（如 START 和 END）是由 langGraph 直接提供的。
+
+
+
+### Edge
+
+边连接节点，并定义了在图中可能的路径：
+
+```python
+import random
+from typing import Literal
+
+def decide_mood(state) -> Literal["node_2", "node_3"]:
+    
+    # Often, we will use state to decide on the next node to visit
+    user_input = state['graph_state'] 
+    
+    # Here, let's just do a 50 / 50 split between nodes 2, 3
+    if random.random() < 0.5:
+
+        # 50% of the time, we return Node 2
+        return "node_2"
+    
+    # 50% of the time, we return Node 3
+    return "node_3"
+```
+
+
+
+边可以是：
+
+- 直接：始终从节点 A 到节点 B
+- 条件：根据当前状态选择下一个节点
+
+
+
+### StateGraph
+
+StateGraph 是承载整个代理工作流的容器：
+
+```python
+from IPython.display import Image, display
+from langgraph.graph import StateGraph, START, END
+
+# Build graph
+builder = StateGraph(State)
+builder.add_node("node_1", node_1)
+builder.add_node("node_2", node_2)
+builder.add_node("node_3", node_3)
+
+# Logic
+builder.add_edge(START, "node_1")
+builder.add_conditional_edges("node_1", decide_mood)
+builder.add_edge("node_2", END)
+builder.add_edge("node_3", END)
+
+# Add
+graph = builder.compile()
+```
+
+可以可视化。
+
+
+
+![basic_graph](images/basic_graph.jpeg)
+
+```me
+
+```
+
