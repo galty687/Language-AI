@@ -29,3 +29,6 @@
 
 
 
+## 人的记忆架构
+
+![markmap](images/memory.png)

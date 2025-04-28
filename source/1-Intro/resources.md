@@ -186,6 +186,7 @@
 
 - [MCP Servers](https://mcp.so)
 - [Exa MCP](https://docs.exa.ai/examples/exa-mcp)
+- [Universal Memory MCP](https://mcp.supermemory.ai) (让各大模型都记得你)
 
 
 
