@@ -157,6 +157,8 @@
 - [MaxKB](https://maxkb.cn)
 - [FastGPT](https://fastgpt.cn)
 - [RLAMA](https://rlama.dev)
+- [CocoIndex](https://github.com/cocoindex-io/cocoindex)
+- [Reasoning-Based RAG with PageIndex](https://github.com/VectifyAI/PageIndex)
 
 ### 框架
 - [Morphik Core](https://github.com/morphik-org/morphik-core) （多模态支持）
@@ -171,6 +173,19 @@
 - [AutoAgent](https://github.com/HKUDS/AutoAgent)
 - [UI-TARS-desktop](https://github.com/bytedance/UI-TARS-desktop)
 - [AI Agents for Beginners - A Course （微软官方）](https://github.com/microsoft/ai-agents-for-beginners?tab=readme-ov-file)
+- [Neural](https://www.neural.org)
+- [Agent S2](https://github.com/simular-ai/Agent-S)
+
+
+
+### Memory
+
+- [HawkinsDSB](https://github.com/harishsg993010/HawkinsDB)
+
+### MCP Tools
+
+- [MCP Servers](https://mcp.so)
+- [Exa MCP](https://docs.exa.ai/examples/exa-mcp)
 
 
 
@@ -181,6 +196,8 @@
 ## 学习资料
 
 - [大模型原理可视化](https://bbycroft.net/llm)
+
+- [TRANSFORMER EXPLAINER](https://poloclub.github.io/transformer-explainer/) （可视化）
 
 - [大模型基础论文列表](https://github.com/ZJU-LLMs/Foundations-of-LLMs/tree/main/大模型经典论文列表)
 
@@ -196,6 +213,8 @@
 
 - [OpenAI Academy](https://academy.openai.com)
 
+- [CS25: Transformers United V5](https://web.stanford.edu/class/cs25/) (Standford)
+
 
 
 
@@ -209,6 +228,12 @@
 ## 工具
 
 - [代码以图片输出](https://ray.so)
+
+
+
+## 机构
+
+- [ADAPT](https://www.adaptcentre.ie/about/)
 
 
 
