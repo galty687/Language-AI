@@ -216,6 +216,10 @@
 
 - [CS25: Transformers United V5](https://web.stanford.edu/class/cs25/) (Standford)
 
+- [CS224N: Natural Language Processing with Deep Learning](https://web.stanford.edu/class/cs224n/) (Standford)
+
+- [CS336: Language Modeling from Scratch](https://stanford-cs336.github.io/spring2025/) (Standford)
+
 
 
 

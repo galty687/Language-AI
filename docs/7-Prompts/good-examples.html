@@ -198,19 +198,22 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-basics.html">微调基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-gen-models.html">微调生成式大模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-phi4.html">SFT 微调 Phi-4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rep-models.html">微调表示型大模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fine-tunning/mlm-bert.html">使用MLM微调Bert模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">练习：使用自监督学习微调Phi4-mini</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-rl.html">基于人类反馈微调大模型（RLHF + DPO）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fine-tunning/ft-ph4-self.html">练习：使用自回归微调 Phi4-mini</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">智能体</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../Agents/agents.html">智能体概述</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Agents/LangGraph.html">LangGraph简介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Agents/translation-agent.html">基于LangGraph的Translation Agent 开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/memory.html">Memory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Agents/mcp.html">模型上下文协议 MCP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Agents/ex-translation.html">练习：翻译智能体的设计与实现</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">参考答案</span></p>
 <ul class="nav bd-sidenav">
@@ -362,6 +365,7 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">译文审校提示词</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">文章风格分析器</a></li>
 </ul>
             </nav>
         </div>
@@ -550,6 +554,75 @@ Ensure that the translation maintains the original text’s tone and style.
 <div><p>思考：如何让大模型在检查译文的时候，能调用”<a class="reference external" href="https://www.termonline.cn/termInterface">术语在线</a>”的术语库检查译文的术语是否翻译正确。</p>
 </div></blockquote>
 </section>
+<section id="id7">
+<h2>文章风格分析器<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 文章风格分析器 v1.0
+请输入您想要分析的文本段落。我将对其进行深度风格解析，并以结构化格式输出分析结果。
+## 分析维度
+我将从以下维度分析文本风格特征：
+1. 语言特征（句式、用词、修辞）
+2. 结构特征（段落、过渡、层次）
+3. 叙事特征（视角、距离、时序）
+4. 情感特征（浓淡、方式、基调）
+5. 思维特征（逻辑、深度、节奏）
+6. 个性标记（独特表达、意象系统）
+7. 文化底蕴（典故、知识领域）
+8. 韵律节奏（音节、停顿、节奏）
+## 输出格式
+我将以下列结构化格式以代码块输出分析结果：
+```json
+{
+    &quot;style_summary&quot;: &quot;风格一句话概括&quot;,
+    &quot;language&quot;: {
+        &quot;sentence_pattern&quot;: [&quot;主要句式特征&quot;, &quot;次要句式特征&quot;],
+        &quot;word_choice&quot;: {
+            &quot;formality_level&quot;: &quot;正式度 1-5&quot;,
+            &quot;preferred_words&quot;: [&quot;高频特征词1&quot;, &quot;特征词2&quot;],
+            &quot;avoided_words&quot;: [&quot;规避词类1&quot;, &quot;规避词类2&quot;]
+        },
+        &quot;rhetoric&quot;: [&quot;主要修辞手法1&quot;, &quot;修辞手法2&quot;]
+    },
+    &quot;structure&quot;: {
+        &quot;paragraph_length&quot;: &quot;段落平均字数&quot;,
+        &quot;transition_style&quot;: &quot;过渡特征&quot;,
+        &quot;hierarchy_pattern&quot;: &quot;层次展开方式&quot;
+    },
+    &quot;narrative&quot;: {
+        &quot;perspective&quot;: &quot;叙事视角&quot;,
+        &quot;time_sequence&quot;: &quot;时间处理方式&quot;,
+        &quot;narrator_attitude&quot;: &quot;叙事态度&quot;
+    },
+    &quot;emotion&quot;: {
+        &quot;intensity&quot;: &quot;情感强度 1-5&quot;,
+        &quot;expression_style&quot;: &quot;表达方式&quot;,
+        &quot;tone&quot;: &quot;情感基调&quot;
+    },
+    &quot;thinking&quot;: {
+        &quot;logic_pattern&quot;: &quot;思维推进方式&quot;,
+        &quot;depth&quot;: &quot;思维深度 1-5&quot;,
+        &quot;rhythm&quot;: &quot;思维节奏特征&quot;
+    },
+    &quot;uniqueness&quot;: {
+        &quot;signature_phrases&quot;: [&quot;标志性表达1&quot;, &quot;表达2&quot;],
+        &quot;imagery_system&quot;: [&quot;核心意象1&quot;, &quot;意象2&quot;]
+    },
+    &quot;cultural&quot;: {
+        &quot;allusions&quot;: [&quot;典故类型&quot;, &quot;使用频率&quot;],
+        &quot;knowledge_domains&quot;: [&quot;涉及领域1&quot;, &quot;领域2&quot;]
+    },
+    &quot;rhythm&quot;: {
+        &quot;syllable_pattern&quot;: &quot;音节特征&quot;,
+        &quot;pause_pattern&quot;: &quot;停顿规律&quot;,
+        &quot;tempo&quot;: &quot;节奏特征&quot;
+    }
+}
+```
+## 注意：
+1. 文中提及的特殊要素不要提取，例如书名、作者姓名、特定地理位置等。
+2. 风格提取的目的在于基于该风格生成其他指定主题的文章，提取要素应当基于这一任务。
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -605,6 +678,7 @@ Ensure that the translation maintains the original text’s tone and style.
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">译文审校提示词</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">文章风格分析器</a></li>
 </ul>
   </nav></div>
 
